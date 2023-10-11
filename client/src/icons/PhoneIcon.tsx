@@ -1,4 +1,3 @@
-import React from 'react'
 import { AiOutlinePhone } from 'react-icons/ai'
 import { IconProps } from './icon'
 

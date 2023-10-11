@@ -1,9 +1,7 @@
-import { BsFillArrowDownCircleFill } from 'react-icons/bs'
 import { BiLockAlt } from 'react-icons/bi'
 import { AiOutlineMail } from 'react-icons/ai'
 import {
 	Modal,
-	useDisclosure,
 	ModalHeader,
 	ModalBody,
 	ModalFooter,
@@ -15,56 +13,47 @@ import {
 	Divider,
 } from '@nextui-org/react'
 import Footer from '../components/Footer'
+import ArrowDownCircleIcon from '../icons/ArrowDownCircleIcon'
+import useModal from '../hooks/useModal'
+import Navigation from '../components/Navigation'
+import useScrollY from '../hooks/useScrollY'
 
 const HomePage = () => {
-	const {
-		isOpen: isOpenLogin,
-		onOpen: onOpenLogin,
-		onOpenChange: onOpenChangeLogin,
-	} = useDisclosure()
+	const { scroll } = useScrollY()
 
 	const {
-		isOpen: isOpenRegister,
-		onOpen: onOpenRegister,
-		onOpenChange: onOpenChangeRegister,
-	} = useDisclosure()
+		onOpenChangeLogin,
+		isOpenLogin,
+		isOpenRegister,
+		onOpenChangeRegister,
+		onOpenLogin,
+		onOpenRegister,
+	} = useModal()
 
 	return (
 		<>
+			<Navigation
+				onOpenLogin={onOpenLogin}
+				onOpenRegister={onOpenRegister}
+			/>
 			<main>
 				<header className='text-white bg-hero-pattern bg-[rgba(0,0,0,0.5)] bg-blend-darken bg-no-repeat bg-cover bg-fixed min-h-screen w-full gap-4 flex relative justify-center items-center flex-col'>
-					<nav className='absolute top-5 right-5'>
-						<ul className='flex gap-4'>
-							<li
-								className='cursor-pointer'
-								onClick={onOpenRegister}
-							>
-								Registrarse
-							</li>
-							<Divider
-								orientation='vertical'
-								className='bg-white h-6'
-							/>
-							<li
-								onClick={onOpenLogin}
-								className='cursor-pointer'
-							>
-								Iniciar Sesion
-							</li>
-						</ul>
-					</nav>
 					<h1 className='text-5xl font-bold '>
 						<span>Hotel </span>
 						Waynapicchu
 					</h1>
-					<p className='text-lg font-semibold'>
+					<p className='text-lg font-semibold text-gray-300'>
 						Welcome to the Hotel Waynapicchu, the best hotel in the world!
 					</p>
 					<a
 						href='#reservation'
-						className='absolute bottom-5'
+						className='absolute bottom-20'
 					>
-						<BsFillArrowDownCircleFill className='text-4xl animate-bounce' />
+						{scroll > 200 ? (
+							''
+						) : (
+							<ArrowDownCircleIcon className='text-4xl animate-bounce' />
+						)}
 					</a>
 				</header>
 				<section
