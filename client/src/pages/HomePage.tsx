@@ -1,15 +1,6 @@
-import {
-	BsFillArrowDownCircleFill,
-	BsFacebook,
-	BsInstagram,
-} from 'react-icons/bs'
-import { CiLocationOn } from 'react-icons/ci'
+import { BsFillArrowDownCircleFill } from 'react-icons/bs'
 import { BiLockAlt } from 'react-icons/bi'
-import {
-	AiOutlineMail,
-	AiOutlinePhone,
-	AiOutlineGooglePlus,
-} from 'react-icons/ai'
+import { AiOutlineMail } from 'react-icons/ai'
 import {
 	Modal,
 	useDisclosure,
@@ -23,6 +14,7 @@ import {
 	Button,
 	Divider,
 } from '@nextui-org/react'
+import Footer from '../components/Footer'
 
 const HomePage = () => {
 	const {
@@ -99,59 +91,8 @@ const HomePage = () => {
 						</div>
 					</div>
 				</section>
-				<footer className='bg-black flex flex-col gap-10 text-white pt-12 pb-8 px-20'>
-					<div className='grid grid-cols-3 justify-items-center '>
-						<div className='flex flex-col gap-2'>
-							<h6 className='text-sm font-bold'>DIRECCION:</h6>
-							<div>
-								<CiLocationOn className='inline-block mr-2 text-lime-400' />
-								<span className='text-sm font-thin'>
-									Av. Garcilaso 216-A - Wanchaq / Cusco
-								</span>
-							</div>
-							<div>
-								<AiOutlinePhone className='inline-block mr-2 text-lime-400' />
-								<span className='text-sm font-thin'>+51 944268176</span>
-							</div>
-							<div>
-								<AiOutlineMail className='inline-block mr-2 text-lime-400' />
-								<span className='text-sm font-thin'>
-									reservas@waynapicchu.com.pe
-								</span>
-							</div>
-						</div>
-						<div className='flex flex-col gap-2'>
-							<h6 className='text-sm font-bold'>REDES SOCIALES:</h6>
-							<a href='#'>
-								<BsFacebook className='inline-block mr-2' />
-								<span className='text-sm font-thin'>Waynapicchu hotal</span>
-							</a>
-							<a href='#'>
-								<BsInstagram className='inline-block mr-2' />
-								<span className='text-sm font-thin'>Waynapicchu hotal</span>
-							</a>
-							<a href='$'>
-								<AiOutlineGooglePlus className='inline-block mr-2' />
-								<span className='text-sm font-thin'>Waynapicchu hotal</span>
-							</a>
-						</div>
-						<div className=''>
-							<a href='#'>
-								<img
-									src='/logo.png'
-									alt='logo waynapicchu hotel'
-									className='w-[350px] '
-								/>
-							</a>
-						</div>
-					</div>
-					<div className='flex justify-end gap-6'>
-						<p className='text-sm font-thin'>Waynapicchu Hotel Cusco</p>
-						<p className='text-sm font-thin'>2023 Copyright</p>
-					</div>
-				</footer>
 			</main>
-			{/* MODAL REGISTER USUARIO */}
+			<Footer />
 			<Modal
 				isOpen={isOpenRegister}
 				onOpenChange={onOpenChangeRegister}
@@ -169,16 +110,65 @@ const HomePage = () => {
 									endContent={
 										<AiOutlineMail className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
 									}
+									label='Nombre'
+									placeholder='Ingrese su nombre'
+									variant='bordered'
+								/>
+								<Input
+									autoFocus
+									endContent={
+										<AiOutlineMail className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
+									}
+									label='Apellido'
+									placeholder='Ingrese su apellido'
+									variant='bordered'
+								/>
+								{/*tipo de documento select  */}
+								<Input
+									autoFocus
+									endContent={
+										<AiOutlineMail className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
+									}
+									label='N° de Documento'
+									placeholder='Ingrese su numero de documento'
+									variant='bordered'
+								/>
+								<Input
+									autoFocus
+									endContent={
+										<AiOutlineMail className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
+									}
+									label='Celular'
+									placeholder='Ingrese su numero de celular'
+									variant='bordered'
+									type='number'
+									minLength={9}
+								/>
+								<Input
+									autoFocus
+									endContent={
+										<AiOutlineMail className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
+									}
 									label='Email'
-									placeholder='Enter your email'
+									placeholder='Ingrese su correo electronico'
+									variant='bordered'
+								/>
+								<Divider />
+								<Input
+									autoFocus
+									endContent={
+										<AiOutlineMail className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
+									}
+									label='Usuario'
+									placeholder='Ingrese su usuario'
 									variant='bordered'
 								/>
 								<Input
 									endContent={
 										<BiLockAlt className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
 									}
-									label='Password'
-									placeholder='Enter your password'
+									label='Constreseña'
+									placeholder='Ingrese su contraseña'
 									type='password'
 									variant='bordered'
 								/>
@@ -189,13 +179,13 @@ const HomePage = () => {
 									variant='flat'
 									onPress={onClose}
 								>
-									Close
+									Cerrar
 								</Button>
 								<Button
 									color='primary'
 									onPress={onClose}
 								>
-									Sign in
+									Registrarse
 								</Button>
 							</ModalFooter>
 						</>
