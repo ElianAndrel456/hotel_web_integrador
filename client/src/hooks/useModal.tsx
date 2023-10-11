@@ -1,6 +1,6 @@
 import { useDisclosure } from '@nextui-org/react'
 
-const useModal = () => {
+export const useModal = () => {
 	const {
 		isOpen: isOpenLogin,
 		onOpen: onOpenLogin,
@@ -21,5 +21,3 @@ const useModal = () => {
 		onOpenChangeRegister,
 	}
 }
-
-export default useModal

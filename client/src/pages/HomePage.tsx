@@ -11,15 +11,24 @@ import {
 	Link,
 	Button,
 	Divider,
+	Select,
+	SelectItem,
+	Image,
 } from '@nextui-org/react'
-import Footer from '../components/Footer'
-import ArrowDownCircleIcon from '../icons/ArrowDownCircleIcon'
-import useModal from '../hooks/useModal'
-import Navigation from '../components/Navigation'
-import useScrollY from '../hooks/useScrollY'
+import { Footer, Navigation, CardRoom } from '@/components'
+import { useScrollY, useModal } from '@/hooks'
+import { useConstants } from '@/constants'
+import {
+	PasswordIcon,
+	PassportIcon,
+	PhoneIcon,
+	UserIcon,
+	ArrowDownCircleIcon,
+} from '@/icons'
 
 const HomePage = () => {
 	const { scroll } = useScrollY()
+	const { TYPE_OF_DOCUMENTS } = useConstants()
 
 	const {
 		onOpenChangeLogin,
@@ -56,28 +65,36 @@ const HomePage = () => {
 						)}
 					</a>
 				</header>
+				<section className='py-16 px-[300px]'>
+					<div className='w-full grid gap-8 grid-cols-2 items-center'>
+						<div className='text-center space-y-8'>
+							<h3 className='text-3xl'>Relájate en nuestra Suite</h3>
+							<p className=''>
+								Nuestra Suite es probablemente el ambiente que más refleja la
+								personalidad del habitante y el más laborioso de planear. El
+								espacio requiere confort, hospitalidad y estilo para recibir los
+								momentos más íntimos del usuario. Es allí donde están nuestros
+								recuerdos más profundos, nuestras piezas favoritas
+							</p>
+						</div>
+						<div>
+							<Image
+								isZoomed
+								isBlurred
+								src='https://waynapicchuhotel.com.pe/wp-content/uploads/2021/01/Mesa-de-trabajo-1307-1.png'
+								alt='secondary_image'
+							/>
+						</div>
+					</div>
+				</section>
 				<section
 					id='reservation'
-					className='py-16'
+					className='py-16 px-[300px]'
 				>
 					<div className='flex w-full justify-around'>
-						<div className='border rounded-md py-2 px-6'>
-							<div>
-								<h3 className='text-center text-xl'>Categoria</h3>
-								<h4 className='text-center text-2xl'>Diamante</h4>
-							</div>
-							<div>
-								<img
-									src='https://cf.bstatic.com/xdata/images/hotel/max1024x768/85796311.jpg?k=76f41f9cd013f4b37648b89ac9be1b721fd1228890633e964d317060fe338c1c&o=&hp=1'
-									alt=''
-									className='w-full h-[200px] object-cover object-center'
-								/>
-							</div>
-							<div className='flex flex-col gap-2'>
-								<button className='border py-2'>Ver detalle</button>
-								<button className='border py-2'>Reservar</button>
-							</div>
-						</div>
+						<CardRoom title='Plata' />
+						<CardRoom title='Diamante' />
+						<CardRoom title='Oro' />
 					</div>
 				</section>
 			</main>
@@ -95,37 +112,54 @@ const HomePage = () => {
 							</ModalHeader>
 							<ModalBody>
 								<Input
+									isRequired
 									autoFocus
 									endContent={
-										<AiOutlineMail className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
+										<UserIcon className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
 									}
 									label='Nombre'
 									placeholder='Ingrese su nombre'
 									variant='bordered'
 								/>
 								<Input
+									isRequired
 									autoFocus
 									endContent={
-										<AiOutlineMail className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
+										<UserIcon className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
 									}
 									label='Apellido'
 									placeholder='Ingrese su apellido'
 									variant='bordered'
 								/>
-								{/*tipo de documento select  */}
+								<Select
+									isRequired
+									label='Seleccione su tipo de documento'
+									className='max-w-xs'
+								>
+									{TYPE_OF_DOCUMENTS.map((t) => (
+										<SelectItem
+											key={t.value}
+											value={t.value}
+										>
+											{t.label}
+										</SelectItem>
+									))}
+								</Select>
 								<Input
+									isRequired
 									autoFocus
 									endContent={
-										<AiOutlineMail className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
+										<PassportIcon className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
 									}
 									label='N° de Documento'
 									placeholder='Ingrese su numero de documento'
 									variant='bordered'
 								/>
 								<Input
+									isRequired
 									autoFocus
 									endContent={
-										<AiOutlineMail className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
+										<PhoneIcon className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
 									}
 									label='Celular'
 									placeholder='Ingrese su numero de celular'
@@ -134,9 +168,10 @@ const HomePage = () => {
 									minLength={9}
 								/>
 								<Input
+									isRequired
 									autoFocus
 									endContent={
-										<AiOutlineMail className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
+										<UserIcon className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
 									}
 									label='Email'
 									placeholder='Ingrese su correo electronico'
@@ -144,6 +179,7 @@ const HomePage = () => {
 								/>
 								<Divider />
 								<Input
+									isRequired
 									autoFocus
 									endContent={
 										<AiOutlineMail className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
@@ -153,8 +189,9 @@ const HomePage = () => {
 									variant='bordered'
 								/>
 								<Input
+									isRequired
 									endContent={
-										<BiLockAlt className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
+										<PasswordIcon className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
 									}
 									label='Constreseña'
 									placeholder='Ingrese su contraseña'
@@ -181,7 +218,7 @@ const HomePage = () => {
 					)}
 				</ModalContent>
 			</Modal>
-			{/* MODAL LOGIN */}
+
 			<Modal
 				isOpen={isOpenLogin}
 				onOpenChange={onOpenChangeLogin}
@@ -190,7 +227,9 @@ const HomePage = () => {
 				<ModalContent>
 					{(onClose) => (
 						<>
-							<ModalHeader className='flex flex-col gap-1'>Log in</ModalHeader>
+							<ModalHeader className='flex flex-col gap-1'>
+								Inicia Sesión
+							</ModalHeader>
 							<ModalBody>
 								<Input
 									autoFocus
@@ -216,7 +255,7 @@ const HomePage = () => {
 											label: 'text-small',
 										}}
 									>
-										Remember me
+										Recordarme
 									</Checkbox>
 									<Link
 										color='primary'
@@ -233,13 +272,13 @@ const HomePage = () => {
 									variant='flat'
 									onPress={onClose}
 								>
-									Close
+									Cerrar
 								</Button>
 								<Button
 									color='primary'
 									onPress={onClose}
 								>
-									Sign in
+									Ingresar
 								</Button>
 							</ModalFooter>
 						</>

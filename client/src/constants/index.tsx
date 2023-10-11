@@ -1,12 +1,21 @@
 import { useMemo } from 'react'
-import FacebookIcon from '../icons/FacebookIcon'
-import GoogleIcon from '../icons/GoogleIcon'
-import InstagramIcon from '../icons/InstagramIcon'
-import LocationIcon from '../icons/LocationIcon'
-import PhoneIcon from '../icons/PhoneIcon'
-import EmailIcon from '../icons/EmailIcon'
+import {
+	EmailIcon,
+	PhoneIcon,
+	LocationIcon,
+	InstagramIcon,
+	GoogleIcon,
+	FacebookIcon,
+} from '@/icons'
 
 export const useConstants = () => {
+	const TYPE_OF_DOCUMENTS = useMemo(() => {
+		return [
+			{ value: 'dni', label: 'DNI' },
+			{ value: 'passport', label: 'Pasaporte' },
+		]
+	}, [])
+
 	const ADDRESS_INFORMATION = useMemo(
 		() => [
 			{
@@ -46,5 +55,5 @@ export const useConstants = () => {
 		[]
 	)
 
-	return { ADDRESS_INFORMATION, SOCIALS }
+	return { ADDRESS_INFORMATION, SOCIALS, TYPE_OF_DOCUMENTS }
 }

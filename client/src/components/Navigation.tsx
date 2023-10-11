@@ -1,5 +1,6 @@
 import {
 	Button,
+	Divider,
 	Link,
 	Navbar,
 	NavbarBrand,
@@ -7,7 +8,7 @@ import {
 	NavbarItem,
 } from '@nextui-org/react'
 
-const Navigation = ({
+export const Navigation = ({
 	onOpenLogin,
 	onOpenRegister,
 }: {
@@ -64,6 +65,10 @@ const Navigation = ({
 				<NavbarItem className='hidden lg:flex'>
 					<Link onClick={onOpenLogin}>Iniciar Sesion</Link>
 				</NavbarItem>
+				<Divider
+					orientation='vertical'
+					className='h-8'
+				/>
 				<NavbarItem>
 					<Button
 						color='primary'
@@ -77,5 +82,3 @@ const Navigation = ({
 		</Navbar>
 	)
 }
-
-export default Navigation

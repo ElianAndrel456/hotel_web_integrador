@@ -1,5 +1,6 @@
-const UserIcon = () => {
-	return <div>UserIcon</div>
-}
+import { CiUser } from 'react-icons/ci'
+import { IconProps } from './icon'
 
-export default UserIcon
+export const UserIcon = ({ className }: IconProps) => (
+	<CiUser className={className} />
+)

@@ -1,6 +1,6 @@
 import { useConstants } from '../constants'
 
-const Footer = () => {
+export const Footer = () => {
 	const { ADDRESS_INFORMATION, SOCIALS } = useConstants()
 	return (
 		<footer className='bg-black flex flex-col gap-10 text-white pt-12 pb-8 px-20'>
@@ -52,5 +52,3 @@ const Footer = () => {
 		</footer>
 	)
 }
-
-export default Footer
