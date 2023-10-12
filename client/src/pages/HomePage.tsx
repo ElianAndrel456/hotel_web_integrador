@@ -1,57 +1,21 @@
-import { BiLockAlt } from 'react-icons/bi'
-import { AiOutlineMail } from 'react-icons/ai'
-import {
-	Modal,
-	ModalHeader,
-	ModalBody,
-	ModalFooter,
-	ModalContent,
-	Checkbox,
-	Input,
-	Link,
-	Button,
-	Divider,
-	Select,
-	SelectItem,
-	Image,
-} from '@nextui-org/react'
-import { Footer, Navigation, CardRoom } from '@/components'
-import { useScrollY, useModal } from '@/hooks'
-import { useConstants } from '@/constants'
-import {
-	PasswordIcon,
-	PassportIcon,
-	PhoneIcon,
-	UserIcon,
-	ArrowDownCircleIcon,
-} from '@/icons'
+import { Image, Spacer } from '@nextui-org/react'
+import { CardRoom } from '@/components'
+import { useScrollY } from '@/hooks'
+import { ArrowDownCircleIcon } from '@/icons'
 
 const HomePage = () => {
 	const { scroll } = useScrollY()
-	const { TYPE_OF_DOCUMENTS } = useConstants()
-
-	const {
-		onOpenChangeLogin,
-		isOpenLogin,
-		isOpenRegister,
-		onOpenChangeRegister,
-		onOpenLogin,
-		onOpenRegister,
-	} = useModal()
 
 	return (
 		<>
-			<Navigation
-				onOpenLogin={onOpenLogin}
-				onOpenRegister={onOpenRegister}
-			/>
 			<main>
 				<header className='text-white bg-hero-pattern bg-[rgba(0,0,0,0.5)] bg-blend-darken bg-no-repeat bg-cover bg-fixed min-h-screen w-full gap-4 flex relative justify-center items-center flex-col'>
-					<h1 className='text-5xl font-bold '>
+					<h1 className='text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-[white] to-[#F0A000]'>
 						<span>Hotel </span>
 						Waynapicchu
 					</h1>
-					<p className='text-lg font-semibold text-gray-300'>
+					<Spacer y={2} />
+					<p className='text-xl font-semibold text-gray-400 max-w-lg text-center'>
 						Welcome to the Hotel Waynapicchu, the best hotel in the world!
 					</p>
 					<a
@@ -67,8 +31,13 @@ const HomePage = () => {
 				</header>
 				<section className='py-16 px-[300px]'>
 					<div className='w-full grid gap-8 grid-cols-2 items-center'>
-						<div className='text-center space-y-8'>
-							<h3 className='text-3xl'>Relájate en nuestra Suite</h3>
+						<div
+							data-aos='fade-right'
+							className='text-center space-y-8'
+						>
+							<h3 className='text-5xl text-[#F0A000] font-bold '>
+								Relájate en nuestra Suite
+							</h3>
 							<p className=''>
 								Nuestra Suite es probablemente el ambiente que más refleja la
 								personalidad del habitante y el más laborioso de planear. El
@@ -77,7 +46,7 @@ const HomePage = () => {
 								recuerdos más profundos, nuestras piezas favoritas
 							</p>
 						</div>
-						<div>
+						<div data-aos='zoom-in'>
 							<Image
 								isZoomed
 								isBlurred
@@ -91,200 +60,36 @@ const HomePage = () => {
 					id='reservation'
 					className='py-16 px-[300px]'
 				>
+					<h3 className='text-5xl text-[#F0A000] font-bold text-center'>
+						Relájate en nuestra Suite
+					</h3>
+					<Spacer y={20} />
 					<div className='flex w-full justify-around'>
-						<CardRoom title='Plata' />
-						<CardRoom title='Diamante' />
-						<CardRoom title='Oro' />
+						<CardRoom
+							title='Plata'
+							img_url='https://cf.bstatic.com/xdata/images/hotel/max1024x768/343137940.jpg?k=36b2680fc93291f7eeac1a4e3716b53700e8ca16b67b48345d9f3f775d72e779&o=&hp=1'
+							ditails_url='#'
+							reservation_url='#'
+							description='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Leo integer malesuada nunc vel risus commodo viverra maecenas accumsan. Cursus risus at ultrices mi tempus imperdiet nulla malesuada pellentesque. Sagittis nisl rhoncus mattis rhoncus urna. In fermentum posuere urna nec tincidunt praesent semper. Consectetur adipiscing elit pellentesque habitant. Adipiscing diam donec adipiscing tristique risus.'
+						/>
+						<CardRoom
+							title='Diamante'
+							img_url='https://cf.bstatic.com/xdata/images/hotel/max1024x768/117560853.jpg?k=b6b488177bf18ad6f07223d116f1b30d3bf7c58378781f08a3393a9f889fc1d7&o=&hp=1'
+							ditails_url='#'
+							reservation_url='#'
+							description='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Leo integer malesuada nunc vel risus commodo viverra maecenas accumsan. Cursus risus at ultrices mi tempus imperdiet nulla malesuada pellentesque. Sagittis nisl rhoncus mattis rhoncus urna. In fermentum posuere urna nec tincidunt praesent semper. Consectetur adipiscing elit pellentesque habitant. Adipiscing diam donec adipiscing tristique risus.'
+							bg_color='bg-gradient-to-br from-orange-200 to-red-900 text-white'
+						/>
+						<CardRoom
+							title='Oro'
+							img_url='https://cf.bstatic.com/xdata/images/hotel/max1024x768/85796311.jpg?k=76f41f9cd013f4b37648b89ac9be1b721fd1228890633e964d317060fe338c1c&o=&hp=1'
+							ditails_url='#'
+							reservation_url='#'
+							description='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Leo integer malesuada nunc vel risus commodo viverra maecenas accumsan. Cursus risus at ultrices mi tempus imperdiet nulla malesuada pellentesque. Sagittis nisl rhoncus mattis rhoncus urna. In fermentum posuere urna nec tincidunt praesent semper. Consectetur adipiscing elit pellentesque habitant. Adipiscing diam donec adipiscing tristique risus.'
+						/>
 					</div>
 				</section>
 			</main>
-			<Footer />
-			<Modal
-				isOpen={isOpenRegister}
-				onOpenChange={onOpenChangeRegister}
-				placement='top-center'
-			>
-				<ModalContent>
-					{(onClose) => (
-						<>
-							<ModalHeader className='flex flex-col gap-1'>
-								Registrate
-							</ModalHeader>
-							<ModalBody>
-								<Input
-									isRequired
-									autoFocus
-									endContent={
-										<UserIcon className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
-									}
-									label='Nombre'
-									placeholder='Ingrese su nombre'
-									variant='bordered'
-								/>
-								<Input
-									isRequired
-									autoFocus
-									endContent={
-										<UserIcon className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
-									}
-									label='Apellido'
-									placeholder='Ingrese su apellido'
-									variant='bordered'
-								/>
-								<Select
-									isRequired
-									label='Seleccione su tipo de documento'
-									className='max-w-xs'
-								>
-									{TYPE_OF_DOCUMENTS.map((t) => (
-										<SelectItem
-											key={t.value}
-											value={t.value}
-										>
-											{t.label}
-										</SelectItem>
-									))}
-								</Select>
-								<Input
-									isRequired
-									autoFocus
-									endContent={
-										<PassportIcon className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
-									}
-									label='N° de Documento'
-									placeholder='Ingrese su numero de documento'
-									variant='bordered'
-								/>
-								<Input
-									isRequired
-									autoFocus
-									endContent={
-										<PhoneIcon className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
-									}
-									label='Celular'
-									placeholder='Ingrese su numero de celular'
-									variant='bordered'
-									type='number'
-									minLength={9}
-								/>
-								<Input
-									isRequired
-									autoFocus
-									endContent={
-										<UserIcon className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
-									}
-									label='Email'
-									placeholder='Ingrese su correo electronico'
-									variant='bordered'
-								/>
-								<Divider />
-								<Input
-									isRequired
-									autoFocus
-									endContent={
-										<AiOutlineMail className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
-									}
-									label='Usuario'
-									placeholder='Ingrese su usuario'
-									variant='bordered'
-								/>
-								<Input
-									isRequired
-									endContent={
-										<PasswordIcon className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
-									}
-									label='Constreseña'
-									placeholder='Ingrese su contraseña'
-									type='password'
-									variant='bordered'
-								/>
-							</ModalBody>
-							<ModalFooter>
-								<Button
-									color='danger'
-									variant='flat'
-									onPress={onClose}
-								>
-									Cerrar
-								</Button>
-								<Button
-									color='primary'
-									onPress={onClose}
-								>
-									Registrarse
-								</Button>
-							</ModalFooter>
-						</>
-					)}
-				</ModalContent>
-			</Modal>
-
-			<Modal
-				isOpen={isOpenLogin}
-				onOpenChange={onOpenChangeLogin}
-				placement='top-center'
-			>
-				<ModalContent>
-					{(onClose) => (
-						<>
-							<ModalHeader className='flex flex-col gap-1'>
-								Inicia Sesión
-							</ModalHeader>
-							<ModalBody>
-								<Input
-									autoFocus
-									endContent={
-										<AiOutlineMail className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
-									}
-									label='Email'
-									placeholder='Enter your email'
-									variant='bordered'
-								/>
-								<Input
-									endContent={
-										<BiLockAlt className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
-									}
-									label='Password'
-									placeholder='Enter your password'
-									type='password'
-									variant='bordered'
-								/>
-								<div className='flex py-2 px-1 justify-between'>
-									<Checkbox
-										classNames={{
-											label: 'text-small',
-										}}
-									>
-										Recordarme
-									</Checkbox>
-									<Link
-										color='primary'
-										href='#'
-										size='sm'
-									>
-										Forgot password?
-									</Link>
-								</div>
-							</ModalBody>
-							<ModalFooter>
-								<Button
-									color='danger'
-									variant='flat'
-									onPress={onClose}
-								>
-									Cerrar
-								</Button>
-								<Button
-									color='primary'
-									onPress={onClose}
-								>
-									Ingresar
-								</Button>
-							</ModalFooter>
-						</>
-					)}
-				</ModalContent>
-			</Modal>
 		</>
 	)
 }

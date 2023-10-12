@@ -4,6 +4,8 @@ import {
 	CardBody,
 	CardFooter,
 	CardHeader,
+	Image,
+	Spacer,
 } from '@nextui-org/react'
 import { ICardRoomProps } from './component'
 
@@ -13,20 +15,29 @@ export const CardRoom = ({
 	ditails_url,
 	img_url,
 	reservation_url,
+	bg_color,
 }: ICardRoomProps) => {
 	return (
-		<Card className='max-w-xs'>
+		<Card
+			className={`${
+				bg_color
+					? 'max-w-[340px] hover:scale-105 ' + bg_color
+					: 'max-w-[340px] hover:scale-105'
+			}`}
+		>
 			<CardHeader>
 				<h4 className='text-center text-2xl block'>{title}</h4>
 			</CardHeader>
 			<CardBody>
 				{img_url && (
-					<img
+					<Image
+						isZoomed
 						src={img_url}
 						alt={title + '_image'}
 						className='w-full h-[200px] object-cover object-center'
 					/>
 				)}
+				<Spacer y={2} />
 				<p>{description}</p>
 			</CardBody>
 			<CardFooter className='flex justify-end gap-4'>
@@ -38,7 +49,14 @@ export const CardRoom = ({
 						Reservar
 					</Button>
 				)}
-				{ditails_url && <Button color='secondary'>Ver detalle</Button>}
+				{ditails_url && (
+					<Button
+						color='secondary'
+						variant='bordered'
+					>
+						Ver detalle
+					</Button>
+				)}
 			</CardFooter>
 		</Card>
 	)

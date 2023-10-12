@@ -1,10 +1,33 @@
+import { Footer, ModalLogin, ModalRegister, Navigation } from '@/components'
+import { useModal } from '@/hooks'
 import { Outlet } from 'react-router-dom'
 
 const BaseLayout = () => {
+	const {
+		onOpenLogin,
+		onOpenRegister,
+		isOpenLogin,
+		isOpenRegister,
+		onOpenChangeLogin,
+		onOpenChangeRegister,
+	} = useModal()
 	return (
-		<div>
+		<>
+			<Navigation
+				onOpenLogin={onOpenLogin}
+				onOpenRegister={onOpenRegister}
+			/>
 			<Outlet />
-		</div>
+			<Footer />
+			<ModalRegister
+				isOpen={isOpenRegister}
+				onOpenChange={onOpenChangeRegister}
+			/>
+			<ModalLogin
+				isOpen={isOpenLogin}
+				onOpenChange={onOpenChangeLogin}
+			/>
+		</>
 	)
 }
 

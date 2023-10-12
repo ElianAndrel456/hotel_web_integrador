@@ -1,12 +1,14 @@
 import {
 	Button,
 	Divider,
+	Image,
 	Link,
 	Navbar,
 	NavbarBrand,
 	NavbarContent,
 	NavbarItem,
 } from '@nextui-org/react'
+import { useNavigate } from 'react-router-dom'
 
 export const Navigation = ({
 	onOpenLogin,
@@ -15,47 +17,59 @@ export const Navigation = ({
 	onOpenLogin: () => void
 	onOpenRegister: () => void
 }) => {
+	const navigation = useNavigate()
+	const path = window.location.pathname
+
 	return (
-		<Navbar
-			shouldHideOnScroll
-			isBordered
-		>
+		<Navbar shouldHideOnScroll>
 			<NavbarBrand>
-				{/* <AcmeLogo /> */}
-				<p className='font-bold text-inherit'>ACME</p>
+				<Image
+					src='/icon_hotel.png'
+					alt='logo waynapicchu hotel'
+					className='sepia brightness-0  h-10'
+				/>
+				<p className='font-bold text-inherit'>HOTEL</p>
 			</NavbarBrand>
 			<NavbarContent
 				className='hidden sm:flex gap-4'
 				justify='center'
 			>
-				<NavbarItem>
+				<NavbarItem isActive={path === '/'}>
 					<Link
-						color='foreground'
-						href='#'
+						onClick={() => {
+							navigation('/')
+						}}
+						color={`${path === '/' ? 'primary' : 'foreground'}`}
 					>
 						Inicio
 					</Link>
 				</NavbarItem>
-				<NavbarItem isActive>
+				<NavbarItem isActive={path === '/sobre-nosotros'}>
 					<Link
-						href='#'
-						aria-current='page'
+						onClick={() => {
+							navigation('/sobre-nosotros')
+						}}
+						color={`${path === '/sobre-nosotros' ? 'primary' : 'foreground'}`}
 					>
 						Sobre Nosotros
 					</Link>
 				</NavbarItem>
-				<NavbarItem>
+				<NavbarItem isActive={path === '/reservacion'}>
 					<Link
-						color='foreground'
-						href='#'
+						onClick={() => {
+							navigation('/reservacion')
+						}}
+						color={`${path === '/reservacion' ? 'primary' : 'foreground'}`}
 					>
 						Reservaciones
 					</Link>
 				</NavbarItem>
-				<NavbarItem>
+				<NavbarItem isActive={path === '/contacto'}>
 					<Link
-						color='foreground'
-						href='#'
+						onClick={() => {
+							navigation('/contacto')
+						}}
+						color={`${path === '/contacto' ? 'primary' : 'foreground'}`}
 					>
 						Contáctanos
 					</Link>
