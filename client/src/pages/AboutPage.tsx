@@ -5,7 +5,6 @@ const AboutPage = () => {
 	return (
 		<main>
 			<LargeBanner title='Sobre Nosotros' />
-
 			<Spacer y={10} />
 			<section className='grid grid-cols-4 px-[300px] gap-10 relative'>
 				<div className='col-span-3'>

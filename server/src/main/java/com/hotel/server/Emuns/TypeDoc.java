@@ -1,8 +1,7 @@
 package com.hotel.server.Emuns;
 
-public enum TipoDoc {
+public enum TypeDoc {
   DNI,
   PASSAPORTE,
   CARNET_EXTRANJERIA,
-  OTRO,
 }

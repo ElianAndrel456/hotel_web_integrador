@@ -26,12 +26,11 @@ export const CardRoom = ({
 			}`}
 		>
 			<CardHeader>
-				<h4 className='text-center text-2xl block'>{title}</h4>
+				<h4 className='text-center text-2xl block font-semibold'>{title}</h4>
 			</CardHeader>
 			<CardBody>
 				{img_url && (
 					<Image
-						isZoomed
 						src={img_url}
 						alt={title + '_image'}
 						className='w-full h-[200px] object-cover object-center'

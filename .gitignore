@@ -2,6 +2,7 @@ client/node_modules
 client/.gitignore
 client/.prettierrc
 client/package-lock.json
-client/README.md
+client/dist
+
 server/target/*
 server/HELP.md

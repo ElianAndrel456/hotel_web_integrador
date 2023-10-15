@@ -1,6 +1,6 @@
 import { Footer, ModalLogin, ModalRegister, Navigation } from '@/components'
 import { useModal } from '@/hooks'
-import { Outlet } from 'react-router-dom'
+import { Outlet, ScrollRestoration } from 'react-router-dom'
 
 const BaseLayout = () => {
 	const {
@@ -27,6 +27,7 @@ const BaseLayout = () => {
 				isOpen={isOpenLogin}
 				onOpenChange={onOpenChangeLogin}
 			/>
+			<ScrollRestoration />
 		</>
 	)
 }
