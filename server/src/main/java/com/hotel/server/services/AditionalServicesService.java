@@ -26,4 +26,16 @@ public class AditionalServicesService {
     return aditionalServicesRepository.save(aditionalServices);
   }
 
+  public AditionalServices updateAditionalServices(AditionalServices aditionalServices) {
+    AditionalServices existingAditionalServices = aditionalServicesRepository.findById(aditionalServices.getId())
+        .orElse(null);
+    existingAditionalServices.setDescription(aditionalServices.getDescription());
+    existingAditionalServices.setPrice(aditionalServices.getPrice());
+    return aditionalServicesRepository.save(existingAditionalServices);
+  }
+
+  public void deleteAditionalServices(Long id) {
+    aditionalServicesRepository.deleteById(id);
+  }
+
 }

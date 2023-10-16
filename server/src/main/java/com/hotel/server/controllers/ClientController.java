@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hotel.server.models.Client;
@@ -19,6 +20,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
+@RequestMapping("/api/cliente")
 public class ClientController {
 
   @Autowired
@@ -26,7 +28,7 @@ public class ClientController {
   @Autowired
   private UserClientService userClientService;
 
-  @GetMapping("/api/get_all_clients")
+  @GetMapping
   public List<Client> getAllClients() {
     try {
       return clientService.getAll();
@@ -36,7 +38,7 @@ public class ClientController {
     }
   }
 
-  @GetMapping("/api/clientes/{id}")
+  @GetMapping("/{id}")
   public Client getByIdClient(@PathVariable Long id) {
     try {
       return clientService.getById(id);
@@ -46,7 +48,7 @@ public class ClientController {
     }
   }
 
-  @PostMapping("/api/clientes/create")
+  @PostMapping("/create")
   public Client saveClient(@RequestBody RequestBodyClient requestBodyClient) {
     try {
       System.out.println(requestBodyClient);
@@ -79,7 +81,7 @@ public class ClientController {
     }
   }
 
-  @PostMapping("/api/clientes/auth")
+  @PostMapping("/auth")
   public UserClient authentication(@RequestBody UserClient userClient, HttpServletResponse response) {
     try {
 
