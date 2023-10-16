@@ -6,3 +6,5 @@ client/dist
 
 server/target/*
 server/HELP.md
+
+.vscode
