@@ -8,12 +8,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Entity
 @Data
-@AllArgsConstructor
 @Table(name = "cliente")
 public class Client {
   @Id
@@ -22,21 +20,21 @@ public class Client {
   private Long id;
 
   @Column(name = "tipo_documento", nullable = false)
-  private TypeDoc tipoDocumento;
+  private TypeDoc type_of_document;
 
   @Column(name = "numero_documento", nullable = false)
-  private String numeroDocumento;
+  private String number_of_document;
 
   @Column(name = "nombre", nullable = false)
-  private String nombre;
+  private String name;
 
   @Column(name = "apellido", nullable = false)
-  private String apellido;
+  private String lastname;
 
   @Column(name = "correo", nullable = false, unique = true)
-  private String correo;
+  private String email;
 
   @Column(name = "telefono", nullable = false)
-  private String telefono;
+  private String phone;
 
 }

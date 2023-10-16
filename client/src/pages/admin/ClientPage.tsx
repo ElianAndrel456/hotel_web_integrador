@@ -153,7 +153,6 @@ export const ClientPage = () => {
 				bottomContent={bottomContent}
 				bottomContentPlacement='outside'
 				removeWrapper
-				isCompact
 			>
 				<TableHeader columns={COLUMNS_CLIENT}>
 					{(column) => (

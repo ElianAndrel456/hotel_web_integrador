@@ -231,3 +231,166 @@ export const COLUMNS_CLIENT = [
 		label: 'ACCIONES',
 	},
 ]
+export const COLUMNS_SERVICES = [
+	{
+		key: 'id',
+		label: 'ID',
+	},
+	{
+		key: 'name',
+		label: 'NOMBRE',
+	},
+	{
+		key: 'description',
+		label: 'DESCRIPCION',
+	},
+	{
+		key: 'price',
+		label: 'PRECIO',
+	},
+	{
+		key: 'actions',
+		label: 'ACCIONES',
+	},
+]
+
+export const DATA_OF_SERVICES = [
+	{
+		id: 1,
+		name: 'Corte de cabello',
+		description: 'Corte de cabello para caballero',
+		price: 25,
+	},
+	{
+		id: 2,
+		name: 'Corte de cabello',
+		description: 'Corte de cabello para dama ',
+		price: 30,
+	},
+	{
+		id: 3,
+		name: 'Servicio de taxi',
+		description: 'Servicio de taxi',
+		price: 50,
+	},
+	{
+		id: 4,
+		name: 'Corte de cabello',
+		description: 'Corte de cabello para caballero',
+		price: 25,
+	},
+]
+
+export const COLUMNS_ROOMS = [
+	{ key: 'id', label: 'ID' },
+	{
+		key: 'category',
+		label: 'CATEGORIA',
+	},
+	{
+		key: 'floor',
+		label: 'PISO',
+	},
+	{
+		key: 'status',
+		label: 'ESTADO',
+	},
+	{
+		key: 'actions',
+		label: 'ACCIONES',
+	},
+]
+
+export const DATA_OF_ROOMS = [
+	{
+		id: 1,
+		category: 'diamante',
+		floor: '1',
+		status: 'ocupado',
+	},
+	{
+		id: 2,
+		category: 'oro',
+		floor: '2',
+		status: 'disponible',
+	},
+	{
+		id: 3,
+		category: 'plata',
+		floor: '3',
+		status: 'disponible',
+	},
+	{
+		id: 4,
+		category: 'plata',
+		floor: '3',
+		status: 'ocupado',
+	},
+]
+
+export const COLUMNS_RESERVATIONS = [
+	{
+		key: 'id',
+		label: 'ID',
+	},
+	{
+		key: 'client',
+		label: 'CLIENTE',
+	},
+	{
+		key: 'room',
+		label: 'HABITACION',
+	},
+	{
+		key: 'checkIn',
+		label: 'FECHA DE RESERVA',
+	},
+	{
+		key: 'checkOut',
+		label: 'FECHA DE SALIDA',
+	},
+	{
+		key: 'aditional_services',
+		label: 'SERVICIOS ADICIONALES',
+	},
+	{
+		key: 'status',
+		label: 'ESTADO',
+	},
+	{
+		key: 'actions',
+		label: 'ACCIONES',
+	},
+]
+
+export const DATA_OF_RESERVATIONS = [
+	{
+		id: 1,
+		client: 'John Doe',
+		room: 'Habitacion 1',
+		checkIn: '01/01/2021',
+		checkOut: '05/01/2021',
+		aditional_services: 'Servicio de taxi',
+		status: 'ocupado',
+	},
+	{
+		id: 2,
+		client: 'Jane Smith',
+		room: 'Habitacion 2',
+		checkIn: '01/01/2021',
+		checkOut: '05/01/2021',
+		aditional_services: 'Servicio de taxi',
+		status: 'ocupado',
+	},
+	{
+		id: 3,
+		client: 'Michael Johnson',
+		room: 'Habitacion 3',
+		checkIn: '01/01/2021',
+		checkOut: '05/01/2021',
+		aditional_services: 'Servicio de taxi',
+		status: 'pendiente',
+	},
+]
+
+export const URL_API = 'http://localhost:8080/api'

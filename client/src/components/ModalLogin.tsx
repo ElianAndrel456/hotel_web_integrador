@@ -11,8 +11,11 @@ import {
 	ModalHeader,
 } from '@nextui-org/react'
 import { IModalAuthProps } from './component'
+import { useNavigate } from 'react-router-dom'
 
 export const ModalLogin = ({ isOpen, onOpenChange }: IModalAuthProps) => {
+	const navigate = useNavigate()
+
 	return (
 		<Modal
 			isOpen={isOpen}
@@ -71,7 +74,7 @@ export const ModalLogin = ({ isOpen, onOpenChange }: IModalAuthProps) => {
 							</Button>
 							<Button
 								color='primary'
-								onPress={onClose}
+								onPress={() => navigate('/admin')}
 							>
 								Ingresar
 							</Button>

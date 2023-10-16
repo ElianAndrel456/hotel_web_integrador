@@ -10,15 +10,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hotel.server.models.Client;
+import com.hotel.server.models.UserClient;
+import com.hotel.server.responses.RequestBodyClient;
 import com.hotel.server.services.ClienteService;
+import com.hotel.server.services.UserClientService;
 
 @RestController
 public class ClientController {
 
   @Autowired
   private ClienteService clientService;
+  @Autowired
+  private UserClientService userClientService;
 
-  @GetMapping("/api/clientes")
+  @GetMapping("/api/get_all_clients")
   public List<Client> getAllClients() {
     try {
       return clientService.getAll();
@@ -38,12 +43,52 @@ public class ClientController {
     }
   }
 
-  @PostMapping("/api/clientes")
-  public Client saveClient(@RequestBody Client client) {
+  @PostMapping("/api/clientes/create")
+  public Client saveClient(@RequestBody RequestBodyClient requestBodyClient) {
     try {
-      return clientService.save(client);
+      System.out.println(requestBodyClient);
+
+      Client client = new Client();
+      client.setName(requestBodyClient.getName());
+      client.setLastname(requestBodyClient.getLastname());
+      client.setType_of_document(requestBodyClient.getType_of_document());
+      client.setNumber_of_document(requestBodyClient.getNumber_of_document());
+      client.setEmail(requestBodyClient.getEmail());
+      client.setPhone(requestBodyClient.getPhone());
+      Client newClient = clientService.save(client);
+
+      UserClient userClient = new UserClient();
+
+      userClient.setClient(
+          clientService.getById(newClient.getId())
+
+      );
+
+      userClient.setUser(requestBodyClient.getUsername());
+      userClient.setPassword(requestBodyClient.getPassword());
+
+      userClientService.saveUserClient(userClient);
+
+      return newClient;
     } catch (Exception e) {
       System.out.println(e.getMessage());
+      return null;
+    }
+  }
+
+  @PostMapping("/api/clientes/auth")
+  public UserClient authentication(@RequestBody UserClient userClient) {
+    try {
+
+      UserClient findUser = userClientService.getUserClientByUsernameAndPassword(userClient.getUser(),
+          userClient.getPassword());
+
+      if (findUser == null)
+        throw new Exception("Usuario o contraseña incorrectos");
+
+      return findUser;
+    } catch (Exception e) {
+      // TODO: handle exception
       return null;
     }
   }
