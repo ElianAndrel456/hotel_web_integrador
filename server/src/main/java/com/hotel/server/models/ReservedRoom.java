@@ -1,23 +1,26 @@
 package com.hotel.server.models;
 
 import java.util.Date;
+import java.util.List;
 
-import com.hotel.server.Emuns.ReservationState;
+import com.hotel.server.Emuns.ReservationStateE;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Entity
 @Data
-@AllArgsConstructor
 @Table(name = "reserva_habitacion")
 public class ReservedRoom {
   @Id
@@ -35,7 +38,7 @@ public class ReservedRoom {
   private Integer numberPeople;
 
   @Column(name = "estado_reserva", nullable = false)
-  private ReservationState reservationState;
+  private ReservationStateE reservationState;
 
   @Column(name = "total", nullable = false)
   private Double total;
@@ -52,8 +55,8 @@ public class ReservedRoom {
   @JoinColumn(name = "usuario_cliente_id", referencedColumnName = "id")
   private Manager manager;
 
-  @OneToOne
-  @JoinColumn(name = "servicios_adicionales_id", referencedColumnName = "id")
-  private AditionalServices aditionalServices;
+  @ManyToMany(cascade = CascadeType.ALL)
+  @JoinTable(name = "reserva_servicios_adicionales", joinColumns = @JoinColumn(name = "reserva_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "servicios_adicionales_id", referencedColumnName = "id"))
+  private List<AditionalServices> aditionalServices;
 
 }

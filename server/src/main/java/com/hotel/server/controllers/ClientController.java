@@ -16,9 +16,6 @@ import com.hotel.server.responses.RequestBodyClient;
 import com.hotel.server.services.ClienteService;
 import com.hotel.server.services.UserClientService;
 
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletResponse;
-
 @RestController
 @RequestMapping("/api/cliente")
 public class ClientController {
@@ -75,36 +72,6 @@ public class ClientController {
       userClientService.saveUserClient(userClient);
 
       return newClient;
-    } catch (Exception e) {
-      System.out.println(e.getMessage());
-      return null;
-    }
-  }
-
-  @PostMapping("/auth")
-  public UserClient authentication(@RequestBody UserClient userClient, HttpServletResponse response) {
-    try {
-
-      UserClient findUser = userClientService.getUserClientByUsernameAndPassword(userClient.getUser(),
-          userClient.getPassword());
-
-      if (findUser == null)
-        throw new Exception("Usuario o contraseña incorrectos");
-
-      Cookie cookie = new Cookie("h_w_username", findUser.getUser());
-
-      cookie.setMaxAge(3600);
-      cookie.setPath("/");
-      Cookie cookie2 = new Cookie("h_w_id", findUser.getId().toString());
-      cookie2.setMaxAge(3600);
-      cookie2.setPath("/");
-
-      response.addCookie(cookie);
-      response.addCookie(cookie2);
-
-      findUser.setPassword(null);
-
-      return findUser;
     } catch (Exception e) {
       System.out.println(e.getMessage());
       return null;

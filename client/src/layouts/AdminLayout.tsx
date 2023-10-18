@@ -7,10 +7,11 @@ import { ClientsIcon } from '@/icons/ClientsIcon'
 import { BedIcon } from '@/icons/BedIcon'
 import { ReservationIcon } from '@/icons/ReservationIcon'
 import { ServicesAditionalIcon } from '@/icons/ServicesAditionalIcon'
+import { initial_user, useAuthStore } from '@/store/auth.store'
 
 export const AdminLayout = () => {
 	const navigate = useNavigate()
-	const isAuth = true
+	const { isAuth, setUser, changeIsAuth } = useAuthStore()
 
 	useEffect(() => {
 		if (!isAuth) {
@@ -89,7 +90,12 @@ export const AdminLayout = () => {
 									key='exit'
 									className='text-danger'
 									color='danger'
-									onClick={() => navigate('/')}
+									onClick={() => {
+										sessionStorage.removeItem('auth-storage')
+										setUser(initial_user)
+										changeIsAuth(false)
+										navigate('/')
+									}}
 								>
 									Cerrar sesion
 								</ListboxItem>

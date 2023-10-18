@@ -8,22 +8,29 @@ import {
 	Spacer,
 } from '@nextui-org/react'
 import { ICardRoomProps } from './component'
+import { useUIStore } from '@/store/ui.store'
+import { useAuthStore } from '@/store/auth.store'
 
 export const CardRoom = ({
 	title,
-	description,
 	ditails_url,
 	img_url,
 	reservation_url,
 	bg_color,
+	children,
 }: ICardRoomProps) => {
+	const { isAuth } = useAuthStore()
+	const { changeModalLogin } = useUIStore()
+
 	return (
 		<Card
 			className={`${
 				bg_color
 					? 'max-w-[340px] hover:scale-105 ' + bg_color
 					: 'max-w-[340px] hover:scale-105'
-			}`}
+			}
+				h-full
+			`}
 		>
 			<CardHeader>
 				<h4 className='text-center text-2xl block font-semibold'>{title}</h4>
@@ -37,13 +44,16 @@ export const CardRoom = ({
 					/>
 				)}
 				<Spacer y={2} />
-				<p>{description}</p>
+				{children}
 			</CardBody>
 			<CardFooter className='flex justify-end gap-4'>
 				{reservation_url && (
 					<Button
 						color='primary'
 						variant='flat'
+						onClick={() => {
+							if (!isAuth) changeModalLogin(true)
+						}}
 					>
 						Reservar
 					</Button>

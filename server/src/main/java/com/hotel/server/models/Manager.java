@@ -1,6 +1,6 @@
 package com.hotel.server.models;
 
-import com.hotel.server.Emuns.MangerRol;
+import com.hotel.server.Emuns.MangerRolE;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,12 +8,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Entity
 @Data
-@AllArgsConstructor
 @Table(name = "administrador")
 public class Manager {
   @Id
@@ -29,10 +27,10 @@ public class Manager {
   @Column(name = "correo", nullable = false, unique = true)
   private String email;
 
-  @Column(name = "contrasena", nullable = false)
+  @Column(name = "telefono", nullable = false)
   private String phone;
 
   @Column(name = "rol", nullable = false)
-  private MangerRol rol;
+  private MangerRolE rol;
 
 }

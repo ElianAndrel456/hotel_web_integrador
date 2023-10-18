@@ -1,5 +1,5 @@
 package com.hotel.server.Emuns;
 
-public enum ReservationState {
+public enum ReservationStateE {
   PENDIENTE, CANCELADO, CONFIRMADO
 }

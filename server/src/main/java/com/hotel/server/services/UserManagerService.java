@@ -22,6 +22,10 @@ public class UserManagerService {
     return userManagerRepository.findById(id).orElse(null);
   }
 
+  public UserManager getUserManagerByUserAndPassword(String user, String password) {
+    return userManagerRepository.findByUserAndPassword(user, password);
+  }
+
   public UserManager createUserManager(UserManager userManager) {
     return userManagerRepository.save(userManager);
   }

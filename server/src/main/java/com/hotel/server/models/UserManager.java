@@ -21,8 +21,8 @@ public class UserManager {
   @Column(name = "id", nullable = false)
   private Long id;
 
-  @Column(name = "nombre", nullable = false)
-  private String username;
+  @Column(name = "usuario", nullable = false, unique = true)
+  private String user;
 
   @Column(name = "contrasena", nullable = false)
   private String password;

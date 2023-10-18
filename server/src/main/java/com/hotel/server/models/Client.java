@@ -1,6 +1,6 @@
 package com.hotel.server.models;
 
-import com.hotel.server.Emuns.TypeDoc;
+import com.hotel.server.Emuns.TypeDocE;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,7 +20,7 @@ public class Client {
   private Long id;
 
   @Column(name = "tipo_documento", nullable = false)
-  private TypeDoc type_of_document;// --> 0 -> DNI 1 -> PASAPORTE 2-> CARNET DE EXTRANJERIA
+  private TypeDocE type_of_document;// --> 0 -> DNI 1 -> PASAPORTE 2-> CARNET DE EXTRANJERIA
 
   @Column(name = "numero_documento", nullable = false)
   private String number_of_document;

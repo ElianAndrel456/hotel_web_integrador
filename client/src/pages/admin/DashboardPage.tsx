@@ -2,6 +2,7 @@ import { ChartComponent } from '@/components/ChartArea'
 import { ClientsIcon } from '@/icons/ClientsIcon'
 import { ReservationIcon } from '@/icons/ReservationIcon'
 import { ServicesAditionalIcon } from '@/icons/ServicesAditionalIcon'
+import { useClientStore } from '@/store/client.store'
 import {
 	Button,
 	Card,
@@ -29,6 +30,7 @@ const initialData = [
 
 export const DashboardPage = () => {
 	const navigate = useNavigate()
+	const { clients } = useClientStore()
 
 	return (
 		<>
@@ -49,7 +51,9 @@ export const DashboardPage = () => {
 					<CardHeader className='text-4xl'>Clientes</CardHeader>
 					<CardBody className='gap-3'>
 						<ClientsIcon className='w-20 h-20 mx-auto' />
-						<span className='text-3xl font-bold text-primary mx-auto'>20</span>
+						<span className='text-3xl font-bold text-primary mx-auto'>
+							{clients.length || 0}
+						</span>
 						<span className='text-sm font-thin text-gray-400 mx-auto'>
 							N° de Clientes Registrados
 						</span>

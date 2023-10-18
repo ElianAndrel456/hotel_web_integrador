@@ -11,8 +11,12 @@ import {
 export const useConstants = () => {
 	const TYPE_OF_DOCUMENTS = useMemo(() => {
 		return [
-			{ value: 'dni', label: 'DNI' },
-			{ value: 'passport', label: 'Pasaporte' },
+			{ value: '0', label: 'DNI' },
+			{ value: '1', label: 'Pasaporte' },
+			{
+				value: '2',
+				label: 'Carnet de extranjería',
+			},
 		]
 	}, [])
 

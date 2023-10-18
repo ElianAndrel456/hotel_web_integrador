@@ -46,7 +46,7 @@ public class RolMiddleware implements HandlerInterceptor {
         throw new Exception("error no se encontro el usuario");
       }
 
-      if (!findManager.getUsername().equals(username)) {
+      if (!findManager.getUser().equals(username)) {
         System.out.println("RolMiddleware: false");
         throw new Exception("error no se encontro coincidencia de usuario");
       }

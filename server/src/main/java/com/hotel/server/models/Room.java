@@ -1,14 +1,13 @@
 package com.hotel.server.models;
 
-import com.hotel.server.Emuns.RoomState;
+import com.hotel.server.Emuns.CategoryRoomE;
+import com.hotel.server.Emuns.RoomStateE;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -25,10 +24,9 @@ public class Room {
   private int floor;
 
   @Column(name = "estado", nullable = false)
-  private RoomState state;
+  private RoomStateE state;
 
-  @ManyToOne
-  @JoinColumn(name = "categoria_habitacion_id", referencedColumnName = "id")
-  private CategoryRoom categoryRoom;
+  @Column(name = "categoria")
+  private CategoryRoomE categoryRoom;
 
 }

@@ -26,4 +26,12 @@ public class ReservedRoomService {
     return reservedRoomRepository.save(reservedRoom);
   }
 
+  public void deleteReservedRoom(Long id) {
+    reservedRoomRepository.deleteById(id);
+  }
+
+  public ReservedRoom UpdateReservedRoom(ReservedRoom reservedRoom) {
+    return reservedRoomRepository.save(reservedRoom);
+  }
+
 }

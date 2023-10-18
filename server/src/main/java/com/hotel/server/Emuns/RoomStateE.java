@@ -1,5 +1,5 @@
 package com.hotel.server.Emuns;
 
-public enum RoomState {
+public enum RoomStateE {
   DISPONIBLE, OCUPADO, MANTENIMIENTO
 }

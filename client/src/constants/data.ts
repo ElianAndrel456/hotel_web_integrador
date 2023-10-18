@@ -393,4 +393,4 @@ export const DATA_OF_RESERVATIONS = [
 	},
 ]
 
-export const URL_API = 'http://localhost:8080/api'
+export const URL_API = 'http://localhost:8080'

@@ -16,12 +16,15 @@ public class AppConfig implements WebMvcConfigurer {
 
   @Override
   public void addInterceptors(org.springframework.web.servlet.config.annotation.InterceptorRegistry registry) {
-    registry.addInterceptor(rolMiddleware).addPathPatterns("/api/get_all_clients");
+    /*
+     * registry.addInterceptor(rolMiddleware).addPathPatterns("/api/get_all_clients"
+     * );
+     */
   }
 
   @Override
   public void addCorsMappings(CorsRegistry registry) {
     WebMvcConfigurer.super.addCorsMappings(registry);
-    registry.addMapping("/**").allowedMethods("*").allowedOrigins("*");
+    registry.addMapping("/**").allowedMethods("*").allowedOrigins("http://localhost:5173").allowCredentials(true);
   }
 }

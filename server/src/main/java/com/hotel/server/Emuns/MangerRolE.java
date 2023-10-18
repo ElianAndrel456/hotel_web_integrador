@@ -1,5 +1,5 @@
 package com.hotel.server.Emuns;
 
-public enum MangerRol {
+public enum MangerRolE {
   ADMIN, RECEPCIONISTA
 }
