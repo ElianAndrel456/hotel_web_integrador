@@ -4,8 +4,8 @@ import { useConstants } from '../constants'
 export const Footer = () => {
 	const { ADDRESS_INFORMATION, SOCIALS } = useConstants()
 	return (
-		<footer className='bg-black flex flex-col gap-10 text-white pt-12 pb-12 px-[300px]'>
-			<div className='grid grid-cols-3  '>
+		<footer className='bg-black flex flex-col gap-10 text-white pt-12 pb-12 px-12 lg:px-[300px]'>
+			<div className='grid grid-cols-1 lg:grid-cols-3 gap-4  '>
 				<div className='flex flex-col gap-2'>
 					<h6 className='text-sm font-bold'>DIRECCION:</h6>
 

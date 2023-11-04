@@ -15,6 +15,7 @@ import com.hotel.server.services.UserManagerService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 
+@SuppressWarnings("unchecked")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {

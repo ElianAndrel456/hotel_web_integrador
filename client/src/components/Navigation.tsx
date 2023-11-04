@@ -14,17 +14,41 @@ import {
 	NavbarBrand,
 	NavbarContent,
 	NavbarItem,
+	NavbarMenu,
+	NavbarMenuItem,
+	NavbarMenuToggle,
 } from '@nextui-org/react'
 import { useNavigate } from 'react-router-dom'
-
+import { useState } from 'react'
 export const Navigation = () => {
+	const [isMenuOpen, setIsMenuOpen] = useState(false)
 	const { isAuth, user, setUser, changeIsAuth } = useAuthStore()
 	const { changeModalRegister, changeModalLogin } = useUIStore()
 	const navigation = useNavigate()
 	const path = window.location.pathname
 
 	return (
-		<Navbar shouldHideOnScroll>
+		<Navbar
+			shouldHideOnScroll
+			isMenuOpen={isMenuOpen}
+			onMenuOpenChange={setIsMenuOpen}
+		>
+			<NavbarContent
+				className='sm:hidden'
+				justify='start'
+			>
+				<NavbarMenuToggle
+					aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+				/>
+			</NavbarContent>
+			<NavbarContent
+				className='sm:hidden pr-3'
+				justify='center'
+			>
+				<NavbarBrand>
+					<p className='font-bold text-inherit'>ACME</p>
+				</NavbarBrand>
+			</NavbarContent>
 			<NavbarBrand>
 				<Image
 					src='/icon_hotel.png'
@@ -33,6 +57,7 @@ export const Navigation = () => {
 				/>
 				<p className='font-bold text-inherit'>HOTEL</p>
 			</NavbarBrand>
+
 			<NavbarContent
 				className='hidden sm:flex gap-4'
 				justify='center'
@@ -84,7 +109,6 @@ export const Navigation = () => {
 				{isAuth ? (
 					<Dropdown>
 						<DropdownTrigger>
-							{/* 			<Tooltip content={user.name}> */}
 							<Avatar
 								as={'button'}
 								isBordered
@@ -92,7 +116,6 @@ export const Navigation = () => {
 								name={user.name}
 								className='cursor-pointer'
 							/>
-							{/* 	</Tooltip> */}
 						</DropdownTrigger>
 						<DropdownMenu aria-label='Profile Actions'>
 							<DropdownItem
@@ -112,7 +135,7 @@ export const Navigation = () => {
 					</Dropdown>
 				) : (
 					<>
-						<NavbarItem className='hidden lg:flex'>
+						<NavbarItem>
 							<Link onClick={() => changeModalLogin(true)}>Iniciar Sesion</Link>
 						</NavbarItem>
 						<Divider
@@ -123,6 +146,7 @@ export const Navigation = () => {
 							<Button
 								color='primary'
 								variant='flat'
+								className='hidden lg:flex'
 								onClick={() => changeModalRegister(true)}
 							>
 								Registrarse
@@ -131,6 +155,18 @@ export const Navigation = () => {
 					</>
 				)}
 			</NavbarContent>
+
+			<NavbarMenu>
+				<NavbarMenuItem>
+					<Link
+						className='w-full'
+						size='lg'
+						color='secondary'
+					>
+						direccion
+					</Link>
+				</NavbarMenuItem>
+			</NavbarMenu>
 		</Navbar>
 	)
 }

@@ -1,5 +1,7 @@
 package com.hotel.server.models;
 
+import java.util.UUID;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,9 +18,9 @@ import lombok.Data;
 @Table(name = "usuario_cliente")
 public class UserClient {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.UUID)
   @Column(name = "id", nullable = false)
-  private Long id;
+  private UUID id;
   @Column(name = "usuario", nullable = false, unique = true)
   private String user;
   @Column(name = "contrasena", nullable = false)

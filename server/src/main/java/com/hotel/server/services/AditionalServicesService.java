@@ -1,6 +1,7 @@
 package com.hotel.server.services;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ public class AditionalServicesService {
     return aditionalServicesRepository.findAll();
   }
 
-  public AditionalServices getAditionalServicesById(Long id) {
+  public AditionalServices getAditionalServicesById(UUID id) {
     return aditionalServicesRepository.findById(id).orElse(null);
   }
 
@@ -26,15 +27,17 @@ public class AditionalServicesService {
     return aditionalServicesRepository.save(aditionalServices);
   }
 
-  public AditionalServices updateAditionalServices(AditionalServices aditionalServices) {
-    AditionalServices existingAditionalServices = aditionalServicesRepository.findById(aditionalServices.getId())
+  public AditionalServices updateAditionalServices(UUID id, AditionalServices aditionalServices) {
+    AditionalServices existingAditionalServices = aditionalServicesRepository.findById(id)
         .orElse(null);
+    existingAditionalServices.setName(aditionalServices.getName());
     existingAditionalServices.setDescription(aditionalServices.getDescription());
     existingAditionalServices.setPrice(aditionalServices.getPrice());
     return aditionalServicesRepository.save(existingAditionalServices);
+
   }
 
-  public void deleteAditionalServices(Long id) {
+  public void deleteAditionalServices(UUID id) {
     aditionalServicesRepository.deleteById(id);
   }
 

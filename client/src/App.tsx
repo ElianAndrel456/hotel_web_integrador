@@ -1,6 +1,7 @@
 import { RouterProvider } from 'react-router-dom'
 import { router } from './routes'
 import { NextUIProvider } from '@nextui-org/react'
+import 'react-toastify/dist/ReactToastify.css'
 
 const App = () => {
 	return (

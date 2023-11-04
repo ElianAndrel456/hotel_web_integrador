@@ -2,7 +2,9 @@ import { ChartComponent } from '@/components/ChartArea'
 import { ClientsIcon } from '@/icons/ClientsIcon'
 import { ReservationIcon } from '@/icons/ReservationIcon'
 import { ServicesAditionalIcon } from '@/icons/ServicesAditionalIcon'
+import { useServiceStore } from '@/store/aditionalService.store'
 import { useClientStore } from '@/store/client.store'
+import { useRoomStore } from '@/store/room.store'
 import {
 	Button,
 	Card,
@@ -14,7 +16,6 @@ import {
 } from '@nextui-org/react'
 import { BedIcon } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
-
 const initialData = [
 	{ time: '2018-12-22', value: 32.51 },
 	{ time: '2018-12-23', value: 31.11 },
@@ -31,6 +32,8 @@ const initialData = [
 export const DashboardPage = () => {
 	const navigate = useNavigate()
 	const { clients } = useClientStore()
+	const { rooms } = useRoomStore()
+	const { services } = useServiceStore()
 
 	return (
 		<>
@@ -73,7 +76,9 @@ export const DashboardPage = () => {
 					<CardHeader className='text-4xl'>Reservas</CardHeader>
 					<CardBody className='gap-3'>
 						<ReservationIcon className='w-20 h-20 mx-auto' />
-						<span className='text-3xl font-bold text-primary mx-auto'>12</span>
+						<span className='text-3xl font-bold text-primary mx-auto'>
+							{services.length || 0}
+						</span>
 						<span className='text-sm font-thin text-gray-400 mx-auto'>
 							N° de reservaciones
 						</span>
@@ -93,7 +98,9 @@ export const DashboardPage = () => {
 					<CardHeader className='text-4xl'>Habitaciones</CardHeader>
 					<CardBody className='gap-3'>
 						<BedIcon className='w-20 h-20 mx-auto' />
-						<span className='text-3xl font-bold text-primary mx-auto'>16</span>
+						<span className='text-3xl font-bold text-primary mx-auto'>
+							{rooms.length || 0}
+						</span>
 						<span className='text-sm font-thin text-gray-400 mx-auto'>
 							N° de habitaciones
 						</span>
@@ -113,7 +120,9 @@ export const DashboardPage = () => {
 					<CardHeader className='text-4xl'>Servicios</CardHeader>
 					<CardBody className='gap-3'>
 						<ServicesAditionalIcon className='w-20 h-20 mx-auto' />
-						<span className='text-3xl font-bold text-primary mx-auto'>20</span>
+						<span className='text-3xl font-bold text-primary mx-auto'>
+							{services.length || 0}
+						</span>
 						<span className='text-sm font-thin text-gray-400 mx-auto'>
 							Administra tus servicios adicionales
 						</span>

@@ -1,5 +1,7 @@
 package com.hotel.server.models;
 
+import java.util.UUID;
+
 import com.hotel.server.Emuns.TypeDocE;
 
 import jakarta.persistence.Column;
@@ -15,9 +17,9 @@ import lombok.Data;
 @Table(name = "cliente")
 public class Client {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.UUID)
   @Column(name = "id", nullable = false)
-  private Long id;
+  private UUID id;
 
   @Column(name = "tipo_documento", nullable = false)
   private TypeDocE type_of_document;// --> 0 -> DNI 1 -> PASAPORTE 2-> CARNET DE EXTRANJERIA

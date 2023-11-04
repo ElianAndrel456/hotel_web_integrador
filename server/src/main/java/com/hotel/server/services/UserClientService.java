@@ -1,6 +1,7 @@
 package com.hotel.server.services;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ public class UserClientService {
     return userClientRepository.findAll();
   }
 
-  public UserClient getUserClientById(Long id) {
+  public UserClient getUserClientById(UUID id) {
     return userClientRepository.findById(id).orElse(null);
   }
 

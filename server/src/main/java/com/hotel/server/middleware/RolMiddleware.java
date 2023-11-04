@@ -1,5 +1,7 @@
 package com.hotel.server.middleware;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -25,18 +27,20 @@ public class RolMiddleware implements HandlerInterceptor {
       Cookie[] cookies = request.getCookies();
       /* Search user by id, username */
       String username = "";
-      Long id = 0L;
+      UUID id = null;
       for (Cookie cookie : cookies) {
         if (cookie.getName().equals("h_w_id")) {
-          id = Long.parseLong(cookie.getValue());
-
+          id = UUID.fromString(cookie.getValue());
         }
         if (cookie.getName().equals("h_w_username")) {
           username = cookie.getValue();
         }
       }
 
-      System.out.println("RolMiddleware: " + username + " " + id);
+      if (id == null) {
+        System.out.println("RolMiddleware: false");
+        throw new Exception("error no se encontro el usuario");
+      }
 
       UserManager findManager = userManagerService.getUserManagerById(id);
 

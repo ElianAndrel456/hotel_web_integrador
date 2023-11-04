@@ -1,6 +1,7 @@
 package com.hotel.server.services;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ public class UserManagerService {
     return userManagerRepository.findAll();
   }
 
-  public UserManager getUserManagerById(Long id) {
+  public UserManager getUserManagerById(UUID id) {
     return userManagerRepository.findById(id).orElse(null);
   }
 

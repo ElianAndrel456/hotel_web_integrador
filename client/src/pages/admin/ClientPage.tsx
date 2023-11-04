@@ -1,39 +1,26 @@
 import { COLUMNS_CLIENT } from '@/constants/data'
-import { PassportIcon } from '@/icons'
-import { VerticalDotsIcon } from '@/icons/VerticalDotsIcon'
-import { getAllClientes } from '@/services/clients.service'
-import {
-	Button,
-	Dropdown,
-	DropdownItem,
-	DropdownMenu,
-	DropdownTrigger,
-	Input,
-	Modal,
-	ModalBody,
-	ModalContent,
-	ModalFooter,
-	ModalHeader,
-	Pagination,
-	Select,
-	SelectItem,
-	Spacer,
-	Table,
-	TableBody,
-	TableCell,
-	TableColumn,
-	TableHeader,
-	TableRow,
-} from '@nextui-org/react'
-import { PhoneIcon, SearchIcon, UserIcon } from 'lucide-react'
+import { Select, SelectItem, Spacer } from '@nextui-org/react'
 import React from 'react'
-import { IoAddOutline } from 'react-icons/io5'
 import { useConstants } from '@/constants/index'
 import { useClientStore } from '@/store/client.store'
+import { useForm, useModal } from '@/hooks'
+import {
+	ActionDropDown,
+	ActionModal,
+	InputForm,
+	TableData,
+	TopContent,
+} from '@/components'
+import { toast } from 'react-toastify'
+import {
+	createClienteService,
+	deleteClienteService,
+	updateClienteService,
+} from '@/services/clients.service'
 
 export interface IClients {
-	id: number
-	dni: string
+	id: string
+	number_of_document: string
 	name: string
 	type_of_document: string
 	phone: string
@@ -41,97 +28,121 @@ export interface IClients {
 }
 
 export const ClientPage = () => {
-	const { clients, setClients } = useClientStore()
-	const [filter, setFilter] = React.useState<string>('')
-	const [isOpenModalDelete, setIsOpenModalDelete] =
-		React.useState<boolean>(false)
-	const [isOpenModalEdit, setIsOpenModalEdit] = React.useState<boolean>(false)
-	const [isSave, setIsSave] = React.useState<boolean>(true)
-
+	const { clients, addClientStore, deleteClientStore, updateClientStore } =
+		useClientStore()
+	const { handleModal, isSavingData, openModal, setIsSavingData } = useModal()
+	const { handleChange, resetInput, values } = useForm()
+	const [columnKeySelected, setColumnKeySelected] = React.useState<
+		null | string
+	>(null)
 	const { TYPE_OF_DOCUMENTS } = useConstants()
 
-	React.useEffect(() => {
-		const fetchClients = async () => {
-			const data = await getAllClientes()
-			console.log(data)
-			const contractData = data.map(
-				(d: {
-					number_of_document: string
-					name: string
-					lastname: string
-					type_of_document: string
-					phone: string
-					email: string
-					id: number
-				}) => ({
-					dni: d.number_of_document,
-					name: d.name + ' ' + d.lastname,
-					type_of_document: d.type_of_document,
-					phone: d.phone,
-					email: d.email,
-					id: d.id,
-				})
-			)
-			setClients(contractData)
-		}
-		fetchClients()
-	}, [])
+	const onOpenModalCreate = () => {
+		resetInput()
+		handleModal('create', true)
+		setColumnKeySelected(null)
+		setIsSavingData(true)
+	}
+	const onOpenModalEdit = React.useCallback(
+		(id: string) => {
+			setIsSavingData(false)
+			setColumnKeySelected(id)
+			const client = clients.find((c) => c.id === id)
+			console.log(client)
+			if (!client) return
+			values.name = client.name.split(' ')[0]
+			values.lastName = client.name.split(' ')[1]
+			values.email = client.email
+			values.phone = client.phone
+			values.type_of_document = client.type_of_document
+			values.number_of_document = client.number_of_document
 
-	const filteredClients = React.useMemo(() => {
-		if (filter) {
-			return clients.filter((client) =>
-				client.name.toLowerCase().includes(filter.toLowerCase())
-			)
-		}
-		return clients
-	}, [filter, clients])
-
-	const TopContent = React.useMemo(
-		() => (
-			<div className='flex justify-between'>
-				<Input
-					isClearable
-					placeholder='Buscar cliente por nombre'
-					startContent={<SearchIcon />}
-					type='text'
-					className='w-[250px]'
-					value={filter}
-					onChange={(e) => setFilter(e.target.value)}
-				/>
-				<Button
-					color='primary'
-					variant='flat'
-					startContent={<IoAddOutline />}
-					onClick={() => {
-						setIsSave(true)
-						setIsOpenModalEdit(true)
-					}}
-				>
-					Agregar cliente
-				</Button>
-			</div>
-		),
-		[filter]
+			handleModal('create', true)
+		},
+		[setIsSavingData, clients, values, handleModal]
 	)
 
-	const bottomContent = React.useMemo(
-		() => (
-			<div className='flex justify-center'>
-				<Pagination
-					total={100}
-					page={1}
-					color='default'
-					className='gap-2'
-					showControls
-					variant='light'
-					radius='full'
-					initialPage={1}
-					onChange={(e) => console.log(e)}
-				/>
-			</div>
-		),
-		[]
+	const onOpenModalDelete = React.useCallback(
+		(id: string) => {
+			handleModal('delete', true)
+			setColumnKeySelected(id)
+		},
+		[handleModal]
 	)
+
+	const onCreate = async () => {
+		try {
+			const client = {
+				name: values.name,
+				lastname: values.lastName,
+				email: values.email,
+				phone: values.phone,
+				type_of_document: values.type_of_document,
+				number_of_document: values.number_of_document,
+				username: '',
+				password: '',
+			}
+			const res = (await createClienteService(client)) as IClients
+			console.log(res)
+
+			addClientStore(res)
+			toast('Se creo el servicio adicional correctamente')
+			handleModal('create', false)
+		} catch (error) {
+			toast('Ocurrio un error al crear el cliente', {
+				type: 'error',
+			})
+		}
+	}
+	const onEdit = async () => {
+		try {
+			if (!columnKeySelected) return
+			const update_room = {
+				id: columnKeySelected,
+				name: values.name,
+				lastname: values.lastName,
+				email: values.email,
+				phone: values.phone,
+				type_of_document: values.type_of_document,
+				number_of_document: values.number_of_document,
+			}
+			const updateClient = await updateClienteService(update_room)
+
+			updateClientStore({
+				email: updateClient.email,
+				id: updateClient.id,
+				name: updateClient.name + ' ' + updateClient.lastname,
+				number_of_document: updateClient.number_of_document,
+				phone: updateClient.phone,
+				type_of_document: updateClient.type_of_document,
+			})
+
+			toast('Se edito el servicio adicional correctamente')
+
+			handleModal('create', false)
+		} catch (error) {
+			toast('Ocurrio un error al editar el servicio adicional', {
+				type: 'error',
+			})
+			console.log(error)
+		}
+	}
+
+	const onDelete = () => {
+		try {
+			if (!columnKeySelected) return
+			deleteClienteService(columnKeySelected)
+			deleteClientStore(columnKeySelected)
+			setColumnKeySelected(null)
+			toast('Se elimino el servicio adicional correctamente')
+			handleModal('delete', false)
+		} catch (error) {
+			toast('Ocurrio un error al eliminar el servicio adicional', {
+				type: 'error',
+			})
+			console.log(error)
+		}
+	}
 
 	const renderCell = React.useCallback(
 		(item: IClients, columnKey: React.Key) => {
@@ -140,7 +151,7 @@ export const ClientPage = () => {
 			switch (columnKey) {
 				case 'name':
 					return <p>{cellValue}</p>
-				case 'dni':
+				case 'number_of_document':
 					return <p>{cellValue}</p>
 				case 'type_of_document':
 					return <p>{cellValue}</p>
@@ -151,34 +162,11 @@ export const ClientPage = () => {
 				case 'actions':
 					return (
 						<div className='relative flex justify-end items-center gap-2'>
-							<Dropdown className='bg-background border-1 border-default-200'>
-								<DropdownTrigger>
-									<Button
-										isIconOnly
-										radius='full'
-										size='sm'
-										variant='light'
-									>
-										<VerticalDotsIcon />
-									</Button>
-								</DropdownTrigger>
-								<DropdownMenu aria-label='Static Actions'>
-									<DropdownItem
-										onClick={() => {
-											setIsSave(false)
-											setIsOpenModalEdit(true)
-										}}
-									>
-										Editar
-									</DropdownItem>
-									<DropdownItem
-										onClick={() => setIsOpenModalDelete(true)}
-										color='danger'
-									>
-										Eliminar
-									</DropdownItem>
-								</DropdownMenu>
-							</Dropdown>
+							<ActionDropDown
+								ariaLabel='Dropdown of services actions'
+								actionEdit={() => onOpenModalEdit(item.id)}
+								actionDelete={() => onOpenModalDelete(item.id)}
+							/>
 						</div>
 					)
 
@@ -186,172 +174,125 @@ export const ClientPage = () => {
 					return cellValue
 			}
 		},
-		[]
+		[onOpenModalDelete, onOpenModalEdit]
 	)
 
 	return (
 		<>
 			<h1 className='text-5xl font-bold'>Listado de Clientes</h1>
 			<Spacer y={8} />
-			<Table
-				aria-label='Table of clients'
-				topContent={TopContent}
-				bottomContent={bottomContent}
-				bottomContentPlacement='outside'
-				removeWrapper
-			>
-				<TableHeader columns={COLUMNS_CLIENT}>
-					{(column) => (
-						<TableColumn key={column.key}>{column.label}</TableColumn>
-					)}
-				</TableHeader>
-				<TableBody
-					emptyContent={'No hay ningun cliente'}
-					items={filteredClients || clients}
-				>
-					{(item) => (
-						<TableRow key={item.dni}>
-							{(columnKey) => (
-								<TableCell>{renderCell(item, columnKey)}</TableCell>
-							)}
-						</TableRow>
-					)}
-				</TableBody>
-			</Table>
+			<TableData
+				ariaLabel='Table of clients'
+				topContent={
+					<TopContent
+						filter={values.filter}
+						handleChange={handleChange}
+						onOpenModalCreate={onOpenModalCreate}
+					/>
+				}
+				columns={COLUMNS_CLIENT}
+				items={clients}
+				renderCell={renderCell}
+			/>
 
-			<Modal
-				isOpen={isOpenModalEdit}
-				onOpenChange={() => setIsOpenModalEdit(!isOpenModalEdit)}
-				placement='top-center'
+			<ActionModal
+				title={
+					isSavingData
+						? 'Agregar un servicio adicional'
+						: 'Editar un servicio adicional'
+				}
+				openModal={openModal.create}
+				setOpenModal={() => {
+					handleModal('create', false)
+				}}
+				button={{
+					color: 'primary',
+					onPress: () => {
+						isSavingData ? onCreate() : onEdit()
+					},
+					text: isSavingData ? 'Guardar' : 'Editar',
+				}}
 			>
-				<ModalContent>
-					{(onClose) => (
-						<>
-							<ModalHeader>
-								{isSave ? 'Agregar Cliente' : 'Editar Cliente'}
-							</ModalHeader>
-							<ModalBody>
-								<Input
-									isRequired
-									autoFocus
-									endContent={
-										<UserIcon className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
-									}
-									label='Nombre'
-									placeholder='Ingrese su nombre'
-									variant='bordered'
-								/>
-								<Input
-									isRequired
-									autoFocus
-									endContent={
-										<UserIcon className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
-									}
-									label='Apellido'
-									placeholder='Ingrese su apellido'
-									variant='bordered'
-								/>
-								<Select
-									isRequired
-									label='Seleccione su tipo de documento'
-									className='max-w-xs'
-								>
-									{TYPE_OF_DOCUMENTS.map((t) => (
-										<SelectItem
-											key={t.value}
-											value={t.value}
-										>
-											{t.label}
-										</SelectItem>
-									))}
-								</Select>
-								<Input
-									isRequired
-									autoFocus
-									endContent={
-										<PassportIcon className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
-									}
-									label='N° de Documento'
-									placeholder='Ingrese su numero de documento'
-									variant='bordered'
-								/>
-								<Input
-									isRequired
-									autoFocus
-									endContent={
-										<PhoneIcon className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
-									}
-									label='Celular'
-									placeholder='Ingrese su numero de celular'
-									variant='bordered'
-									type='number'
-									minLength={9}
-								/>
-								<Input
-									isRequired
-									autoFocus
-									endContent={
-										<UserIcon className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
-									}
-									label='Email'
-									placeholder='Ingrese su correo electronico'
-									variant='bordered'
-								/>
-							</ModalBody>
-							<ModalFooter>
-								<Button
-									color='warning'
-									variant='flat'
-									onPress={onClose}
-								>
-									Cerrar
-								</Button>
-								<Button
-									color='primary'
-									onPress={() => {}}
-								>
-									{isSave ? 'Guardar' : 'Editar'}
-								</Button>
-							</ModalFooter>
-						</>
-					)}
-				</ModalContent>
-			</Modal>
+				<>
+					<InputForm
+						label='Nombre'
+						autoFocus
+						name='name'
+						value={values.name}
+						handleChange={handleChange}
+					/>
+					<InputForm
+						label='Apellido'
+						name='lastName'
+						value={values.lastName}
+						handleChange={handleChange}
+					/>
 
-			{/* ELIMINAR MODAL */}
-			<Modal
-				isOpen={isOpenModalDelete}
-				onOpenChange={() => setIsOpenModalDelete(!isOpenModalDelete)}
-				placement='top-center'
+					<Select
+						isRequired
+						label='Seleccione su tipo de documento'
+						className='max-w-xs'
+						name='type_of_document'
+						value={values.type_of_document}
+						onChange={handleChange}
+						defaultSelectedKeys={
+							values.type_of_document && values.type_of_document === 'DNI'
+								? '0'
+								: values.type_of_document === 'PASAPORTE'
+								? '1'
+								: values.type_of_document === 'CARNET_EXTRANJERIA'
+								? '2'
+								: ''
+						}
+					>
+						{TYPE_OF_DOCUMENTS.map((t) => (
+							<SelectItem
+								key={t.value}
+								value={t.value}
+							>
+								{t.label}
+							</SelectItem>
+						))}
+					</Select>
+					<InputForm
+						label='N° de Documento'
+						name='number_of_document'
+						value={values.number_of_document}
+						handleChange={handleChange}
+					/>
+					<InputForm
+						label='Celular'
+						name='phone'
+						value={values.phone}
+						handleChange={handleChange}
+						type='tel'
+					/>
+					<InputForm
+						label='Email'
+						name='email'
+						value={values.email}
+						handleChange={handleChange}
+						type='email'
+					/>
+				</>
+			</ActionModal>
+
+			<ActionModal
+				title={'Eliminar un cliente'}
+				openModal={openModal.delete}
+				setOpenModal={() => {
+					handleModal('delete', false)
+				}}
+				button={{
+					color: 'danger',
+					onPress: () => {
+						onDelete()
+					},
+					text: 'Eliminar',
+				}}
 			>
-				<ModalContent>
-					{(onClose) => (
-						<>
-							<ModalHeader>¿Estas segurdo de eliminar al cliente?</ModalHeader>
-							<ModalBody>
-								<p className='text-gray-400 text-sm font-thin'>
-									Se eliminara al cliente permantemente de la base de datos
-								</p>
-							</ModalBody>
-							<ModalFooter>
-								<Button
-									color='warning'
-									variant='flat'
-									onPress={onClose}
-								>
-									Cerrar
-								</Button>
-								<Button
-									color='danger'
-									onPress={() => {}}
-								>
-									Eliminar
-								</Button>
-							</ModalFooter>
-						</>
-					)}
-				</ModalContent>
-			</Modal>
+				<p>¿Esta seguro que desea eliminar el cliente?</p>
+			</ActionModal>
 		</>
 	)
 }

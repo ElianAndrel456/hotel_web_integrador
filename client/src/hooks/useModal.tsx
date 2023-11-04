@@ -1,23 +1,33 @@
-import { useDisclosure } from '@nextui-org/react'
+import { useState } from 'react'
+
+interface IUseModal {
+	modal: {
+		create: boolean
+		delete: boolean
+		edit: boolean
+	}
+}
 
 export const useModal = () => {
-	const {
-		isOpen: isOpenLogin,
-		onOpen: onOpenLogin,
-		onOpenChange: onOpenChangeLogin,
-	} = useDisclosure()
-	const {
-		isOpen: isOpenRegister,
-		onOpen: onOpenRegister,
-		onOpenChange: onOpenChangeRegister,
-	} = useDisclosure()
+	const [openModal, setOpenModal] = useState<IUseModal['modal']>({
+		create: false,
+		delete: false,
+		edit: false,
+	})
+	const [isSavingData, setIsSavingData] = useState<boolean>(true)
+
+	const handleModal = (modal: 'create' | 'delete' | 'edit', value: boolean) => {
+		setOpenModal((prev) => ({
+			...prev,
+			[modal]: value,
+		}))
+	}
 
 	return {
-		isOpenLogin,
-		onOpenLogin,
-		onOpenChangeLogin,
-		isOpenRegister,
-		onOpenRegister,
-		onOpenChangeRegister,
+		openModal,
+		setOpenModal,
+		handleModal,
+		isSavingData,
+		setIsSavingData,
 	}
 }

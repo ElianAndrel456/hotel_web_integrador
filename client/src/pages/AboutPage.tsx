@@ -6,8 +6,8 @@ const AboutPage = () => {
 		<main>
 			<LargeBanner title='Sobre Nosotros' />
 			<Spacer y={10} />
-			<section className='grid grid-cols-4 px-[300px] gap-10 relative'>
-				<div className='col-span-3'>
+			<section className='grid grid-cols-4 px-14 lg:px-[100px] xl:px-[300px] gap-10 relative'>
+				<div className='col-span-4 lg:col-span-3'>
 					<Image
 						src='https://waynapicchuhotel.com.pe/wp-content/uploads/2021/01/Mesa-de-trabajo-2-4.png'
 						alt='Macchu picchu'
@@ -97,7 +97,7 @@ const AboutPage = () => {
 						</article>
 					</section>
 				</div>
-				<div className='col-span-1 relative -top-32 bg-white px-2 py-8 rounded-md'>
+				<div className='col-span-4 lg:col-span-1 relative lg:-top-32 bg-white px-2 py-8 rounded-md'>
 					<article>
 						<h4 className='text-3xl text-[#F0A000] font-semibold'>
 							Nuestras Cualidades

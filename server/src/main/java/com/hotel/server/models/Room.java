@@ -1,5 +1,7 @@
 package com.hotel.server.models;
 
+import java.util.UUID;
+
 import com.hotel.server.Emuns.CategoryRoomE;
 import com.hotel.server.Emuns.RoomStateE;
 
@@ -16,17 +18,17 @@ import lombok.Data;
 @Table(name = "habitacion")
 public class Room {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.UUID)
   @Column(name = "id", nullable = false)
-  private Long id;
+  private UUID id;
 
   @Column(name = "piso", nullable = false)
   private int floor;
 
   @Column(name = "estado", nullable = false)
-  private RoomStateE state;
+  private RoomStateE state; // --> DISPONIBLE, OCUPADO, MANTENIMIENTO
 
   @Column(name = "categoria")
-  private CategoryRoomE categoryRoom;
+  private CategoryRoomE categoryRoom; // --> PLATA, ORO, DIAMANTE
 
 }

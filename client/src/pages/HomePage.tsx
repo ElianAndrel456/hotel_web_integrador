@@ -5,11 +5,13 @@ import { ArrowDownCircleIcon } from '@/icons'
 import { motion } from 'framer-motion'
 import { useAuthStore } from '@/store/auth.store'
 import { useUIStore } from '@/store/ui.store'
+import { useConstants } from '@/constants'
 
 const HomePage = () => {
 	const { isAuth } = useAuthStore()
 	const { changeModalLogin } = useUIStore()
 	const { scroll } = useScrollY()
+	const { CARDS_INFORMATION } = useConstants()
 
 	return (
 		<>
@@ -18,7 +20,7 @@ const HomePage = () => {
 					<motion.h1
 						animate={{ x: 0, opacity: 1 }}
 						initial={{ x: -100, opacity: 0 }}
-						className='text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-[white] to-[#F0A000]'
+						className='text-4xl text-center lg:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-[white] to-[#F0A000]'
 					>
 						<span>Hotel </span>
 						Waynapicchu
@@ -28,7 +30,7 @@ const HomePage = () => {
 						animate={{ x: 0, opacity: 1 }}
 						initial={{ x: -100, opacity: 0 }}
 						transition={{ delay: 0.2 }}
-						className=' font-semibold text-gray-400 max-w-lg text-center'
+						className=' text-sm lg:text-medium font-semibold text-gray-400 max-w-lg text-center'
 					>
 						Un hotel acogedor perfectamente diseñado para convertir tus gratos
 						momentos en una experiencia mágica e inolvidable.
@@ -42,7 +44,7 @@ const HomePage = () => {
 						>
 							<Button
 								variant='bordered'
-								className='text-white tracking-widest uppercase underline-offset-4 underline text-2xl'
+								className=' text-white tracking-widest uppercase underline-offset-4 underline text-sm lg:text-2xl'
 								onClick={() => {
 									if (!isAuth) changeModalLogin(true)
 								}}
@@ -62,8 +64,8 @@ const HomePage = () => {
 						)}
 					</a>
 				</header>
-				<section className='py-16 px-[300px]'>
-					<div className='w-full grid gap-8 grid-cols-2 items-center'>
+				<section className='py-16 px-12 lg:px-[300px]'>
+					<div className='w-full grid gap-8 grid-cols-1 lg:grid-cols-2 items-center'>
 						<div
 							data-aos='fade-right'
 							className='text-center space-y-8'
@@ -91,107 +93,30 @@ const HomePage = () => {
 				</section>
 				<section
 					id='reservation'
-					className='py-16 px-[300px]'
+					className='py-16 px-12 lg:px-[300px]'
 				>
 					<h3 className='text-5xl text-[#F0A000] font-bold text-center'>
 						Relájate en nuestra Suite
 					</h3>
 					<Spacer y={20} />
-					<div className='flex w-full justify-around'>
-						<motion.div
-							initial={{ opacity: 0 }}
-							whileInView={{ opacity: 1 }}
-							transition={{ delay: 0.1 }}
-						>
-							<CardRoom
-								title='Plata'
-								img_url='https://cf.bstatic.com/xdata/images/hotel/max1024x768/343137940.jpg?k=36b2680fc93291f7eeac1a4e3716b53700e8ca16b67b48345d9f3f775d72e779&o=&hp=1'
-								ditails_url='#'
-								reservation_url='#'
-								children={
-									<div className=' text-gray-400 text-sm font-thin py-6 space-y-4'>
-										<p>
-											Esta categoría de habitación ofrece una estancia cómoda y
-											conveniente para los huéspedes que desean disfrutar de una
-											habitación con camas adicionales y comodidades modernas,
-											como televisión por cable y teléfono fijo, mientras tienen
-											la privacidad de un baño propio.
-										</p>
-										<ul className='space-y-2'>
-											<li>2 Camas de Plaza y media</li>
-											<li>baño privado</li>
-											<li>Television con cable</li>
-											<li>Telefono fijo</li>
-										</ul>
-									</div>
-								}
-							/>
-						</motion.div>
-						<motion.div
-							initial={{ opacity: 0 }}
-							whileInView={{ opacity: 1 }}
-							transition={{ delay: 0.15 }}
-						>
-							<CardRoom
-								title='Diamante'
-								img_url='https://cf.bstatic.com/xdata/images/hotel/max1024x768/117560853.jpg?k=b6b488177bf18ad6f07223d116f1b30d3bf7c58378781f08a3393a9f889fc1d7&o=&hp=1'
-								ditails_url='#'
-								reservation_url='#'
-								bg_color='bg-gradient-to-br from-orange-200 to-red-900 text-white'
-								children={
-									<div className=' text-white text-sm font-thin py-6 space-y-4'>
-										<p>
-											La categoría Diamante está diseñada para ofrecer una
-											experiencia de alojamiento de alto nivel con comodidades
-											exclusivas como el jacuzzi, una sala de estar privada y la
-											comodidad adicional de tener un bar en las instalaciones
-											del hotel. Estas características crean un ambiente lujoso
-											y cómodo para los visitantes que buscan una estancia
-											verdaderamente indulgente.
-										</p>
-										<ul className='space-y-2'>
-											<li>1 Cama QUEEN</li>
-											<li>baño privado con Jacuzzi</li>
-											<li>Television con cable</li>
-											<li>Telefono fijo</li>
-											<li>Sala estar</li>
-											<li>Bar del hotal</li>
-										</ul>
-									</div>
-								}
-							/>
-						</motion.div>
-						<motion.div
-							initial={{ opacity: 0 }}
-							whileInView={{ opacity: 1 }}
-							transition={{ delay: 0.2 }}
-						>
-							<CardRoom
-								title='Oro'
-								img_url='https://cf.bstatic.com/xdata/images/hotel/max1024x768/85796311.jpg?k=76f41f9cd013f4b37648b89ac9be1b721fd1228890633e964d317060fe338c1c&o=&hp=1'
-								ditails_url='#'
-								reservation_url='#'
-								children={
-									<div className=' text-gray-400 text-sm font-thin py-6 space-y-4'>
-										<p>
-											La categoría Oro está diseñada para ofrecer a los
-											huéspedes una experiencia de alojamiento de alta calidad,
-											con comodidades adicionales como el jacuzzi y una sala de
-											estar, además de las comodidades estándar como la
-											televisión por cable y el teléfono fijo. Esto crea un
-											ambiente lujoso y cómodo para los visitantes del hotel.
-										</p>
-										<ul className='space-y-2'>
-											<li>1 Cama QUEEN</li>
-											<li>baño privado con Jacuzzi</li>
-											<li>Television con cable</li>
-											<li>Telefono fijo</li>
-											<li>Sala estar</li>
-										</ul>
-									</div>
-								}
-							/>
-						</motion.div>
+					<div className='flex w-full gap-8 justify-around flex-wrap'>
+						{CARDS_INFORMATION.map((card, index) => (
+							<motion.div
+								initial={{ opacity: 0 }}
+								whileInView={{ opacity: 1 }}
+								transition={{ delay: 0.1 * index }}
+							>
+								<CardRoom
+									key={index}
+									title={card.title}
+									img_url={card.img_url}
+									ditails_url={card.ditails_url}
+									reservation_url={card.reservation_url}
+									bg_color={card.bg_color ?? ''}
+									children={card.children}
+								/>
+							</motion.div>
+						))}
 					</div>
 				</section>
 			</main>

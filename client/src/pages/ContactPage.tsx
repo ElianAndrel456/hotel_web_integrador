@@ -6,7 +6,7 @@ const ContactPage = () => {
 		<main>
 			<LargeBanner title='Contactanos' />
 			<section className='bg-large-hero-pattern2 bg-[rgba(0,0,0,.8)] bg-blend-darken h-[600px] bg-fixed bg-cover'>
-				<div className='px-[300px] py-14 pt-28 text-white'>
+				<div className='px-14 lg:px-[300px] py-14 pt-28 text-white flex items-center flex-col lg:items-start'>
 					<span className='uppercase text-xs text-primary'>
 						Queremos Saber mas de ti
 					</span>

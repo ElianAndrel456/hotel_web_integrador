@@ -1,4 +1,4 @@
-import { EmailIcon, PasswordIcon } from '@/icons'
+import { PasswordIcon, UserIcon } from '@/icons'
 import { useAuthStore } from '@/store/auth.store'
 import { useUIStore } from '@/store/ui.store'
 import {
@@ -80,7 +80,7 @@ export const ModalLogin = () => {
 							<Input
 								autoFocus
 								endContent={
-									<EmailIcon className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
+									<UserIcon className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
 								}
 								label='Usuario'
 								placeholder='Ingresa tu Usuario'

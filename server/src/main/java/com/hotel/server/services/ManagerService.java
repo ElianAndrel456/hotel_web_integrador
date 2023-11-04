@@ -1,6 +1,7 @@
 package com.hotel.server.services;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ public class ManagerService {
     return managerRepository.findAll();
   }
 
-  public Manager getManagerById(Long id) {
+  public Manager getManagerById(UUID id) {
     return managerRepository.findById(id).orElse(null);
   }
 

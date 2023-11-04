@@ -1,5 +1,7 @@
 package com.hotel.server.models;
 
+import java.util.UUID;
+
 import com.hotel.server.Emuns.MangerRolE;
 
 import jakarta.persistence.Column;
@@ -15,8 +17,8 @@ import lombok.Data;
 @Table(name = "administrador")
 public class Manager {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  @GeneratedValue(strategy = GenerationType.UUID)
+  private UUID id;
 
   @Column(name = "nombre", nullable = false)
   private String name;

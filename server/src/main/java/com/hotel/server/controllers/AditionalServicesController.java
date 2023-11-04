@@ -1,6 +1,7 @@
 package com.hotel.server.controllers;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -36,7 +37,7 @@ public class AditionalServicesController {
   }
 
   @GetMapping("/{id}")
-  public AditionalServices getAditionalServicesById(@PathVariable Long id) {
+  public AditionalServices getAditionalServicesById(@PathVariable UUID id) {
     try {
 
       return aditionalServicesService.getAditionalServicesById(id);
@@ -61,11 +62,12 @@ public class AditionalServicesController {
     }
   }
 
-  @PutMapping("/update")
-  public AditionalServices updateAditionalServices(@RequestBody AditionalServices aditionalServices) {
+  @PutMapping("/update/{id}")
+  public AditionalServices updateAditionalServices(@PathVariable UUID id,
+      @RequestBody AditionalServices aditionalServices) {
     try {
 
-      return aditionalServicesService.saveAditionalServices(aditionalServices);
+      return aditionalServicesService.updateAditionalServices(id, aditionalServices);
 
     } catch (Exception e) {
 
@@ -75,7 +77,7 @@ public class AditionalServicesController {
   }
 
   @DeleteMapping("/delete/{id}")
-  public void deleteAditionalServices(@PathVariable Long id) {
+  public void deleteAditionalServices(@PathVariable UUID id) {
     try {
 
       aditionalServicesService.deleteAditionalServices(id);

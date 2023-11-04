@@ -1,11 +1,14 @@
 package com.hotel.server.controllers;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,7 +39,7 @@ public class ClientController {
   }
 
   @GetMapping("/{id}")
-  public Client getByIdClient(@PathVariable Long id) {
+  public Client getByIdClient(@PathVariable UUID id) {
     try {
       return clientService.getById(id);
     } catch (Exception e) {
@@ -48,7 +51,6 @@ public class ClientController {
   @PostMapping("/create")
   public Client saveClient(@RequestBody RequestBodyClient requestBodyClient) {
     try {
-      System.out.println(requestBodyClient);
 
       Client client = new Client();
       client.setName(requestBodyClient.getName());
@@ -72,6 +74,27 @@ public class ClientController {
       userClientService.saveUserClient(userClient);
 
       return newClient;
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+      return null;
+    }
+  }
+
+  @DeleteMapping("/{id}")
+  public boolean deleteClient(@PathVariable UUID id) {
+    try {
+      clientService.delete(id);
+      return true;
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+      return false;
+    }
+  }
+
+  @PutMapping("/{id}")
+  public Client updateClient(@PathVariable UUID id, @RequestBody Client client) {
+    try {
+      return clientService.update(id, client);
     } catch (Exception e) {
       System.out.println(e.getMessage());
       return null;

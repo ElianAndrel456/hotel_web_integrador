@@ -1,5 +1,7 @@
 package com.hotel.server.models;
 
+import java.util.UUID;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,9 +15,9 @@ import lombok.Data;
 @Table(name = "servicios_adicionales")
 public class AditionalServices {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.UUID)
   @Column(name = "id", nullable = false)
-  private Long id;
+  private UUID id;
 
   @Column(name = "nombre", nullable = false)
   private String name;

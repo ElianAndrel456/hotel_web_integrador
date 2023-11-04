@@ -16,6 +16,7 @@ import { EmailIcon, PassportIcon, PasswordIcon, PhoneIcon } from '@/icons'
 import { useUIStore } from '@/store/ui.store'
 import { useState } from 'react'
 import { register_service_client } from '@/services/auth.service'
+import { toast } from 'react-toastify'
 
 export interface UserAccountI {
 	username: string
@@ -59,9 +60,19 @@ export const ModalRegister = () => {
 			register(userAccount)
 				.then(() => {
 					changeModalRegister(false)
+					toast('Se ha registrado correctamente', {
+						position: 'bottom-right',
+						closeOnClick: true,
+						type: 'success',
+					})
 					changeModalLogin(true)
 				})
 				.catch((error) => {
+					toast('Ocurrio un error', {
+						position: 'bottom-right',
+						closeOnClick: true,
+						type: 'error',
+					})
 					console.log(error)
 				})
 		} catch (error) {
@@ -157,7 +168,7 @@ export const ModalRegister = () => {
 								isRequired
 								autoFocus
 								endContent={
-									<UserIcon className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
+									<EmailIcon className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
 								}
 								label='Email'
 								placeholder='Ingrese su correo electronico'
@@ -171,7 +182,7 @@ export const ModalRegister = () => {
 								isRequired
 								autoFocus
 								endContent={
-									<EmailIcon className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
+									<UserIcon className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
 								}
 								label='Usuario'
 								placeholder='Ingrese su usuario'
