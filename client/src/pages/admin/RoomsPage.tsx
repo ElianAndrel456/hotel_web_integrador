@@ -72,10 +72,10 @@ const RoomsPage = () => {
 			}
 			const res = (await createRoomService(room)) as IRooms
 			createRoomStore(res)
-			toast('Se creo el servicio adicional correctamente')
+			toast('Se creo la habitacion correctamente')
 			handleModal('create', false)
 		} catch (error) {
-			toast('Ocurrio un error al crear el servicio adicional', {
+			toast('Ocurrio un error', {
 				type: 'error',
 			})
 		}
@@ -98,11 +98,11 @@ const RoomsPage = () => {
 				status: updateRoom.state,
 			})
 
-			toast('Se edito el servicio adicional correctamente')
+			toast('Se edito la habitacion correctamente')
 
 			handleModal('create', false)
 		} catch (error) {
-			toast('Ocurrio un error al editar el servicio adicional', {
+			toast('Ocurrio un error al editar', {
 				type: 'error',
 			})
 			console.log(error)
@@ -115,10 +115,10 @@ const RoomsPage = () => {
 			deleteRoomService(columnKeySelected)
 			deleteRoomStore(columnKeySelected)
 			setColumnKeySelected(null)
-			toast('Se elimino el servicio adicional correctamente')
+			toast('Se elimino la habitacion correctamente')
 			handleModal('delete', false)
 		} catch (error) {
-			toast('Ocurrio un error al eliminar el servicio adicional', {
+			toast('Ocurrio un error al eliminar', {
 				type: 'error',
 			})
 			console.log(error)
@@ -183,6 +183,8 @@ const RoomsPage = () => {
 						filter={values.filter}
 						handleChange={handleChange}
 						onOpenModalCreate={onOpenModalCreate}
+						buttonText='Agregar una habitacion'
+						placeholder='Buscar por categoria'
 					/>
 				}
 				columns={COLUMNS_ROOMS}

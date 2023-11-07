@@ -39,6 +39,8 @@ public class ReservedRoomService {
 
   @Transactional
   public ReservedRoom saveReservedRoom(ReservedRoom reservedRoom) {
+    System.out.println(reservedRoom);
+
     Client mewclient = clienteService.getById(reservedRoom.getClient().getId());
     reservedRoom.setClient(mewclient);
     Manager newmanager = managerService.getManagerById(reservedRoom.getManager().getId());

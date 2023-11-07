@@ -5,18 +5,22 @@ interface ITopContentProps {
 	onOpenModalCreate: () => void
 	filter: string
 	handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+	placeholder?: string
+	buttonText?: string
 }
 
 export const TopContent = ({
 	onOpenModalCreate,
 	filter,
 	handleChange,
+	buttonText,
+	placeholder,
 }: ITopContentProps) => {
 	return (
 		<div className='flex justify-between'>
 			<Input
 				isClearable
-				placeholder='Buscar por nombre de servicio'
+				placeholder={placeholder || 'Buscar'}
 				startContent={<SearchIcon />}
 				type='text'
 				className='w-[350px]'
@@ -29,7 +33,7 @@ export const TopContent = ({
 				startContent={<IoAddOutline />}
 				onClick={onOpenModalCreate}
 			>
-				Agregar un servicio
+				{buttonText || 'Agregar'}
 			</Button>
 		</div>
 	)

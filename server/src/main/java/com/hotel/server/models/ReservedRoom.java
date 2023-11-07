@@ -54,7 +54,7 @@ public class ReservedRoom {
   private Client client;
 
   @OneToOne
-  @JoinColumn(name = "usuario_cliente_id", referencedColumnName = "id")
+  @JoinColumn(name = "admin_id", referencedColumnName = "id")
   private Manager manager;
 
   @OneToMany(cascade = CascadeType.PERSIST)

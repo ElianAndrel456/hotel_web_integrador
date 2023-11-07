@@ -1,6 +1,6 @@
 export const COLUMNS_CLIENT = [
 	{
-		key: 'dni',
+		key: 'number_of_document',
 		label: 'DNI',
 	},
 	{
@@ -130,7 +130,7 @@ export const COLUMNS_RESERVATIONS = [
 	},
 ]
 
-const RESERVED_DATA = [
+export const RESERVED_DATA = [
 	{
 		dateIn: '2021-10-10',
 		dateOut: '2021-10-15',

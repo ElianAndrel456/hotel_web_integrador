@@ -79,8 +79,8 @@ export const ClientPage = () => {
 				phone: values.phone,
 				type_of_document: values.type_of_document,
 				number_of_document: values.number_of_document,
-				username: '',
-				password: '',
+				username: values.username,
+				password: values.password,
 			}
 			const res = (await createClienteService(client)) as IClients
 			console.log(res)
@@ -143,7 +143,7 @@ export const ClientPage = () => {
 			console.log(error)
 		}
 	}
-
+	console.log(clients)
 	const renderCell = React.useCallback(
 		(item: IClients, columnKey: React.Key) => {
 			const cellValue = item[columnKey as keyof IClients]
@@ -188,6 +188,8 @@ export const ClientPage = () => {
 						filter={values.filter}
 						handleChange={handleChange}
 						onOpenModalCreate={onOpenModalCreate}
+						buttonText='Agregar un cliente'
+						placeholder='Buscar un cliente por nombre'
 					/>
 				}
 				columns={COLUMNS_CLIENT}
@@ -196,11 +198,7 @@ export const ClientPage = () => {
 			/>
 
 			<ActionModal
-				title={
-					isSavingData
-						? 'Agregar un servicio adicional'
-						: 'Editar un servicio adicional'
-				}
+				title={isSavingData ? 'Agregar un cliente' : 'Editar un cliente'}
 				openModal={openModal.create}
 				setOpenModal={() => {
 					handleModal('create', false)
@@ -274,6 +272,25 @@ export const ClientPage = () => {
 						handleChange={handleChange}
 						type='email'
 					/>
+					{isSavingData ? (
+						<>
+							<InputForm
+								label='Usuario'
+								name='username'
+								value={values.username}
+								handleChange={handleChange}
+							/>
+							<InputForm
+								label='Contraseña'
+								name='password'
+								value={values.password}
+								handleChange={handleChange}
+								type='password'
+							/>
+						</>
+					) : (
+						''
+					)}
 				</>
 			</ActionModal>
 

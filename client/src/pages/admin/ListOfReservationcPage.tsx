@@ -7,7 +7,7 @@ import {
 } from '@/components'
 import { COLUMNS_RESERVATIONS } from '@/constants/data'
 import { useForm, useModal } from '@/hooks'
-import { Dropdown, Spacer } from '@nextui-org/react'
+import { Spacer } from '@nextui-org/react'
 import React from 'react'
 import { toast } from 'react-toastify'
 interface IReservation {
@@ -44,7 +44,7 @@ export const ListOfReservationcPage = () => {
 			values.price = service.price.toString() */
 			handleModal('create', true)
 		},
-		[handleModal, values, setIsSavingData]
+		[handleModal, setIsSavingData]
 	)
 
 	const onOpenModalDelete = React.useCallback(
@@ -74,11 +74,11 @@ export const ListOfReservationcPage = () => {
 	const onEdit = async () => {
 		try {
 			if (!columnKeySelected) return
-			const update_service = {
+			/* 	const update_service = {
 				name: values.name,
 				description: values.description,
 				price: parseFloat(values.price),
-			}
+			} */
 			/* 	await updateService(columnKeySelected, update_service)
 
 			updateServiceStore(columnKeySelected, {
@@ -145,7 +145,7 @@ export const ListOfReservationcPage = () => {
 					return cellValue
 			}
 		},
-		[]
+		[onOpenModalDelete, onOpenModalEdit]
 	)
 	return (
 		<>

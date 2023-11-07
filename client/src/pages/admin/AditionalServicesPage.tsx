@@ -73,7 +73,7 @@ export const AditionalServicesPage = () => {
 			toast('Se creo el servicio adicional correctamente')
 			handleModal('create', false)
 		} catch (error) {
-			toast('Ocurrio un error al crear el servicio adicional', {
+			toast('Ocurrio un error', {
 				type: 'error',
 			})
 		}
@@ -97,7 +97,7 @@ export const AditionalServicesPage = () => {
 
 			handleModal('create', false)
 		} catch (error) {
-			toast('Ocurrio un error al editar el servicio adicional', {
+			toast('Ocurrio un error', {
 				type: 'error',
 			})
 			console.log(error)
@@ -113,7 +113,7 @@ export const AditionalServicesPage = () => {
 			toast('Se elimino el servicio adicional correctamente')
 			handleModal('delete', false)
 		} catch (error) {
-			toast('Ocurrio un error al eliminar el servicio adicional', {
+			toast('Ocurrio un error', {
 				type: 'error',
 			})
 			console.log(error)
@@ -161,6 +161,8 @@ export const AditionalServicesPage = () => {
 						filter={values.filter}
 						handleChange={handleChange}
 						onOpenModalCreate={onOpenModalCreate}
+						buttonText='Agregar un servicio adicional'
+						placeholder='Buscar por nombre'
 					/>
 				}
 				columns={COLUMNS_SERVICES}
