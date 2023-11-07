@@ -26,6 +26,7 @@ export async function createRoomService(room: RoomWithOutId) {
 				floor: room.floor,
 				categoryRoom: room.category,
 				state: room.status,
+				roomNumber: room.roomNumber,
 			}),
 		})
 		const data = await response.json()
@@ -35,6 +36,7 @@ export async function createRoomService(room: RoomWithOutId) {
 			floor: data.floor,
 			category: data.categoryRoom,
 			status: data.state,
+			roomNumber: data.roomNumber,
 		}
 	} catch (error) {
 		console.log(error)
@@ -54,6 +56,7 @@ export async function updateRoomService(room: IRooms) {
 					floor: room.floor,
 					categoryRoom: room.category,
 					state: room.status,
+					roomNumber: room.roomNumber,
 				}),
 			}
 		)

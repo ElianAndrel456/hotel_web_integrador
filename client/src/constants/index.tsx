@@ -41,6 +41,14 @@ export const useConstants = () => {
 		]
 	}, [])
 
+	const RESERVATION_STATE = useMemo(() => {
+		return [
+			{ value: '0', label: 'Pendiente' },
+			{ value: '1', label: 'Cancelado' },
+			{ value: '2', label: 'Finalizado' },
+		]
+	}, [])
+
 	const ADDRESS_INFORMATION = useMemo(
 		() => [
 			{
@@ -171,5 +179,6 @@ export const useConstants = () => {
 		CARDS_INFORMATION,
 		ROOMS_CATEGORY,
 		ROOM_STATE,
+		RESERVATION_STATE,
 	}
 }

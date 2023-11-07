@@ -16,6 +16,8 @@ interface IInputFormProps {
 		| 'search'
 		| 'date'
 		| 'file'
+	isDisabled?: boolean
+	variant?: 'bordered' | 'flat'
 }
 
 export const InputForm = ({
@@ -25,17 +27,21 @@ export const InputForm = ({
 	label,
 	autoFocus,
 	type = 'text',
+	isDisabled,
+	variant = 'bordered',
 }: IInputFormProps) => {
 	return (
 		<Input
 			isRequired
 			autoFocus={autoFocus}
 			label={label}
-			variant='bordered'
+			variant={variant}
 			value={value || ''}
 			name={name}
 			onChange={handleChange}
 			type={type}
+			min={type === 'number' ? 0 : undefined}
+			isDisabled={isDisabled ?? false}
 		/>
 	)
 }

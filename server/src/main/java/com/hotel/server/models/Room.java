@@ -22,6 +22,9 @@ public class Room {
   @Column(name = "id", nullable = false)
   private UUID id;
 
+  @Column(name = "numero", nullable = false, unique = true)
+  private int roomNumber;
+
   @Column(name = "piso", nullable = false)
   private int floor;
 

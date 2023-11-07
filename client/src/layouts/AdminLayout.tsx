@@ -17,6 +17,8 @@ import { useServiceStore } from '@/store/aditionalService.store'
 import { ToastContainer } from 'react-toastify'
 import { useState } from 'react'
 import { IoExit } from 'react-icons/io5'
+import { useReservationStore } from '@/store/reservation.store'
+import { getAllReservations } from '@/services/reserved_room.service'
 
 export const AdminLayout = () => {
 	const navigate = useNavigate()
@@ -24,6 +26,7 @@ export const AdminLayout = () => {
 	const { setClients } = useClientStore()
 	const { setRoomsStore } = useRoomStore()
 	const { setServicesStore } = useServiceStore()
+	const { setReservationStore } = useReservationStore()
 	const [openMenu, setOpenMenu] = useState(false)
 
 	useEffect(() => {
@@ -31,6 +34,69 @@ export const AdminLayout = () => {
 			navigate('/')
 		}
 	}, [navigate, isAuth])
+
+	useEffect(() => {
+		const fetchReservations = async () => {
+			const data = await getAllReservations()
+			const contractData = data.map(
+				(d: {
+					id: string
+					dateIn: string
+					dateOut: string
+					numberPeople: number
+					reservationState: string
+					total: number
+					reservationDate: string
+					room: {
+						id: string
+						roomNumber: number
+						floor: number
+						state: string
+						categoryRoom: string
+					}
+					client: {
+						id: string
+						type_of_document: string
+						number_of_document: string
+						name: string
+						lastname: string
+						email: string
+						phone: string
+					}
+					manager: {
+						id: string
+						name: string
+						lastName: string
+						email: string
+						phone: string
+						rol: string
+					}
+					aditionalServices: {
+						id: string
+						name: string
+						description: string
+						price: number
+					}[]
+				}) => ({
+					id: d.id,
+					dateIn: d.dateIn,
+					dateOut: d.dateOut,
+					numberPeople: d.numberPeople,
+					reservationState: d.reservationState,
+					total: d.total,
+					reservationDate: d.reservationDate,
+					room: d.room.roomNumber + ' ' + d.room.categoryRoom,
+					client: d.client.name + ' ' + d.client.lastname,
+					manager: d.manager.name + ' ' + d.manager.lastName,
+					aditionalServices: d.aditionalServices
+						.map((service) => service.name)
+						.join(', '),
+				})
+			)
+			setReservationStore(contractData)
+		}
+		fetchReservations()
+	}, [setReservationStore])
 
 	useEffect(() => {
 		const fetchClients = async () => {
@@ -69,11 +135,13 @@ export const AdminLayout = () => {
 					state: string
 					categoryRoom: string
 					floor: string
+					roomNumber: number
 				}) => ({
 					id: room.id,
 					status: room.state,
 					category: room.categoryRoom,
 					floor: room.floor,
+					roomNumber: room.roomNumber,
 				})
 			)
 

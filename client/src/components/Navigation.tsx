@@ -15,7 +15,6 @@ import {
 	NavbarContent,
 	NavbarItem,
 	NavbarMenu,
-	NavbarMenuItem,
 	NavbarMenuToggle,
 } from '@nextui-org/react'
 import { useNavigate } from 'react-router-dom'
@@ -41,14 +40,7 @@ export const Navigation = () => {
 					aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
 				/>
 			</NavbarContent>
-			<NavbarContent
-				className='sm:hidden pr-3'
-				justify='center'
-			>
-				<NavbarBrand>
-					<p className='font-bold text-inherit'>ACME</p>
-				</NavbarBrand>
-			</NavbarContent>
+
 			<NavbarBrand>
 				<Image
 					src='/icon_hotel.png'
@@ -135,12 +127,12 @@ export const Navigation = () => {
 					</Dropdown>
 				) : (
 					<>
-						<NavbarItem>
+						<NavbarItem className='hidden lg:flex'>
 							<Link onClick={() => changeModalLogin(true)}>Iniciar Sesion</Link>
 						</NavbarItem>
 						<Divider
 							orientation='vertical'
-							className='h-8'
+							className='h-8 hidden	 lg:flex'
 						/>
 						<NavbarItem>
 							<Button
@@ -157,15 +149,78 @@ export const Navigation = () => {
 			</NavbarContent>
 
 			<NavbarMenu>
-				<NavbarMenuItem>
+				<NavbarItem isActive={path === '/'}>
 					<Link
-						className='w-full'
-						size='lg'
-						color='secondary'
+						onClick={() => {
+							navigation('/')
+							setIsMenuOpen(false)
+						}}
+						color={`${path === '/' ? 'primary' : 'foreground'}`}
 					>
-						direccion
+						Inicio
 					</Link>
-				</NavbarMenuItem>
+				</NavbarItem>
+				<NavbarItem isActive={path === '/sobre-nosotros'}>
+					<Link
+						onClick={() => {
+							navigation('/sobre-nosotros')
+							setIsMenuOpen(false)
+						}}
+						color={`${path === '/sobre-nosotros' ? 'primary' : 'foreground'}`}
+					>
+						Sobre Nosotros
+					</Link>
+				</NavbarItem>
+				{isAuth && (
+					<NavbarItem isActive={path === '/reservacion'}>
+						<Link
+							onClick={() => {
+								navigation('/reservacion')
+								setIsMenuOpen(false)
+							}}
+							color={`${path === '/reservacion' ? 'primary' : 'foreground'}`}
+						>
+							Reservaciones
+						</Link>
+					</NavbarItem>
+				)}
+				<NavbarItem isActive={path === '/contacto'}>
+					<Link
+						onClick={() => {
+							navigation('/contacto')
+							setIsMenuOpen(false)
+						}}
+						color={`${path === '/contacto' ? 'primary' : 'foreground'}`}
+					>
+						Contáctanos
+					</Link>
+				</NavbarItem>
+				<Divider
+					orientation='horizontal'
+					className='h-8 hidden	 lg:flex'
+				/>
+				<NavbarItem className=''>
+					<Link
+						color='secondary'
+						onClick={() => {
+							changeModalLogin(true)
+							setIsMenuOpen(false)
+						}}
+					>
+						Iniciar Sesion
+					</Link>
+				</NavbarItem>
+				<NavbarItem>
+					<Link
+						color='secondary'
+						onClick={() => {
+							changeModalRegister(true)
+							setIsMenuOpen(false)
+						}}
+					>
+						Registrarse
+					</Link>
+				</NavbarItem>
 			</NavbarMenu>
 		</Navbar>
 	)

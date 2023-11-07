@@ -5,27 +5,75 @@ import {
 	TableData,
 	TopContent,
 } from '@/components'
+import { useConstants } from '@/constants'
 import { COLUMNS_RESERVATIONS } from '@/constants/data'
 import { useForm, useModal } from '@/hooks'
-import { Spacer } from '@nextui-org/react'
+import {
+	createReservation,
+	deleteResevation,
+} from '@/services/reserved_room.service'
+import { useServiceStore } from '@/store/aditionalService.store'
+import { useAuthStore } from '@/store/auth.store'
+import { useClientStore } from '@/store/client.store'
+import { useReservationStore } from '@/store/reservation.store'
+import { useRoomStore } from '@/store/room.store'
+import { Input, Select, SelectItem, Spacer } from '@nextui-org/react'
 import React from 'react'
 import { toast } from 'react-toastify'
-interface IReservation {
+export interface IReservation {
 	id: string
 	client: string
 	room: string
-	checkIn: string
-	checkOut: string
-	aditional_services: string
-	status: string
+	manager: string
+	dateIn: string
+	dateOut: string
+	reservationDate: string
+	numberPeople: number
+	aditionalServices: string[]
+	reservationState: string
+	total: number
 }
 
 export const ListOfReservationcPage = () => {
 	const { openModal, handleModal, isSavingData, setIsSavingData } = useModal()
 	const { values, handleChange, resetInput } = useForm()
+	const { RESERVATION_STATE } = useConstants()
 	const [columnKeySelected, setColumnKeySelected] = React.useState<
 		null | string
 	>(null)
+	const { user } = useAuthStore()
+	const { rooms } = useRoomStore()
+	const { clients } = useClientStore()
+	const { services } = useServiceStore()
+	const { reservations, createReservationStore, deleteReservationStore } =
+		useReservationStore()
+
+	const roomsAvalibles = React.useMemo(
+		() => rooms.filter((room) => room.status === 'DISPONIBLE'),
+		[rooms]
+	)
+
+	const total = React.useMemo(() => {
+		let amount = 0
+		if (values.room) {
+			const room = rooms.find((r) => r.id === values.room)
+			if (room?.category === 'PLATA') amount = 100
+			if (room?.category === 'ORO') amount = 200
+			if (room?.category === 'DIAMANTE') amount = 300
+		}
+
+		if (values.aditional_services) {
+			const inputServiceID = values.aditional_services.split(',')
+			for (let index = 0; index < inputServiceID.length; index++) {
+				const element = inputServiceID[index]
+				const service = services.find((s) => s.id === element)
+				if (!service) continue
+				amount += service.price
+			}
+		}
+
+		return amount
+	}, [rooms, services, values.aditional_services, values.room])
 
 	const onOpenModalCreate = () => {
 		resetInput()
@@ -57,16 +105,35 @@ export const ListOfReservationcPage = () => {
 
 	const onCreate = async () => {
 		try {
-			/* 	const res = await createService({
-				name: values.name,
-				description: values.description,
-				price: parseFloat(values.price),
+			const findClient = clients.find(
+				(c) => c.number_of_document === values.client
+			)
+			if (!findClient) throw new Error('No se encontro el cliente')
+
+			const res = await createReservation({
+				dateIn: values.dateIn,
+				dateOut: values.dateOut,
+				numberPeople: parseInt(values.numberPeople),
+				reservationState: values.reservationState,
+				total: total,
+				reservationDate: new Date().toISOString(),
+				room: values.room,
+				client: findClient.id,
+				manager: user.id,
+				aditionalServices: values.aditional_services
+					? values.aditional_services.split(',')
+					: [],
 			})
-			addServiceStore(res) */
-			toast('Se creo el servicio adicional correctamente')
+			createReservationStore({
+				...res,
+				aditionalServices: res.aditionalServices
+					.map((s: { name: string }) => s.name)
+					.join(', '),
+			})
+			toast('Se creo la reservacion correctamente')
 			handleModal('create', false)
 		} catch (error) {
-			toast('Ocurrio un error al crear el servicio adicional', {
+			toast('Ocurrio un error al crear', {
 				type: 'error',
 			})
 		}
@@ -100,13 +167,13 @@ export const ListOfReservationcPage = () => {
 	const onDelete = () => {
 		try {
 			if (!columnKeySelected) return
-			/* 	deleteService(columnKeySelected)
-			deleteServiceStore(columnKeySelected) */
+			deleteResevation(columnKeySelected)
+			deleteReservationStore(columnKeySelected)
 			setColumnKeySelected(null)
-			toast('Se elimino el servicio adicional correctamente')
+			toast('Se elimino la reservacion correctamente')
 			handleModal('delete', false)
 		} catch (error) {
-			toast('Ocurrio un error al eliminar el servicio adicional', {
+			toast('Ocurrio un error al eliminar', {
 				type: 'error',
 			})
 			console.log(error)
@@ -119,17 +186,25 @@ export const ListOfReservationcPage = () => {
 
 			switch (columnKey) {
 				case 'id':
-					return <p>{cellValue}</p>
+					return <p>{cellValue.toString().slice(0, 7)}</p>
 				case 'client':
 					return <p>{cellValue}</p>
 				case 'room':
 					return <p>{cellValue}</p>
-				case 'checkIn':
+				case 'dateIn':
+					return <p>{new Date(cellValue as string).toLocaleDateString()}</p>
+				case 'dateOut':
+					return <p>{new Date(cellValue as string).toLocaleDateString()}</p>
+				case 'reservationDate':
+					return <p>{new Date(cellValue as string).toLocaleDateString()}</p>
+				case 'numberPeople':
 					return <p>{cellValue}</p>
-				case 'checkOut':
+				case 'aditionalServices':
 					return <p>{cellValue}</p>
-				case 'status':
+				case 'reservationState':
 					return <p>{cellValue}</p>
+				case 'total':
+					return <p>S/.{cellValue}</p>
 				case 'actions':
 					return (
 						<div className='relative flex justify-end items-center gap-2'>
@@ -147,6 +222,7 @@ export const ListOfReservationcPage = () => {
 		},
 		[onOpenModalDelete, onOpenModalEdit]
 	)
+
 	return (
 		<>
 			<h1 className='text-5xl font-bold'>Reservaciones</h1>
@@ -158,10 +234,12 @@ export const ListOfReservationcPage = () => {
 						filter={values.filter}
 						handleChange={handleChange}
 						onOpenModalCreate={onOpenModalCreate}
+						buttonText='Agregar una reservación'
+						placeholder='Buscar por cliente'
 					/>
 				}
 				columns={COLUMNS_RESERVATIONS}
-				items={[]}
+				items={reservations}
 				renderCell={renderCell}
 			/>
 			<ActionModal
@@ -184,18 +262,103 @@ export const ListOfReservationcPage = () => {
 			>
 				<>
 					<InputForm
-						label='Nombre'
-						name='name'
-						value={values.name}
+						label='DNI del Cliente'
+						name='client'
+						value={values.client}
 						handleChange={handleChange}
 						autoFocus
 					/>
-					<InputForm
-						label='Precio'
-						name='price'
-						value={values.price}
-						handleChange={handleChange}
-						type='number'
+
+					<Select
+						label='Habitacion NN-CAT-PS'
+						onChange={handleChange}
+						value={values.room}
+						name='room'
+					>
+						{roomsAvalibles.map((item) => (
+							<SelectItem
+								key={item.id}
+								value={item.id}
+							>
+								{item.roomNumber + ' - ' + item.category + ' - ' + item.floor}
+							</SelectItem>
+						))}
+					</Select>
+					<Input
+						name='dateIn'
+						value={values.dateIn || ''}
+						onChange={handleChange}
+						label='Fecha de llegada:'
+						type='date'
+						labelPlacement='outside-left'
+					/>
+					<Input
+						name='dateOut'
+						value={values.dateOut || ''}
+						onChange={handleChange}
+						label='Fecha de salida:'
+						type='date'
+						labelPlacement='outside-left'
+					/>
+					<Select
+						label='Servicios Adicionales'
+						selectionMode='multiple'
+						name='aditional_services'
+						value={values.aditional_services}
+						onChange={handleChange}
+					>
+						{services.map((item) => (
+							<SelectItem key={item.id}>
+								{item.name + ' - ' + item.price}
+							</SelectItem>
+						))}
+					</Select>
+					<Select
+						label='Estado de reservacion'
+						name='reservationState'
+						value={values.reservationState}
+						onChange={handleChange}
+					>
+						{RESERVATION_STATE.map((item) => (
+							<SelectItem
+								key={item.value}
+								value={item.value}
+							>
+								{item.label}
+							</SelectItem>
+						))}
+					</Select>
+					<Select
+						label='N° de Personas'
+						name='numberPeople'
+						onChange={handleChange}
+						value={values.numberPeople}
+					>
+						<SelectItem
+							key={'1'}
+							value={'1'}
+						>
+							1
+						</SelectItem>
+						<SelectItem
+							key={'2'}
+							value={'2'}
+						>
+							2
+						</SelectItem>
+						<SelectItem
+							key={'3'}
+							value={'3'}
+						>
+							3
+						</SelectItem>
+					</Select>
+
+					<Input
+						placeholder='Total S/.0.00'
+						label='Total'
+						value={'S./' + total.toString()}
+						isDisabled
 					/>
 				</>
 			</ActionModal>
@@ -213,7 +376,7 @@ export const ListOfReservationcPage = () => {
 					text: 'Eliminar',
 				}}
 			>
-				<p>¿Esta seguro que desea eliminar el servicio adicional?</p>
+				<p>¿Esta seguro que desea eliminar la reservacion?</p>
 			</ActionModal>
 		</>
 	)

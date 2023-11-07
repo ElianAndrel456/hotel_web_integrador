@@ -1,6 +1,7 @@
 import {
 	ActionDropDown,
 	ActionModal,
+	InputForm,
 	TableData,
 	TopContent,
 } from '@/components'
@@ -20,6 +21,7 @@ import { toast } from 'react-toastify'
 
 export interface IRooms {
 	id: string
+	roomNumber: number
 	status: string
 	category: string
 	floor: number
@@ -69,6 +71,7 @@ const RoomsPage = () => {
 				category: values.category,
 				floor: parseInt(values.floor),
 				status: values.status,
+				roomNumber: parseInt(values.roomNumber),
 			}
 			const res = (await createRoomService(room)) as IRooms
 			createRoomStore(res)
@@ -88,6 +91,7 @@ const RoomsPage = () => {
 				category: values.category,
 				floor: parseInt(values.floor),
 				status: values.status,
+				roomNumber: parseInt(values.roomNumber),
 			}
 			const updateRoom = await updateRoomService(update_room)
 
@@ -96,6 +100,7 @@ const RoomsPage = () => {
 				floor: updateRoom.floor,
 				category: updateRoom.categoryRoom,
 				status: updateRoom.state,
+				roomNumber: updateRoom.roomNumber,
 			})
 
 			toast('Se edito la habitacion correctamente')
@@ -132,6 +137,8 @@ const RoomsPage = () => {
 			switch (columnKey) {
 				case 'id':
 					return <p>{cellValue.toString().slice(0, 7)}</p>
+				case 'roomNumber':
+					return <p>{cellValue}</p>
 				case 'category':
 					return <p>{cellValue}</p>
 				case 'floor':
@@ -210,6 +217,14 @@ const RoomsPage = () => {
 				}}
 			>
 				<>
+					<InputForm
+						name='roomNumber'
+						value={values.roomNumber}
+						handleChange={handleChange}
+						label='Numero de habitacion'
+						autoFocus
+						type='number'
+					/>
 					<Select
 						label='Categoria'
 						name='category'

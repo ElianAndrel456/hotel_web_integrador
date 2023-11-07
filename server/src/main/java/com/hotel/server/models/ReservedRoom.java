@@ -1,9 +1,7 @@
 package com.hotel.server.models;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 import com.hotel.server.Emuns.ReservationStateE;
@@ -16,8 +14,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -45,19 +43,22 @@ public class ReservedRoom {
   @Column(name = "total", nullable = false)
   private Double total;
 
-  @OneToOne
+  @Column(name = "fecha_reserva", nullable = false)
+  private Date reservationDate;
+
+  @ManyToOne
   @JoinColumn(name = "habitacion_id", referencedColumnName = "id")
   private Room room;
 
-  @OneToOne
+  @ManyToOne
   @JoinColumn(name = "cliente_id", referencedColumnName = "id")
   private Client client;
 
-  @OneToOne
+  @ManyToOne
   @JoinColumn(name = "admin_id", referencedColumnName = "id")
   private Manager manager;
 
-  @OneToMany(cascade = CascadeType.PERSIST)
+  @ManyToMany(cascade = CascadeType.PERSIST)
   @JoinTable(name = "reserva_servicios_adicionales", joinColumns = @JoinColumn(name = "reserva_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "servicios_adicionales_id", referencedColumnName = "id"))
   private List<AditionalServices> aditionalServices;
 

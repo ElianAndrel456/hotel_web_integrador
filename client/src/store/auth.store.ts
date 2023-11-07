@@ -3,6 +3,7 @@ import { persist } from 'zustand/middleware'
 
 interface AuthStore {
 	user: {
+		id: string
 		name: string
 		email: string
 		phone: string
@@ -16,6 +17,7 @@ interface AuthStore {
 	changeIsAuth: (isAuth: AuthStore['isAuth']) => void
 }
 export const initial_user = {
+	id: '',
 	name: '',
 	email: '',
 	phone: '',

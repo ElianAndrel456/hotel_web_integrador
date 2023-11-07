@@ -78,6 +78,10 @@ export const DATA_OF_SERVICES = [
 export const COLUMNS_ROOMS = [
 	{ key: 'id', label: 'ID' },
 	{
+		key: 'roomNumber',
+		label: 'NUMERO DE HABITACION',
+	},
+	{
 		key: 'category',
 		label: 'CATEGORIA',
 	},
@@ -109,20 +113,33 @@ export const COLUMNS_RESERVATIONS = [
 		label: 'HABITACION',
 	},
 	{
-		key: 'checkIn',
+		key: 'reservationDate',
 		label: 'FECHA DE RESERVA',
 	},
 	{
-		key: 'checkOut',
-		label: 'FECHA DE SALIDA',
+		key: 'dateIn',
+		label: 'FECHA DE ENTRADA',
 	},
 	{
-		key: 'aditional_services',
+		key: 'dateOut',
+		label: 'FECHA DE SALIDA',
+	},
+
+	{
+		key: 'numberPeople',
+		label: 'NUMERO DE PERSONAS',
+	},
+	{
+		key: 'aditionalServices',
 		label: 'SERVICIOS ADICIONALES',
 	},
 	{
-		key: 'status',
+		key: 'reservationState',
 		label: 'ESTADO',
+	},
+	{
+		key: 'total',
+		label: 'TOTAL',
 	},
 	{
 		key: 'actions',
