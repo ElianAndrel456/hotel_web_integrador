@@ -247,9 +247,7 @@ export const ListOfReservationcPage = () => {
 			/>
 			<ActionModal
 				title={
-					isSavingData
-						? 'Agregar un servicio adicional'
-						: 'Editar un servicio adicional'
+					isSavingData ? 'Agregar una reservación' : 'Editar una reservación'
 				}
 				openModal={openModal.create}
 				setOpenModal={() => {

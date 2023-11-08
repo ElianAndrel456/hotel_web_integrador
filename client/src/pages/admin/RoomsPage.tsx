@@ -200,9 +200,7 @@ const RoomsPage = () => {
 			/>
 			<ActionModal
 				title={
-					isSavingData
-						? 'Agregar un servicio adicional'
-						: 'Editar un servicio adicional'
+					isSavingData ? 'Agregar una habitacion' : 'Editar una habitacion'
 				}
 				openModal={openModal.create}
 				setOpenModal={() => {

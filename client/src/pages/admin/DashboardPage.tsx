@@ -18,18 +18,6 @@ import {
 import { BedIcon } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import React from 'react'
-const initialData = [
-	{ time: '2018-07-22', value: 32 },
-	{ time: '2018-09-23', value: 31 },
-	{ time: '2018-12-24', value: 27 },
-	{ time: '2018-12-25', value: 27 },
-	{ time: '2018-12-26', value: 25 },
-	{ time: '2018-12-27', value: 28 },
-	{ time: '2018-12-28', value: 25 },
-	{ time: '2018-12-29', value: 23 },
-	{ time: '2018-12-30', value: 22 },
-	{ time: '2018-12-31', value: 22 },
-]
 
 export const DashboardPage = () => {
 	const navigate = useNavigate()
@@ -39,21 +27,32 @@ export const DashboardPage = () => {
 	const { reservations } = useReservationStore()
 
 	const dataReservationsChart = React.useMemo(() => {
-		const data = reservations.map((reservation) => {
-			const date = new Date(reservation.reservationDate)
-			const dateFormated = `${date.getFullYear()}-${
-				date.getMonth() + 1
-			}-${date.getDate()}`
+		const data: { time: string; value: number }[] = []
+		reservations.forEach((r) => {
+			const reservationDate = new Date(r.reservationDate)
 
-			return {
-				time: dateFormated,
-				value: 1,
+			const year = reservationDate.getFullYear()
+			const month = (reservationDate.getMonth() + 1).toString().padStart(2, '0') // Agrega un cero adelante si es menor a 10
+			const day = reservationDate.getDate().toString().padStart(2, '0') // Agrega un cero adelante si es menor a 10
+
+			const formattedDate = `${year}-${month}-${day}`
+
+			if (data.find((d) => d.time === formattedDate)) {
+				const index = data.findIndex((d) => d.time === formattedDate)
+				data[index].value += 1
+			} else {
+				data.push({ time: formattedDate, value: 1 })
 			}
+		})
+
+		data.sort((a, b) => {
+			const dateA = new Date(a.time)
+			const dateB = new Date(b.time)
+			return dateA.getTime() - dateB.getTime()
 		})
 
 		return data
 	}, [reservations])
-	console.log(dataReservationsChart)
 	return (
 		<>
 			<h1 className='text-5xl font-bold'>Dashboard</h1>
@@ -65,7 +64,7 @@ export const DashboardPage = () => {
 				<ChartComponent
 					/* {...props} */
 
-					data={initialData}
+					data={dataReservationsChart}
 				></ChartComponent>
 			</section>
 			<Spacer y={8} />

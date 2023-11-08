@@ -6,5 +6,6 @@ client/dist
 
 server/target/*
 server/HELP.md
+server/src/main/resources/application.properties
 
 .vscode
