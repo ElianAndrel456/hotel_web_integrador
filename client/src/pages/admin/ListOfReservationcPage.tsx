@@ -129,6 +129,9 @@ export const ListOfReservationcPage = () => {
 				aditionalServices: res.aditionalServices
 					.map((s: { name: string }) => s.name)
 					.join(', '),
+				room: res.room.roomNumber + ' ' + res.room.categoryRoom,
+				client: res.client.name + ' ' + res.client.lastname,
+				manager: res.manager.name + ' ' + res.manager.lastName,
 			})
 			toast('Se creo la reservacion correctamente')
 			handleModal('create', false)

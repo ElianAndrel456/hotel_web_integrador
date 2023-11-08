@@ -13,14 +13,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hotel.server.Emuns.RoomStateE;
 import com.hotel.server.models.ReservedRoom;
+import com.hotel.server.models.Room;
 import com.hotel.server.services.ReservedRoomService;
+import com.hotel.server.services.RoomService;
 
 @RestController
 @RequestMapping("/api/reservacion")
 public class ReservedRoomController {
   @Autowired
   private ReservedRoomService reservedRoomService;
+  @Autowired
+  private RoomService roomService;
 
   @GetMapping
   public List<ReservedRoom> getAllReservedRooms() {
@@ -45,8 +50,16 @@ public class ReservedRoomController {
   @PostMapping("/create")
   public ReservedRoom createReservedRoom(@RequestBody ReservedRoom reservedRoom) {
     try {
-      System.out.println(reservedRoom);
-      return reservedRoomService.saveReservedRoom(reservedRoom);
+
+      Room findRoom = roomService.getRoomById(reservedRoom.getRoom().getId());
+      if (findRoom.getState() == RoomStateE.DISPONIBLE) {
+        findRoom.setState(RoomStateE.OCUPADO);
+        roomService.updateRoom(findRoom.getId(), findRoom);
+      } else {
+        throw new Exception("La habitacion no esta disponible");
+      }
+      ReservedRoom newReservedRoom = reservedRoomService.saveReservedRoom(reservedRoom);
+      return newReservedRoom;
     } catch (Exception e) {
       System.out.println(e.getMessage());
       return null;

@@ -45,7 +45,7 @@ export const ChartComponent = (props: ChartProps) => {
 		chart.timeScale().fitContent()
 
 		const newSeries = chart.addAreaSeries({
-			title: 'Series',
+			title: 'Reservas',
 			lineColor,
 			topColor: areaTopColor,
 			bottomColor: areaBottomColor,
