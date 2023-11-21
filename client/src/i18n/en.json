@@ -1,0 +1,27 @@
+{
+  "home": {
+    "title": "Hotel Waynapicchu",
+    "subtitle": "Un hotel acogedor perfectamente diseñado para convertir tus gratos momentos en una experiencia mágica e inolvidable.",
+    "button": " Reserva tu Habitacion ahora",
+    "title_section": "Relájate en nuestra Suite",
+    "subtitle_section": "Nuestra Suite es probablemente el ambiente que más refleja la personalidad del habitante y el más laborioso de planear. El espacio requiere confort, hospitalidad y estilo para recibir los momentos más íntimos del usuario. Es allí donde están nuestros recuerdos más profundos, nuestras piezas favoritas.",
+    "title_section2": "Conoce nuestras habitaciones",
+    "CARDS_INFORMATION": [
+      {
+        "title": "PLATA",
+        "img_url": "https://cf.bstatic.com/xdata/images/hotel/max1024x768/343137940.jpg?k=36b2680fc93291f7eeac1a4e3716b53700e8ca16b67b48345d9f3f775d72e779&o=&hp=1",
+        "ditails_url": "#",
+        "reservation_url": "#",
+        "description": "Esta categoría de habitación ofrece una estancia cómoda y conveniente para los huéspedes que desean disfrutar de una habitación con camas adicionales y comodidades modernas, como televisión por cable y teléfono fijo, mientras tienen la privacidad de un baño propio.",
+        "features": [
+          "2 Camas de Plaza y media",
+          "Baño privado",
+          "TV por cable",
+          "Teléfono fijo",
+          "Wifi",
+          "Desayuno incluido"
+        ]
+      }
+    ]
+  }
+}

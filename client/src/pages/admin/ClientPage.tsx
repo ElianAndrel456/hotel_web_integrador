@@ -1,7 +1,6 @@
 import { COLUMNS_CLIENT } from '@/constants/data'
-import { Select, SelectItem, Spacer } from '@nextui-org/react'
-import React from 'react'
-import { useConstants } from '@/constants/index'
+import { Divider, Spacer } from '@nextui-org/react'
+import React, { useState } from 'react'
 import { useClientStore } from '@/store/client.store'
 import { useForm, useModal } from '@/hooks'
 import {
@@ -17,25 +16,52 @@ import {
 	deleteClienteService,
 	updateClienteService,
 } from '@/services/clients.service'
+import { EmailIcon, PassportIcon, PasswordIcon } from '@/icons'
+import { PhoneIcon, UserIcon } from 'lucide-react'
+import { ZodError, ZodIssue, z } from 'zod'
 
 export interface IClients {
 	id: string
-	number_of_document: string
-	name: string
-	type_of_document: string
-	phone: string
+	names: string
 	email: string
+	phone: string
+	dni: string
+	address: string
 }
+
+const registerSchema = z.object({
+	names: z
+		.string()
+		.min(3, { message: 'Nombre muy corto' })
+		.regex(/^[a-zA-Z ]/, 'Solo letras'),
+	dni: z
+		.string()
+		.min(8, { message: 'Deberia tener 8 digitos' })
+		.regex(/^[0-9]{8}$/, 'Solo numeros y 8 digitos'),
+	address: z.string().min(3, { message: 'Dirección muy corta' }),
+	phone: z
+		.string()
+		.min(9, { message: 'Deberia tener 9 digitos' })
+		.regex(/^[0-9]{9}$/, 'Solo numeros y 9 digitos'),
+	email: z.string().email({ message: 'Email invalido' }),
+	password: z
+		.string()
+		.min(8, { message: 'Contraseña debe tener como minimo 8 caracteres' })
+		.regex(
+			/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
+			'Debe contener al menos una mayúscula, una minúscula y un número'
+		),
+})
 
 export const ClientPage = () => {
 	const { clients, addClientStore, deleteClientStore, updateClientStore } =
 		useClientStore()
 	const { handleModal, isSavingData, openModal, setIsSavingData } = useModal()
-	const { handleChange, resetInput, values } = useForm()
+	const { handleChange, resetInput, values, setValues } = useForm()
 	const [columnKeySelected, setColumnKeySelected] = React.useState<
 		null | string
 	>(null)
-	const { TYPE_OF_DOCUMENTS } = useConstants()
+	const [errors, setErrors] = useState<ZodIssue[]>([])
 
 	const onOpenModalCreate = () => {
 		resetInput()
@@ -50,16 +76,16 @@ export const ClientPage = () => {
 			const client = clients.find((c) => c.id === id)
 			console.log(client)
 			if (!client) return
-			values.name = client.name.split(' ')[0]
-			values.lastName = client.name.split(' ')[1]
-			values.email = client.email
-			values.phone = client.phone
-			values.type_of_document = client.type_of_document
-			values.number_of_document = client.number_of_document
-
+			setValues({
+				names: client.names,
+				dni: client.dni,
+				address: client.address,
+				phone: client.phone,
+				email: client.email,
+			})
 			handleModal('create', true)
 		},
-		[setIsSavingData, clients, values, handleModal]
+		[setIsSavingData, clients, setValues, handleModal]
 	)
 
 	const onOpenModalDelete = React.useCallback(
@@ -73,17 +99,18 @@ export const ClientPage = () => {
 	const onCreate = async () => {
 		try {
 			const client = {
-				name: values.name,
-				lastname: values.lastName,
+				names: values.names,
+				dni: values.dni,
 				email: values.email,
+				address: values.address,
 				phone: values.phone,
-				type_of_document: values.type_of_document,
-				number_of_document: values.number_of_document,
-				username: values.username,
 				password: values.password,
 			}
+
+			const parse = registerSchema.parse(client)
+			console.log(parse)
+
 			const res = (await createClienteService(client)) as IClients
-			console.log(res)
 
 			addClientStore(res)
 			toast('Se creo el servicio adicional correctamente')
@@ -92,6 +119,9 @@ export const ClientPage = () => {
 			toast('Ocurrio un error al crear el cliente', {
 				type: 'error',
 			})
+			if (typeof error !== 'string' && error instanceof ZodError) {
+				setErrors(error.issues)
+			}
 		}
 	}
 	const onEdit = async () => {
@@ -99,22 +129,21 @@ export const ClientPage = () => {
 			if (!columnKeySelected) return
 			const update_room = {
 				id: columnKeySelected,
-				name: values.name,
-				lastname: values.lastName,
+				names: values.names,
 				email: values.email,
 				phone: values.phone,
-				type_of_document: values.type_of_document,
-				number_of_document: values.number_of_document,
+				dni: values.dni,
+				address: values.address,
 			}
 			const updateClient = await updateClienteService(update_room)
 
 			updateClientStore({
-				email: updateClient.email,
 				id: updateClient.id,
-				name: updateClient.name + ' ' + updateClient.lastname,
-				number_of_document: updateClient.number_of_document,
+				email: updateClient.email,
+				address: updateClient.address,
+				dni: updateClient.dni,
+				names: updateClient.names,
 				phone: updateClient.phone,
-				type_of_document: updateClient.type_of_document,
 			})
 
 			toast('Se edito el servicio adicional correctamente')
@@ -143,7 +172,6 @@ export const ClientPage = () => {
 			console.log(error)
 		}
 	}
-	console.log(clients)
 	const renderCell = React.useCallback(
 		(item: IClients, columnKey: React.Key) => {
 			const cellValue = item[columnKey as keyof IClients]
@@ -213,79 +241,104 @@ export const ClientPage = () => {
 			>
 				<>
 					<InputForm
-						label='Nombre'
-						autoFocus
-						name='name'
-						value={values.name}
+						label='Nombres'
+						name='names'
+						value={values.names}
 						handleChange={handleChange}
-					/>
-					<InputForm
-						label='Apellido'
-						name='lastName'
-						value={values.lastName}
-						handleChange={handleChange}
-					/>
-
-					<Select
-						isRequired
-						label='Seleccione su tipo de documento'
-						className='max-w-xs'
-						name='type_of_document'
-						value={values.type_of_document}
-						onChange={handleChange}
-						defaultSelectedKeys={
-							values.type_of_document && values.type_of_document === 'DNI'
-								? '0'
-								: values.type_of_document === 'PASAPORTE'
-								? '1'
-								: values.type_of_document === 'CARNET_EXTRANJERIA'
-								? '2'
-								: ''
+						EndContent={
+							<UserIcon className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
 						}
-					>
-						{TYPE_OF_DOCUMENTS.map((t) => (
-							<SelectItem
-								key={t.value}
-								value={t.value}
-							>
-								{t.label}
-							</SelectItem>
-						))}
-					</Select>
-					<InputForm
-						label='N° de Documento'
-						name='number_of_document'
-						value={values.number_of_document}
-						handleChange={handleChange}
+						isValid={errors.some((error) => error.path[0] === 'names')}
+						errorMessage={
+							errors
+								.filter((error) => error.path[0] === 'names')
+								.map((error) => error.message)[0]
+						}
 					/>
 					<InputForm
+						label='N° de Documento | DNI'
+						name='dni'
+						value={values.dni}
+						handleChange={handleChange}
+						type='number'
+						EndContent={
+							<PassportIcon className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
+						}
+						isValid={errors.some((error) => error.path[0] === 'dni')}
+						errorMessage={
+							errors
+								.filter((error) => error.path[0] === 'dni')
+								.map((error) => error.message)[0]
+						}
+					/>
+					<InputForm
+						label='Dirección'
+						name='address'
+						value={values.address}
+						handleChange={handleChange}
+						EndContent={
+							<PassportIcon className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
+						}
+						isValid={errors.some((error) => error.path[0] === 'address')}
+						errorMessage={
+							errors
+								.filter((error) => error.path[0] === 'address')
+								.map((error) => error.message)[0]
+						}
+					/>
+					<InputForm
+						EndContent={
+							<PhoneIcon className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
+						}
 						label='Celular'
 						name='phone'
 						value={values.phone}
+						type='number'
 						handleChange={handleChange}
-						type='tel'
+						isValid={errors.some((error) => error.path[0] === 'phone')}
+						errorMessage={
+							errors
+								.filter((error) => error.path[0] === 'phone')
+								.map((error) => error.message)[0]
+						}
 					/>
-					<InputForm
-						label='Email'
-						name='email'
-						value={values.email}
-						handleChange={handleChange}
-						type='email'
-					/>
+
 					{isSavingData ? (
 						<>
+							<Divider />
 							<InputForm
-								label='Usuario'
-								name='username'
-								value={values.username}
+								EndContent={
+									<EmailIcon className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
+								}
+								label='Email'
+								variant='bordered'
+								type='email'
+								name='email'
+								value={values.email}
 								handleChange={handleChange}
+								isValid={errors.some((error) => error.path[0] === 'email')}
+								errorMessage={
+									errors
+										.filter((error) => error.path[0] === 'email')
+										.map((error) => error.message)[0]
+								}
 							/>
 							<InputForm
-								label='Contraseña'
+								EndContent={
+									<PasswordIcon className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
+								}
+								label='Constreseña'
+								type='password'
+								variant='bordered'
 								name='password'
 								value={values.password}
 								handleChange={handleChange}
-								type='password'
+								isValid={errors.some((error) => error.path[0] === 'password')}
+								errorMessage={
+									errors
+										.filter((error) => error.path[0] === 'password')
+										.map((error) => error.message)[0]
+								}
 							/>
 						</>
 					) : (

@@ -1,9 +1,7 @@
 package com.hotel.server.controllers;
 
-import java.util.List;
-import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,63 +11,62 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+import java.util.UUID;
+
 import com.hotel.server.models.Room;
 import com.hotel.server.services.RoomService;
 
+import jakarta.validation.Valid;
+
 @RestController
-@RequestMapping("/api/habitacion")
+@RequestMapping("/api/rooms")
 public class RoomController {
+
   @Autowired
   private RoomService roomService;
 
   @GetMapping
-  public List<Room> getAllRooms() {
+  public ResponseEntity<List<Room>> findAll() {
     try {
-      return roomService.getAllRooms();
+      return roomService.findAllRooms();
     } catch (Exception e) {
-      System.out.println(e.getMessage());
-      return null;
+      e.printStackTrace();
+      return ResponseEntity.badRequest().build();
     }
   }
 
-  @GetMapping("/{id}")
-  public Room getByIdRoom(@PathVariable UUID id) {
+  @PostMapping
+  public ResponseEntity<Room> save(@Valid @RequestBody Room room) {
     try {
-      return roomService.getRoomById(id);
+      return roomService.createRoom(room);
     } catch (Exception e) {
-      System.out.println(e.getMessage());
-      return null;
-    }
-  }
-
-  @PostMapping("/create")
-  public Room saveRoom(@RequestBody Room room) {
-    try {
-      return roomService.saveRoom(room);
-    } catch (Exception e) {
-      System.out.println(e.getMessage());
-      return null;
-    }
-  }
-
-  @DeleteMapping("/delete/{id}")
-  public void deleteRoom(@PathVariable UUID id) {
-    try {
-      roomService.deleteRoom(id);
-    } catch (Exception e) {
-      System.out.println(e.getMessage());
+      e.printStackTrace();
+      return ResponseEntity.badRequest().build();
     }
 
   }
 
-  @PutMapping("/update/{id}")
-  public Room updateRoom(@PathVariable UUID id, @RequestBody Room room) {
+  @PutMapping("/{id}")
+  public ResponseEntity<Room> update(@PathVariable UUID id, @Valid @RequestBody Room room) {
     try {
-      return roomService.updateRoom(id, room);
+      return roomService.updateByIdRoom(id, room);
     } catch (Exception e) {
-      System.out.println(e.getMessage());
-      return null;
+      e.printStackTrace();
+      return ResponseEntity.badRequest().build();
     }
+
+  }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Void> deleteById(@PathVariable UUID id) {
+    try {
+      return roomService.deleteByIdRoom(id);
+    } catch (Exception e) {
+      e.printStackTrace();
+      return ResponseEntity.badRequest().build();
+    }
+
   }
 
 }

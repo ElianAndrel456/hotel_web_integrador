@@ -18,6 +18,7 @@ export const useForm = () => {
 
 	return {
 		values,
+		setValues,
 		handleChange,
 		resetInput,
 	}

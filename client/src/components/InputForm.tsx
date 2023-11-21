@@ -18,6 +18,9 @@ interface IInputFormProps {
 		| 'file'
 	isDisabled?: boolean
 	variant?: 'bordered' | 'flat'
+	EndContent?: JSX.Element
+	errorMessage?: string
+	isValid?: boolean
 }
 
 export const InputForm = ({
@@ -29,6 +32,9 @@ export const InputForm = ({
 	type = 'text',
 	isDisabled,
 	variant = 'bordered',
+	EndContent,
+	errorMessage,
+	isValid,
 }: IInputFormProps) => {
 	return (
 		<Input
@@ -42,6 +48,9 @@ export const InputForm = ({
 			type={type}
 			min={type === 'number' ? 0 : undefined}
 			isDisabled={isDisabled ?? false}
+			endContent={EndContent ?? ''}
+			isInvalid={isValid ?? false}
+			errorMessage={errorMessage ?? ''}
 		/>
 	)
 }

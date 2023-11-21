@@ -2,85 +2,76 @@ import { UserIcon } from 'lucide-react'
 import {
 	Button,
 	Divider,
-	Input,
 	Modal,
 	ModalBody,
 	ModalContent,
 	ModalFooter,
 	ModalHeader,
-	Select,
-	SelectItem,
 } from '@nextui-org/react'
-import { useConstants } from '@/constants'
 import { EmailIcon, PassportIcon, PasswordIcon, PhoneIcon } from '@/icons'
 import { useUIStore } from '@/store/ui.store'
-import { useState } from 'react'
 import { register_service_client } from '@/services/auth.service'
 import { toast } from 'react-toastify'
+import { useForm } from '@/hooks'
+import { ZodError, ZodIssue, z } from 'zod'
+import { InputForm } from '.'
+import { useState } from 'react'
 
-export interface UserAccountI {
-	username: string
-	password: string
-	email: string
-	lastname: string
-	type_of_document: string
-	number_of_document: string
-	phone: string
-	name: string
-}
+const registerSchema = z.object({
+	names: z
+		.string()
+		.min(3, { message: 'Nombre muy corto' })
+		.regex(/^[a-zA-Z ]/, 'Solo letras'),
+	dni: z
+		.string()
+		.min(8, { message: 'Deberia tener 8 digitos' })
+		.regex(/^[0-9]{8}$/, 'Solo numeros y 8 digitos'),
+	address: z.string().min(3, { message: 'Dirección muy corta' }),
+	phone: z
+		.string()
+		.min(9, { message: 'Deberia tener 9 digitos' })
+		.regex(/^[0-9]{9}$/, 'Solo numeros y 9 digitos'),
+	email: z.string().email({ message: 'Email invalido' }),
+	password: z
+		.string()
+		.min(8, { message: 'Contraseña debe tener como minimo 8 caracteres' })
+		.regex(
+			/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
+			'Debe contener al menos una mayúscula, una minúscula y un número'
+		),
+})
 
 export const ModalRegister = () => {
-	const { TYPE_OF_DOCUMENTS } = useConstants()
-	const { openModalRegister, changeModalRegister, changeModalLogin } =
+	const { openModalRegister, changeModalRegister, changeModalCode } =
 		useUIStore()
-	const [inputName, setInputName] = useState('')
-	const [inputLastName, setInputLastName] = useState('')
-	const [inputTypeOfDocument, setInputTypeOfDocument] = useState('')
-	const [inputNumberDocument, setInputNumberDocument] = useState('')
-	const [inputPhone, setInputPhone] = useState('')
-	const [inputEmail, setInputEmail] = useState('')
-	const [inputUser, setInputUser] = useState('')
-	const [inputPassword, setInputPassword] = useState('')
+	const { values, handleChange, resetInput } = useForm()
+	const [errors, setErrors] = useState<ZodIssue[]>([])
 
-	const onSubmit = (e: React.FormEvent) => {
-		e.preventDefault()
-
-		const userAccount = {
-			name: inputName,
-			lastname: inputLastName,
-			email: inputEmail,
-			type_of_document: inputTypeOfDocument,
-			number_of_document: inputNumberDocument,
-			phone: inputPhone,
-			username: inputUser,
-			password: inputPassword,
-		} as UserAccountI
+	const onSubmit = async () => {
+		const registerUser = {
+			names: values.names,
+			dni: values.dni,
+			address: values.address,
+			phone: values.phone,
+			email: values.email,
+			password: values.password,
+		}
 
 		try {
-			register(userAccount)
-				.then(() => {
-					changeModalRegister(false)
-					toast('Se ha registrado correctamente', {
-						position: 'bottom-right',
-						closeOnClick: true,
-						type: 'success',
-					})
-					changeModalLogin(true)
-				})
-				.catch((error) => {
-					toast('Ocurrio un error', {
-						position: 'bottom-right',
-						closeOnClick: true,
-						type: 'error',
-					})
-					console.log(error)
-				})
+			const parse = registerSchema.parse(registerUser)
+			console.log(parse)
+			const data = await register_service_client(registerUser)
+			localStorage.setItem('email_register', data.email)
+			resetInput()
+			changeModalRegister(false)
+			changeModalCode(true)
+			toast.success('Registro exitoso')
 		} catch (error) {
-			console.log(error)
+			toast.error('Error al registrarse, verifique si los datos son correctos')
+			if (typeof error !== 'string' && error instanceof ZodError) {
+				setErrors(error.issues)
+			}
 		}
-	}
-	async function register(create_user: UserAccountI) {
-		await register_service_client(create_user)
 	}
 
 	return (
@@ -96,111 +87,102 @@ export const ModalRegister = () => {
 							Registrate
 						</ModalHeader>
 						<ModalBody>
-							<Input
-								isRequired
-								autoFocus
-								endContent={
+							<InputForm
+								label='Nombres'
+								name='names'
+								value={values.names}
+								handleChange={handleChange}
+								EndContent={
 									<UserIcon className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
 								}
-								label='Nombre'
-								placeholder='Ingrese su nombre'
-								variant='bordered'
-								value={inputName}
-								onChange={(e) => setInputName(e.target.value)}
-							/>
-							<Input
-								isRequired
-								autoFocus
-								endContent={
-									<UserIcon className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
+								isValid={errors.some((error) => error.path[0] === 'names')}
+								errorMessage={
+									errors
+										.filter((error) => error.path[0] === 'names')
+										.map((error) => error.message)[0]
 								}
-								label='Apellido'
-								placeholder='Ingrese su apellido'
-								variant='bordered'
-								value={inputLastName}
-								onChange={(e) => setInputLastName(e.target.value)}
 							/>
-							<Select
-								isRequired
-								label='Seleccione su tipo de documento'
-								className='max-w-xs'
-								value={inputTypeOfDocument}
-								onChange={(e) => setInputTypeOfDocument(e.target.value)}
-							>
-								{TYPE_OF_DOCUMENTS.map((t) => (
-									<SelectItem
-										key={t.value}
-										value={t.value}
-									>
-										{t.label}
-									</SelectItem>
-								))}
-							</Select>
-							<Input
-								isRequired
-								autoFocus
-								endContent={
+							<InputForm
+								label='N° de Documento | DNI'
+								name='dni'
+								value={values.dni}
+								handleChange={handleChange}
+								type='number'
+								EndContent={
 									<PassportIcon className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
 								}
-								label='N° de Documento'
-								placeholder='Ingrese su numero de documento'
-								variant='bordered'
-								type='number'
-								minLength={8}
-								value={inputNumberDocument}
-								onChange={(e) => setInputNumberDocument(e.target.value)}
+								isValid={errors.some((error) => error.path[0] === 'dni')}
+								errorMessage={
+									errors
+										.filter((error) => error.path[0] === 'dni')
+										.map((error) => error.message)[0]
+								}
 							/>
-							<Input
-								isRequired
-								autoFocus
-								endContent={
+							<InputForm
+								label='Dirección'
+								name='address'
+								value={values.address}
+								handleChange={handleChange}
+								EndContent={
+									<PassportIcon className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
+								}
+								isValid={errors.some((error) => error.path[0] === 'address')}
+								errorMessage={
+									errors
+										.filter((error) => error.path[0] === 'address')
+										.map((error) => error.message)[0]
+								}
+							/>
+							<InputForm
+								EndContent={
 									<PhoneIcon className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
 								}
 								label='Celular'
-								placeholder='Ingrese su numero de celular'
-								variant='bordered'
+								name='phone'
+								value={values.phone}
 								type='number'
-								minLength={9}
-								value={inputPhone}
-								onChange={(e) => setInputPhone(e.target.value)}
+								handleChange={handleChange}
+								isValid={errors.some((error) => error.path[0] === 'phone')}
+								errorMessage={
+									errors
+										.filter((error) => error.path[0] === 'phone')
+										.map((error) => error.message)[0]
+								}
 							/>
-							<Input
-								isRequired
-								autoFocus
-								endContent={
+							<Divider />
+							<InputForm
+								EndContent={
 									<EmailIcon className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
 								}
 								label='Email'
-								placeholder='Ingrese su correo electronico'
 								variant='bordered'
 								type='email'
-								value={inputEmail}
-								onChange={(e) => setInputEmail(e.target.value)}
-							/>
-							<Divider />
-							<Input
-								isRequired
-								autoFocus
-								endContent={
-									<UserIcon className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
+								name='email'
+								value={values.email}
+								handleChange={handleChange}
+								isValid={errors.some((error) => error.path[0] === 'email')}
+								errorMessage={
+									errors
+										.filter((error) => error.path[0] === 'email')
+										.map((error) => error.message)[0]
 								}
-								label='Usuario'
-								placeholder='Ingrese su usuario'
-								variant='bordered'
-								value={inputUser}
-								onChange={(e) => setInputUser(e.target.value)}
 							/>
-							<Input
-								isRequired
-								endContent={
+							<InputForm
+								EndContent={
 									<PasswordIcon className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
 								}
 								label='Constreseña'
-								placeholder='Ingrese su contraseña'
 								type='password'
 								variant='bordered'
-								value={inputPassword}
-								onChange={(e) => setInputPassword(e.target.value)}
+								name='password'
+								value={values.password}
+								handleChange={handleChange}
+								isValid={errors.some((error) => error.path[0] === 'password')}
+								errorMessage={
+									errors
+										.filter((error) => error.path[0] === 'password')
+										.map((error) => error.message)[0]
+								}
 							/>
 						</ModalBody>
 						<ModalFooter>

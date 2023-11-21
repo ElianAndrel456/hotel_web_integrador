@@ -10,6 +10,7 @@ import { ClientPage } from '@/pages/admin/ClientPage'
 import { ListOfReservationcPage } from '@/pages/admin/ListOfReservationcPage'
 import { AditionalServicesPage } from '@/pages/admin/AditionalServicesPage'
 import RoomsPage from '@/pages/admin/RoomsPage'
+import { NotFoundPage } from '@/pages/NotFoundPage'
 
 export const router = createBrowserRouter([
 	{
@@ -53,5 +54,10 @@ export const router = createBrowserRouter([
 				element: <RoomsPage />,
 			},
 		],
+	},
+	{
+		path: '*',
+		element: <NotFoundPage />,
+		errorElement: <NotFoundPage />,
 	},
 ])

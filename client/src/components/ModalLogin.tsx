@@ -15,6 +15,7 @@ import {
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { login_service } from '@/services/auth.service'
+import { toast } from 'react-toastify'
 
 export const ModalLogin = () => {
 	const navigate = useNavigate()
@@ -27,38 +28,26 @@ export const ModalLogin = () => {
 		e.preventDefault()
 
 		const userAccount = {
-			user: inputUser,
+			email: inputUser,
 			password: inputPassword,
 		}
 
 		try {
 			login_service(userAccount)
 				.then((res) => {
-					console.log(res)
-
-					if (Object.prototype.hasOwnProperty.call(res, 'client')) {
-						console.log('es cliente')
-						setUser(res.client)
-						changeModalLogin(false)
-						changeIsAuth(true)
-					} else if (Object.prototype.hasOwnProperty.call(res, 'manager')) {
-						console.log('es manager')
-						setUser(res.manager)
-						changeModalLogin(false)
-						changeIsAuth(true)
+					if (!res) throw new Error('Error al iniciar sesión')
+					setUser(res)
+					changeModalLogin(false)
+					changeIsAuth(true)
+					if (res && res.rol === 'ADMINISTRADOR') {
 						navigate('/admin')
-					} else {
-						throw new Error('No se pudo identificar el tipo de usuario')
 					}
 				})
 				.catch((err) => {
 					console.log(err)
 				})
-
-			/* changeIsAuth(true)
-			changeModalLogin(false) */
 		} catch (error) {
-			console.log(error)
+			toast.error('Error al iniciar sesión, verifique sus credenciales')
 		}
 	}
 
@@ -82,9 +71,9 @@ export const ModalLogin = () => {
 								endContent={
 									<UserIcon className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
 								}
-								label='Usuario'
-								placeholder='Ingresa tu Usuario'
+								label='Email'
 								variant='bordered'
+								type='email'
 								value={inputUser}
 								onChange={(e) => setInputUser(e.target.value)}
 							/>

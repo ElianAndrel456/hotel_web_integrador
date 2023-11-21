@@ -1,17 +1,16 @@
 export const COLUMNS_CLIENT = [
 	{
-		key: 'number_of_document',
+		key: 'dni',
 		label: 'DNI',
 	},
 	{
-		key: 'type_of_document',
-		label: 'TIPO DE DOCUMENTO',
+		key: 'names',
+		label: 'NOMBRES',
 	},
 	{
-		key: 'name',
-		label: 'NOMBRE',
+		key: 'address',
+		label: 'DIRECCION',
 	},
-
 	{
 		key: 'phone',
 		label: 'TELEFONO',
@@ -41,6 +40,10 @@ export const COLUMNS_SERVICES = [
 	{
 		key: 'price',
 		label: 'PRECIO',
+	},
+	{
+		key: 'available',
+		label: 'DISPONIBILIDAD',
 	},
 	{
 		key: 'actions',
@@ -78,19 +81,23 @@ export const DATA_OF_SERVICES = [
 export const COLUMNS_ROOMS = [
 	{ key: 'id', label: 'ID' },
 	{
-		key: 'roomNumber',
+		key: 'numberRoom',
 		label: 'NUMERO DE HABITACION',
 	},
 	{
-		key: 'category',
+		key: 'categoryRoom',
 		label: 'CATEGORIA',
 	},
 	{
-		key: 'floor',
-		label: 'PISO',
+		key: 'typeRoom',
+		label: 'TIPO DE HABITACION',
 	},
 	{
-		key: 'status',
+		key: 'price',
+		label: 'PRECIO X NOCHE',
+	},
+	{
+		key: 'state',
 		label: 'ESTADO',
 	},
 	{
@@ -113,28 +120,23 @@ export const COLUMNS_RESERVATIONS = [
 		label: 'HABITACION',
 	},
 	{
-		key: 'reservationDate',
+		key: 'dateReserved',
 		label: 'FECHA DE RESERVA',
 	},
 	{
-		key: 'dateIn',
+		key: 'dateEntry',
 		label: 'FECHA DE ENTRADA',
 	},
 	{
-		key: 'dateOut',
+		key: 'dateDeparture',
 		label: 'FECHA DE SALIDA',
-	},
-
-	{
-		key: 'numberPeople',
-		label: 'NUMERO DE PERSONAS',
 	},
 	{
 		key: 'aditionalServices',
 		label: 'SERVICIOS ADICIONALES',
 	},
 	{
-		key: 'reservationState',
+		key: 'state',
 		label: 'ESTADO',
 	},
 	{
@@ -144,23 +146,6 @@ export const COLUMNS_RESERVATIONS = [
 	{
 		key: 'actions',
 		label: 'ACCIONES',
-	},
-]
-
-export const RESERVED_DATA = [
-	{
-		dateIn: '2021-10-10',
-		dateOut: '2021-10-15',
-		numberPeople: 2,
-		reservationState: '0',
-		total: 100,
-		room: '2dae1b4f-8fbd-4f99-bb63-323b54e7de7d',
-		client: '6e4bc89e-ccd4-44f5-9e02-c964cd515339',
-		manager: 'd24eac17-bb69-43cd-bba5-dc003da857e8',
-		additionalServices: [
-			'27bfc1d1-2c84-466d-b4cf-2fa59ff69d70',
-			'614d338a-eaed-4904-b59e-4b136f4644e3',
-		],
 	},
 ]
 

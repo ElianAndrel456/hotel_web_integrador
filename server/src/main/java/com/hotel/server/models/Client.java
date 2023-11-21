@@ -2,41 +2,66 @@ package com.hotel.server.models;
 
 import java.util.UUID;
 
-import com.hotel.server.Emuns.TypeDocE;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "cliente")
+@Table(name = "clientes")
 public class Client {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
-  @Column(name = "id", nullable = false)
+  @Column(name = "id")
   private UUID id;
 
-  @Column(name = "tipo_documento", nullable = false)
-  private TypeDocE type_of_document;// --> 0 -> DNI 1 -> PASAPORTE 2-> CARNET DE EXTRANJERIA
+  @NotNull
+  @NotBlank
+  @Size(min = 3, max = 50)
+  @Column(name = "nombres", nullable = false)
+  private String names;
 
-  @Column(name = "numero_documento", nullable = false)
-  private String number_of_document;
-
-  @Column(name = "nombre", nullable = false)
-  private String name;
-
-  @Column(name = "apellido", nullable = false)
-  private String lastname;
-
+  @NotNull
+  @Email
   @Column(name = "correo", nullable = false, unique = true)
   private String email;
 
+  @NotNull
+  @NotBlank
+  @Pattern(regexp = "^[0-9]{9}$")
   @Column(name = "telefono", nullable = false)
   private String phone;
+
+  @NotNull
+  @NotBlank
+  @Size(min = 3, max = 200)
+  @Column(name = "direccion", nullable = false)
+  private String address;
+
+  @NotNull
+  @Pattern(regexp = "^[0-9]{8}$")
+  @Column(name = "dni", nullable = false, unique = true)
+  private String dni;
+
+  @NotNull
+  @NotBlank
+  @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$")
+  @Column(name = "contrasena", nullable = false)
+  private String password;
+
+  @Column(name = "codigo", nullable = true)
+  private String code;
+
+  @Column(name = "verificado", nullable = false)
+  private Boolean isVerified;
 
 }

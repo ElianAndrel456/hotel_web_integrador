@@ -7,8 +7,6 @@ interface AuthStore {
 		name: string
 		email: string
 		phone: string
-		username: string
-		lastname?: string
 		rol?: string
 	}
 	isAuth: boolean
@@ -21,8 +19,6 @@ export const initial_user = {
 	name: '',
 	email: '',
 	phone: '',
-	username: '',
-	lastname: '',
 	rol: '',
 }
 

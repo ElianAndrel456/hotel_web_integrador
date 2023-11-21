@@ -29,7 +29,7 @@ export const DashboardPage = () => {
 	const dataReservationsChart = React.useMemo(() => {
 		const data: { time: string; value: number }[] = []
 		reservations.forEach((r) => {
-			const reservationDate = new Date(r.reservationDate)
+			const reservationDate = new Date(r.dateReserved)
 
 			const year = reservationDate.getFullYear()
 			const month = (reservationDate.getMonth() + 1).toString().padStart(2, '0') // Agrega un cero adelante si es menor a 10

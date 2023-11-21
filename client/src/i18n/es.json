@@ -1,0 +1,69 @@
+{
+  "navbar": {
+    "brand": "HOTEL",
+    "home": "Home",
+    "about": "Sobre nosotros"
+  },
+
+  "home": {
+    "title": "Hotel Waynapicchu",
+    "subtitle": "Un hotel acogedor perfectamente diseñado para convertir tus gratos momentos en una experiencia mágica e inolvidable.",
+    "button": " Reserva tu Habitacion ahora",
+    "title_section": "Relájate en nuestra Suite",
+    "subtitle_section": "Nuestra Suite es probablemente el ambiente que más refleja la personalidad del habitante y el más laborioso de planear. El espacio requiere confort, hospitalidad y estilo para recibir los momentos más íntimos del usuario. Es allí donde están nuestros recuerdos más profundos, nuestras piezas favoritas.",
+    "title_section2": "Conoce nuestras habitaciones",
+    "CARDS_INFORMATION": [
+      {
+        "title": "PLATA",
+        "img_url": "https://cf.bstatic.com/xdata/images/hotel/max1024x768/343137940.jpg?k=36b2680fc93291f7eeac1a4e3716b53700e8ca16b67b48345d9f3f775d72e779&o=&hp=1",
+        "ditails_url": "#",
+        "reservation_url": "#",
+        "description": "Esta categoría de habitación ofrece una estancia cómoda y conveniente para los huéspedes que desean disfrutar de una habitación con camas adicionales y comodidades modernas, como televisión por cable y teléfono fijo, mientras tienen la privacidad de un baño propio.",
+        "bg_color": "",
+        "features": [
+          "2 Camas de Plaza y media",
+          "Baño privado",
+          "TV por cable",
+          "Teléfono fijo",
+          "Wifi",
+          "Desayuno incluido"
+        ]
+      },
+      {
+        "title": "Diamante",
+        "img_url": "https://cf.bstatic.com/xdata/images/hotel/max1024x768/117560853.jpg?k=b6b488177bf18ad6f07223d116f1b30d3bf7c58378781f08a3393a9f889fc1d7&o=&hp=1",
+        "ditails_url": "#",
+        "reservation_url": "#",
+        "bg_color": "bg-gradient-to-br from-orange-200 to-red-900 text-white",
+        "description": "La categoría Diamante está diseñada para ofrecer una experiencia de alojamiento de alto nivel con comodidades exclusivas como el jacuzzi, una sala de estar privada y la comodidad adicional de tener un bar en las instalaciones del hotel. Estas características crean un ambiente lujoso y cómodo para los visitantes que buscan una estancia verdaderamente indulgente.",
+        "features": [
+          "1 Cama QUEEN",
+          "Baño privado con Jacuzzi",
+          "TV por cable",
+          "Teléfono fijo",
+          "Wifi",
+          "Desayuno incluido",
+          "Sala estar privada",
+          "Bar"
+        ]
+      },
+      {
+        "title": "Oro",
+        "img_url": "https://cf.bstatic.com/xdata/images/hotel/max1024x768/85796311.jpg?k=76f41f9cd013f4b37648b89ac9be1b721fd1228890633e964d317060fe338c1c&o=&hp=1",
+        "ditails_url": "#",
+        "reservation_url": "#",
+        "description": "La categoría Oro está diseñada para ofrecer a los huéspedes una experiencia de alojamiento de alta calidad, con comodidades adicionales como el jacuzzi y una sala de estar, además de las comodidades estándar como la televisión por cable y el teléfono fijo. Esto crea un ambiente lujoso y cómodo para los visitantes del hotel.",
+        "bg_color": "",
+        "features": [
+          "1 Cama QUEEN",
+          "Baño privado con Jacuzzi",
+          "TV por cable",
+          "Teléfono fijo",
+          "Wifi",
+          "Desayuno incluido",
+          "Sala estar privada"
+        ]
+      }
+    ]
+  }
+}

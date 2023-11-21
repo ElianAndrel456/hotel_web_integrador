@@ -4,75 +4,81 @@ import { IRooms } from '@/pages/admin/RoomsPage'
 type RoomWithOutId = Omit<IRooms, 'id'>
 
 export async function getAllRooms() {
-	try {
-		const response = await fetch(`${URL_API}/api/habitacion`)
-		const data = await response.json()
+  try {
+    const response = await fetch(`${URL_API}/api/rooms`)
+    const data = await response.json()
 
-		return data
-	} catch (error) {
-		console.log(error)
-	}
+    const contractRooms = data.map(
+      (room: {
+        id: string
+        numberRoom: string
+        categoryRoom: 'PLATA' | 'ORO' | 'DIAMANTE'
+        typeRoom: 'INDIVIDUAL' | 'DOBLE' | 'TRIPLE' | 'SUITE'
+        price: number
+        state: 'DISPONIBLE' | 'RESERVADO' | 'MANTENIMIENTO'
+      }) => ({
+        id: room.id,
+        numberRoom: room.numberRoom,
+        categoryRoom: room.categoryRoom,
+        typeRoom: room.typeRoom,
+        price: room.price,
+        state: room.state,
+      })
+    )
+
+    return contractRooms
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 export async function createRoomService(room: RoomWithOutId) {
-	try {
-		const response = await fetch(`${URL_API}/api/habitacion/create`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
+  try {
+    const response = await fetch(`${URL_API}/api/rooms`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
 
-			body: JSON.stringify({
-				floor: room.floor,
-				categoryRoom: room.category,
-				state: room.status,
-				roomNumber: room.roomNumber,
-			}),
-		})
-		const data = await response.json()
+      body: JSON.stringify(room),
+    })
+    const data = await response.json()
 
-		return {
-			id: data.id,
-			floor: data.floor,
-			category: data.categoryRoom,
-			status: data.state,
-			roomNumber: data.roomNumber,
-		}
-	} catch (error) {
-		console.log(error)
-	}
+    return {
+      id: data.id,
+      price: data.price,
+      typeRoom: data.typeRoom,
+      categoryRoom: data.categoryRoom,
+      state: data.state,
+      numberRoom: data.numberRoom,
+    } as IRooms
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 export async function updateRoomService(room: IRooms) {
-	try {
-		const response = await fetch(
-			`${URL_API}/api/habitacion/update/${room.id}`,
-			{
-				method: 'PUT',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({
-					floor: room.floor,
-					categoryRoom: room.category,
-					state: room.status,
-					roomNumber: room.roomNumber,
-				}),
-			}
-		)
-		const data = await response.json()
-		return data
-	} catch (error) {
-		console.log(error)
-	}
+  try {
+    const response = await fetch(`${URL_API}/api/rooms/${room.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(room),
+    })
+    const data = await response.json()
+    return data
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 export async function deleteRoomService(id: IRooms['id']) {
-	try {
-		await fetch(`${URL_API}/api/habitacion/delete/${id}`, {
-			method: 'DELETE',
-		})
-	} catch (error) {
-		console.log(error)
-	}
+  try {
+    await fetch(`${URL_API}/api/rooms/${id}`, {
+      method: 'DELETE',
+    })
+  } catch (error) {
+    console.log(error)
+  }
 }
