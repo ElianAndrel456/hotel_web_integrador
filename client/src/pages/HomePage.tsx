@@ -1,5 +1,5 @@
-import { Button, Image, Spacer } from '@nextui-org/react'
-import { CardRoom } from '@/components'
+import { Button, Image, Spacer, useDisclosure } from '@nextui-org/react'
+import { ActionModal, CardRoom } from '@/components'
 import { useScrollY } from '@/hooks'
 import { ArrowDownCircleIcon } from '@/icons'
 import { motion } from 'framer-motion'
@@ -7,8 +7,11 @@ import { useAuthStore } from '@/store/auth.store'
 import { useUIStore } from '@/store/ui.store'
 import { useConstants } from '@/constants'
 import { i18n } from '@/i18n'
+import { useState } from 'react'
 
 const HomePage = () => {
+  const [openCategoryModal, setOpenCategoryModal] = useState<number>(0)
+  const { onOpenChange, isOpen, onOpen } = useDisclosure()
   const { language } = useUIStore()
   const { isAuth } = useAuthStore()
   const { changeModalLogin } = useUIStore()
@@ -97,9 +100,11 @@ const HomePage = () => {
                   key={index}
                   title={card.title}
                   img_url={card.img_url}
-                  ditails_url={card.ditails_url}
+                  openModalDitails={() => {
+                    onOpen()
+                    setOpenCategoryModal(index)
+                  }}
                   reservation_url={card.reservation_url}
-                  bg_color={card.bg_color ?? ''}
                   children={card.children}
                 />
               </motion.div>
@@ -107,6 +112,19 @@ const HomePage = () => {
           </div>
         </section>
       </main>
+      <ActionModal
+        title=''
+        openModal={isOpen}
+        setOpenModal={onOpenChange}
+      >
+        {openCategoryModal === 0 ? (
+          <section>plata</section>
+        ) : openCategoryModal === 1 ? (
+          <section>diamante</section>
+        ) : (
+          <section>oro</section>
+        )}
+      </ActionModal>
     </>
   )
 }

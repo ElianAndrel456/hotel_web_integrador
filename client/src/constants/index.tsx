@@ -90,8 +90,9 @@ export const useConstants = () => {
         ...card,
         children: (
           <div
-            className=' text-gray-400 text-sm font-thin py-6 space-y-4'
-            style={card.bg_color ? { color: '#FFF' } : {}}
+            className={`text-sm font-thin py-6 space-y-4 ${
+              card.title === i18n[language].home.CARDS_INFORMATION[1].title ? 'text-white' : 'text-gray-400'
+            }`}
           >
             <p>{card.description}</p>
             <ul className='space-y-2'>

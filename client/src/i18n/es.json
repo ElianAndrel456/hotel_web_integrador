@@ -1,8 +1,42 @@
 {
+  "modal_register": {
+    "title": "Registrate",
+    "names": "Nombres",
+    "email": "Correo",
+    "address": "Dirección",
+    "phone": "Teléfono",
+    "dni": "N° de Documento | DNI",
+    "password": "Contraseña",
+    "button_close": "Cerrar",
+    "button_register": "Iniciar sesión"
+  },
+  "modal_login": {
+    "title": "Iniciar sesión",
+    "email": "Correo",
+    "password": "Contraseña",
+    "button_close": "Cerrar",
+    "button_login": "Ingresar",
+    "link_register": "Crear un nueva cuenta",
+    "check_remember": "Recordarme"
+  },
+
+  "modal_code": {
+    "title": "Verificar código",
+    "message": "Se ha enviado un codigo de 6 digitos a su correo electronico por favor revisar en la carpeta de span",
+    "button_close": "Cerrar",
+    "button_verify": "Verificar",
+    "label_code": "Ingrese el código de 6 digitos"
+  },
+
   "navbar": {
     "brand": "HOTEL",
-    "home": "Home",
-    "about": "Sobre nosotros"
+    "home": "Inicio",
+    "about": "Sobre nosotros",
+    "reservation": "Reserva",
+    "contact": "Contacto",
+    "signin": "Iniciar sesión",
+    "signup": "Registrarse",
+    "exit": "Salir"
   },
 
   "home": {
@@ -19,7 +53,6 @@
         "ditails_url": "#",
         "reservation_url": "#",
         "description": "Esta categoría de habitación ofrece una estancia cómoda y conveniente para los huéspedes que desean disfrutar de una habitación con camas adicionales y comodidades modernas, como televisión por cable y teléfono fijo, mientras tienen la privacidad de un baño propio.",
-        "bg_color": "",
         "features": [
           "2 Camas de Plaza y media",
           "Baño privado",
@@ -34,7 +67,6 @@
         "img_url": "https://cf.bstatic.com/xdata/images/hotel/max1024x768/117560853.jpg?k=b6b488177bf18ad6f07223d116f1b30d3bf7c58378781f08a3393a9f889fc1d7&o=&hp=1",
         "ditails_url": "#",
         "reservation_url": "#",
-        "bg_color": "bg-gradient-to-br from-orange-200 to-red-900 text-white",
         "description": "La categoría Diamante está diseñada para ofrecer una experiencia de alojamiento de alto nivel con comodidades exclusivas como el jacuzzi, una sala de estar privada y la comodidad adicional de tener un bar en las instalaciones del hotel. Estas características crean un ambiente lujoso y cómodo para los visitantes que buscan una estancia verdaderamente indulgente.",
         "features": [
           "1 Cama QUEEN",
@@ -53,7 +85,6 @@
         "ditails_url": "#",
         "reservation_url": "#",
         "description": "La categoría Oro está diseñada para ofrecer a los huéspedes una experiencia de alojamiento de alta calidad, con comodidades adicionales como el jacuzzi y una sala de estar, además de las comodidades estándar como la televisión por cable y el teléfono fijo. Esto crea un ambiente lujoso y cómodo para los visitantes del hotel.",
-        "bg_color": "",
         "features": [
           "1 Cama QUEEN",
           "Baño privado con Jacuzzi",
@@ -65,5 +96,48 @@
         ]
       }
     ]
+  },
+
+  "about": {
+    "title": "Sobre nosotros",
+    "article_1": {
+      "description": "Somos una empresa con mas de 8 años en la ciudad del CUSCO, trabajamos en una larga cadena hoteles con prestigio a nivel nacional poniendo a tu disposición nuestra experiencia laboral en Waynappichu Hotel.",
+      "list": ["Ubicación estratégica", "Seguridad Garantizada", "Habitaciones Cómodas", "Garantizamos el mejor precio"]
+    },
+    "article_2": {
+      "title": "¿Quiénes Somos?",
+      "description": "Somos la mejor alternativa para su viaje de negocios y placer. Estamos ubicados en el distrito de Wánchaq Av. Garcilaso 216-A (Costado de la Caja Tacna), uno de los distritos más seguros de Cusco, tenemos una amplia experiencia en el rubro de hotelería ya que estamos mas de 8 años en la ciudad brindándote una experiencia única e inolvidable."
+    },
+    "article_3": {
+      "title": "Nuestra Misión",
+      "description": "Ser líderes en el sector de 2 estrellas, logrando dar un servicio personalizado ayudando a revalorar la cultura local de los destinos en los que vayamos a operar.."
+    },
+    "article_4": {
+      "title": "Nuestra Visión",
+      "description": "Ser una empresa que contribuye al desarrollo cultural y turístico del país, teniendo siempre como meta la calidad de nuestros servicios gracias a nuestro valioso equipo humano."
+    },
+    "article_5": {
+      "title": "Nuestras Cualidades",
+      "cualities": ["Responsables", "Eficientes", "Detallistas", "Apasionados"]
+    },
+    "article_6": {
+      "title": "Nuestro Equipo",
+      "description": "El equipo de <b>Waynapicchu Hotel</b> está formado por profesionales con amplia experiencia en el sector, que dan preferencia a un trato personalizado, un valor añadido y una de las razones principales por las cuales muchos de nuestros clientes vuelven a solicitar nuestros servicios en sus visitas. Agradecemos cualquier sugerencia, que será inmediatamente atendida por nuestra dirección, para la constante y mejora de la calidad del hotel"
+    }
+  },
+
+  "contact": {
+    "title": "Contactanos",
+    "section_1": {
+      "title": "Queremos Saber mas de ti",
+      "subtitle": "Contactanos",
+      "description": "Cómo podemos ayudarte? En Waynapicchu Hotel Cusco estamos a tu disposición para que tu estadía sea perfecta. Déjanos tus comentarios aquí.",
+      "button": "Enviar"
+    }
+  },
+
+  "footer": {
+    "address": "DIRECCION",
+    "networks": "REDES SOCIALES"
   }
 }

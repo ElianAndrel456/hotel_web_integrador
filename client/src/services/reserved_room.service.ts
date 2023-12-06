@@ -41,7 +41,7 @@ export const getAllReservations = async () => {
       })
     )
 
-    return contractReservation
+    return contractReservation as IReservation[]
   } catch (error) {
     console.log(error)
   }
@@ -76,7 +76,22 @@ export const createReservation = async (reservation: IReservationWithOutId) => {
   }
 }
 
-export const updateReservation = async (reservation: IReservation) => {
+export const updateReservation = async (reservation: {
+  id: string
+  dateEntry: string
+  dateDeparture: string
+  state: 'PENDIENTE' | 'CONFIRMADO' | 'CANCELADO' | 'FINALIZADO'
+  total: number
+  room: {
+    id: string
+  }
+  client: {
+    id: string
+  }
+  services: {
+    id: string
+  }[]
+}) => {
   try {
     const res = await fetch(`${URL_API}/api/reserveds/${reservation.id}`, {
       method: 'PUT',

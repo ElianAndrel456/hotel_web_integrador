@@ -1,16 +1,15 @@
 export interface ICardRoomProps {
-	title: string
-	img_url?: string
-	ditails_url?: string
-	reservation_url?: string
-	bg_color?: string
-	children?: React.ReactNode
+  title: string
+  img_url?: string
+  openModalDitails?: () => void
+  reservation_url?: string
+  children?: React.ReactNode
 }
 export interface IModalAuthProps {
-	isOpen: boolean
-	onOpenChange: () => void
+  isOpen: boolean
+  onOpenChange: () => void
 }
 
 export interface ILargeBannerProps {
-	title: string
+  title: string
 }

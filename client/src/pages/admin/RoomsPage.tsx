@@ -6,7 +6,7 @@ import { createRoomService, deleteRoomService, getAllRooms, updateRoomService } 
 import { useRoomStore } from '@/store/room.store'
 import { Chip, Select, SelectItem, Spacer } from '@nextui-org/react'
 import { DotIcon } from 'lucide-react'
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { toast } from 'react-toastify'
 import { z } from 'zod'
 
@@ -44,7 +44,7 @@ const RoomsPage = () => {
       const rooms = await getAllRooms()
       setRoomsStore(rooms)
     })()
-  }, [rooms, setRoomsStore])
+  }, [setRoomsStore])
 
   const onOpenModalCreate = () => {
     resetInput()
@@ -160,6 +160,15 @@ const RoomsPage = () => {
     }
   }
 
+  const renderRooms = useMemo(() => {
+    return rooms.filter((room) => {
+      if (values.filter && values.filter.length > 0) {
+        return room.numberRoom.includes(values.filter)
+      }
+      return room
+    })
+  }, [rooms, values.filter])
+
   const renderCell = React.useCallback(
     (item: IRooms, columnKey: React.Key) => {
       const cellValue = item[columnKey as keyof IRooms]
@@ -217,11 +226,11 @@ const RoomsPage = () => {
             handleChange={handleChange}
             onOpenModalCreate={onOpenModalCreate}
             buttonText='Agregar una habitacion'
-            placeholder='Buscar por categoria'
+            placeholder='Buscar por número de habitacion'
           />
         }
         columns={COLUMNS_ROOMS}
-        items={rooms}
+        items={renderRooms}
         renderCell={renderCell}
       />
       <ActionModal

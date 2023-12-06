@@ -2,9 +2,8 @@ import { ActionDropDown, ActionModal, InputForm, TableData, TopContent } from '@
 import { useConstants } from '@/constants'
 import { COLUMNS_RESERVATIONS } from '@/constants/data'
 import { useForm, useModal } from '@/hooks'
-import { createReservation, deleteResevation } from '@/services/reserved_room.service'
+import { createReservation, deleteResevation, updateReservation } from '@/services/reserved_room.service'
 import { useServiceStore } from '@/store/aditionalService.store'
-import { useAuthStore } from '@/store/auth.store'
 import { useClientStore } from '@/store/client.store'
 import { useReservationStore } from '@/store/reservation.store'
 import { useRoomStore } from '@/store/room.store'
@@ -28,7 +27,7 @@ export interface IReservation {
   room: {
     id: IRooms['id']
   }
-  services?: string[]
+  services?: { id: string }[]
 }
 
 export const ListOfReservationcPage = () => {
@@ -36,7 +35,6 @@ export const ListOfReservationcPage = () => {
   const { values, handleChange, resetInput, setValues } = useForm()
   const { RESERVATION_STATE } = useConstants()
   const [columnKeySelected, setColumnKeySelected] = React.useState<null | string>(null)
-  const { user } = useAuthStore()
   const { rooms } = useRoomStore()
   const { clients } = useClientStore()
   const { services } = useServiceStore()
@@ -116,11 +114,9 @@ export const ListOfReservationcPage = () => {
         client: {
           id: findClient.id,
         },
-
-        /* 				services: values.services
-					? values.services.split(',').map((s) => ({ id: s }))
-					: [], */
+        services: values.services.split(',').map((id) => ({ id })),
       })
+
       createReservationStore({
         ...res,
         aditionalServices: res.aditionalServices.map((s: { name: string }) => s.name).join(', '),
@@ -139,17 +135,23 @@ export const ListOfReservationcPage = () => {
   const onEdit = async () => {
     try {
       if (!columnKeySelected) return
-      /*    const update_service = {
-        name: values.name,
-        description: values.description,
-        price: parseFloat(values.price),
-      } */
-      /* 	await update(columnKeySelected, update_service)
+      const update_service = {
+        id: columnKeySelected,
+        dateEntry: values.dateEntry,
+        dateDeparture: values.dateDeparture,
+        state: values.state as IReservationState,
+        total: total,
+        room: {
+          id: values.room,
+        },
+        client: {
+          id: values.client,
+        },
+        services: values.services.split(',').map((id) => ({ id })),
+      }
+      const data = await updateReservation(update_service)
 
-			updateReservationStore(columnKeySelected, {
-				id: columnKeySelected,
-				...update_service,
-			}) */
+      updateReservationStore(data)
 
       toast('Se edito la reservacion')
 
@@ -174,11 +176,32 @@ export const ListOfReservationcPage = () => {
       toast('Ocurrio un error al eliminar', {
         type: 'error',
       })
-      console.log(error)
     }
   }
 
   const reservedsRender = useMemo(() => {
+    if (values.filter && values.filter.length > 0) {
+      return reservations
+        .filter(
+          (item) =>
+            item.client?.id === clients.find((c) => c.names.toLowerCase().includes(values.filter.toLowerCase()))?.id
+        )
+        .map((item) => ({
+          id: item.id,
+          client: item.client ? clients.find((c) => c.id === item.client.id)!.names : '-',
+          room: item.room
+            ? rooms.find((r) => r.id === item.room.id)!.numberRoom +
+              ' ' +
+              rooms.find((r) => r.id === item.room.id)!.typeRoom
+            : '-',
+          dateEntry: new Date(item.dateEntry).toLocaleDateString(),
+          dateDeparture: new Date(item.dateDeparture).toLocaleDateString(),
+          dateReserved: new Date(item.dateReserved).toLocaleDateString(),
+          state: item.state,
+          total: item.total,
+        }))
+    }
+
     return reservations.map((item) => ({
       id: item.id,
       client: item.client ? clients.find((c) => c.id === item.client.id)!.names : '-',
@@ -193,7 +216,7 @@ export const ListOfReservationcPage = () => {
       state: item.state,
       total: item.total,
     }))
-  }, [clients, reservations, rooms])
+  }, [clients, reservations, rooms, values.filter])
 
   const renderCell = React.useCallback(
     (

@@ -8,15 +8,17 @@ interface UIStore {
   changeModalLogin: (value: boolean) => void
   changeModalRegister: (value: boolean) => void
   changeModalCode: (value: boolean) => void
+  changeLanguage: (value: 'es' | 'en') => void
 }
 
 export const useUIStore = create<UIStore>((set) => ({
   openModalLogin: false,
   openModalRegister: false,
   openModalCode: false,
-  language: 'en',
+  language: 'es',
 
   changeModalLogin: (value) => set((state) => ({ ...state, openModalLogin: value })),
   changeModalRegister: (value) => set((state) => ({ ...state, openModalRegister: value })),
   changeModalCode: (value) => set((state) => ({ ...state, openModalCode: value })),
+  changeLanguage: (value) => set((state) => ({ ...state, language: value })),
 }))

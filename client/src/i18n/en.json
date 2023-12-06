@@ -1,27 +1,139 @@
 {
+  "modal_register": {
+    "title": "Sign Up",
+    "names": "Names",
+    "email": "Email",
+    "address": "Address",
+    "phone": "Phone",
+    "dni": "Document No. | ID",
+    "password": "Password",
+    "button_close": "Close",
+    "button_register": "Sign in"
+  },
+  "modal_login": {
+    "title": "Sign In",
+    "email": "Email",
+    "password": "Password",
+    "button_close": "Close",
+    "button_login": "Enter",
+    "link_register": "Create a new account",
+    "check_remember": "Remind me"
+  },
+
+  "modal_code": {
+    "title": "Verify Code",
+    "message": "A 6 digit code has been sent to your email please check in the span folder",
+    "button_close": "Close",
+    "button_verify": "verify",
+    "label_code": "Enter the 6-digit code"
+  },
+
+  "navbar": {
+    "brand": "HOTEL",
+    "home": "Home",
+    "about": "About us",
+    "reservation": "Reservation",
+    "contact": "Contact",
+    "signin": "Sign in",
+    "signup": "Sign up",
+    "exit": "Exit"
+  },
+
   "home": {
     "title": "Hotel Waynapicchu",
-    "subtitle": "Un hotel acogedor perfectamente diseñado para convertir tus gratos momentos en una experiencia mágica e inolvidable.",
-    "button": " Reserva tu Habitacion ahora",
-    "title_section": "Relájate en nuestra Suite",
-    "subtitle_section": "Nuestra Suite es probablemente el ambiente que más refleja la personalidad del habitante y el más laborioso de planear. El espacio requiere confort, hospitalidad y estilo para recibir los momentos más íntimos del usuario. Es allí donde están nuestros recuerdos más profundos, nuestras piezas favoritas.",
-    "title_section2": "Conoce nuestras habitaciones",
+    "subtitle": "A cosy hotel perfectly designed to turn your pleasant moments into a magical and unforgettable experience.",
+    "button": "Book your room now",
+    "title_section": "Relax in our Suite",
+    "subtitle_section": "Our Suite is probably the environment that most reflects the personality of the inhabitant and the most laborious to plan. The space requires comfort, hospitality and style to receive the most intimate moments of the user. That's where our deepest memories are, our favorite pieces.",
+    "title_section2": "Get to know our rooms",
     "CARDS_INFORMATION": [
       {
-        "title": "PLATA",
+        "title": "SILVER",
         "img_url": "https://cf.bstatic.com/xdata/images/hotel/max1024x768/343137940.jpg?k=36b2680fc93291f7eeac1a4e3716b53700e8ca16b67b48345d9f3f775d72e779&o=&hp=1",
         "ditails_url": "#",
         "reservation_url": "#",
-        "description": "Esta categoría de habitación ofrece una estancia cómoda y conveniente para los huéspedes que desean disfrutar de una habitación con camas adicionales y comodidades modernas, como televisión por cable y teléfono fijo, mientras tienen la privacidad de un baño propio.",
+        "description": "This room category offers a comfortable and convenient stay for guests who want to enjoy a room with extra beds and modern amenities, such as cable TV and landline, while having the privacy of their own bathroom.",
+        "bg_color": "",
+        "features": ["2 1/2 Beds", "Private bathroom", "Cable TV", "Landline", "Wifi", "Breakfast included"]
+      },
+      {
+        "title": "Diamond",
+        "img_url": "https://cf.bstatic.com/xdata/images/hotel/max1024x768/117560853.jpg?k=b6b488177bf18ad6f07223d116f1b30d3bf7c58378781f08a3393a9f889fc1d7&o=&hp=1",
+        "ditails_url": "#",
+        "reservation_url": "#",
+        "bg_color": "bg-gradient-to-br from-orange-200 to-red-900 text-white",
+        "description": "The Diamond category is designed to offer a high-end lodging experience with exclusive amenities such as the Jacuzzi, a private lounge area, and the added convenience of having an on-site bar. These features create a luxurious and comfortable environment for visitors looking for a truly indulgent stay.",
         "features": [
-          "2 Camas de Plaza y media",
-          "Baño privado",
-          "TV por cable",
-          "Teléfono fijo",
+          "1 QUEEN Bed",
+          "Private bathroom with Jacuzzi",
+          "Cable TV",
+          "Landline",
           "Wifi",
-          "Desayuno incluido"
+          "Breakfast included",
+          "Private living room",
+          "Bar"
+        ]
+      },
+      {
+        "title": "Gold",
+        "img_url": "https://cf.bstatic.com/xdata/images/hotel/max1024x768/85796311.jpg?k=76f41f9cd013f4b37648b89ac9be1b721fd1228890633e964d317060fe338c1c&o=&hp=1",
+        "ditails_url": "#",
+        "reservation_url": "#",
+        "description": "The Gold category is designed to provide guests with a high-quality accommodation experience, with additional amenities such as a Jacuzzi and a lounge area, in addition to standard amenities such as cable TV and landline. This creates a luxurious and comfortable environment for visitors to the hotel.",
+        "bg_color": "",
+        "features": [
+          "1 QUEEN Bed",
+          "Private bathroom with Jacuzzi",
+          "Cable TV",
+          "Landline",
+          "Wifi",
+          "Breakfast included",
+          "Private living room"
         ]
       }
     ]
+  },
+
+  "about": {
+    "title": "About us",
+    "article_1": {
+      "description": "We are a company with more than 8 years in the city of CUSCO, we work in a long chain of hotels with national prestige putting at your disposal our work experience at Waynappichu Hotel.",
+      "list": ["Strategic location", "Guaranteed Safety", "Comfortable Rooms", "We guarantee the best price"]
+    },
+    "article_2": {
+      "title": "Who are we?",
+      "description": "We are the best alternative for your business and leisure trip. We are located in the district of Wánchaq Av. Garcilaso 216-A (Lado de la Caja Tacna), one of the safest districts of Cusco, we have extensive experience in the hotel industry since we are more than 8 years in the city providing you with a unique and unforgettable experience."
+    },
+    "article_3": {
+      "title": "Our Mission",
+      "description": "To be leaders in the 2-star sector, managing to provide a personalized service helping to revalue the local culture of the destinations in which we are going to operate."
+    },
+    "article_4": {
+      "title": "Our Vision",
+      "description": "To be a company that contributes to the cultural and tourist development of the country, always having as a goal the quality of our services thanks to our valuable human team."
+    },
+    "article_5": {
+      "title": "Our Qualities",
+      "cualities": ["Responsible", "Efficient", "Retailers", "Passionate"]
+    },
+    "article_6": {
+      "title": "Our Team",
+      "description": "The <b>Waynapicchu Hotel</b> team is made up of professionals with extensive experience in the sector, who give preference to personalized treatment, added value and one of the main reasons why many of our clients return to request our services during their visits. We welcome any suggestions, which will be immediately addressed by our management, for the constant improvement of the quality of the hotel"
+    }
+  },
+
+  "contact": {
+    "title": "Contact us",
+    "section_1": {
+      "title": "We want to know more about you",
+      "subtitle": "Contact us",
+      "description": "How can we help you? At Waynapicchu Hotel Cusco we are at your disposal to make your stay perfect. Let us know in the comments here.",
+      "button": "Send"
+    }
+  },
+
+  "footer": {
+    "address": "ADDRESS",
+    "networks": "SOCIAL NETWORK"
   }
 }

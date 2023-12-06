@@ -54,46 +54,58 @@ export const Navigation = () => {
         className='hidden sm:flex gap-4'
         justify='center'
       >
-        <NavbarItem isActive={path === '/'}>
+        <NavbarItem
+          isActive={path === '/'}
+          className='cursor-pointer'
+        >
           <Link
             onClick={() => {
               navigation('/')
             }}
             color={`${path === '/' ? 'primary' : 'foreground'}`}
           >
-            Inicio
+            {i18n[language].navbar.home}
           </Link>
         </NavbarItem>
-        <NavbarItem isActive={path === '/sobre-nosotros'}>
+        <NavbarItem
+          isActive={path === '/sobre-nosotros'}
+          className='cursor-pointer'
+        >
           <Link
             onClick={() => {
               navigation('/sobre-nosotros')
             }}
             color={`${path === '/sobre-nosotros' ? 'primary' : 'foreground'}`}
           >
-            Sobre Nosotros
+            {i18n[language].navbar.about}
           </Link>
         </NavbarItem>
         {isAuth && (
-          <NavbarItem isActive={path === '/reservacion'}>
+          <NavbarItem
+            className='cursor-pointer'
+            isActive={path === '/reservacion'}
+          >
             <Link
               onClick={() => {
                 navigation('/reservacion')
               }}
               color={`${path === '/reservacion' ? 'primary' : 'foreground'}`}
             >
-              Reservaciones
+              {i18n[language].navbar.reservation}
             </Link>
           </NavbarItem>
         )}
-        <NavbarItem isActive={path === '/contacto'}>
+        <NavbarItem
+          className='cursor-pointer'
+          isActive={path === '/contacto'}
+        >
           <Link
             onClick={() => {
               navigation('/contacto')
             }}
             color={`${path === '/contacto' ? 'primary' : 'foreground'}`}
           >
-            Contáctanos
+            {i18n[language].navbar.contact}
           </Link>
         </NavbarItem>
       </NavbarContent>
@@ -121,14 +133,14 @@ export const Navigation = () => {
                   navigation('/')
                 }}
               >
-                Salir
+                {i18n[language].navbar.exit}
               </DropdownItem>
             </DropdownMenu>
           </Dropdown>
         ) : (
           <>
-            <NavbarItem className='hidden lg:flex'>
-              <Link onClick={() => changeModalLogin(true)}>Iniciar Sesion</Link>
+            <NavbarItem className='hidden lg:flex cursor-pointer'>
+              <Link onClick={() => changeModalLogin(true)}>{i18n[language].navbar.signin}</Link>
             </NavbarItem>
             <Divider
               orientation='vertical'
@@ -141,7 +153,7 @@ export const Navigation = () => {
                 className='hidden lg:flex'
                 onClick={() => changeModalRegister(true)}
               >
-                Registrarse
+                {i18n[language].navbar.signup}
               </Button>
             </NavbarItem>
           </>
@@ -157,7 +169,7 @@ export const Navigation = () => {
             }}
             color={`${path === '/' ? 'primary' : 'foreground'}`}
           >
-            Inicio
+            {i18n[language].navbar.home}
           </Link>
         </NavbarItem>
         <NavbarItem isActive={path === '/sobre-nosotros'}>
@@ -168,7 +180,7 @@ export const Navigation = () => {
             }}
             color={`${path === '/sobre-nosotros' ? 'primary' : 'foreground'}`}
           >
-            Sobre Nosotros
+            {i18n[language].navbar.about}
           </Link>
         </NavbarItem>
         {isAuth && (
@@ -180,7 +192,7 @@ export const Navigation = () => {
               }}
               color={`${path === '/reservacion' ? 'primary' : 'foreground'}`}
             >
-              Reservaciones
+              {i18n[language].navbar.reservation}
             </Link>
           </NavbarItem>
         )}
@@ -192,7 +204,7 @@ export const Navigation = () => {
             }}
             color={`${path === '/contacto' ? 'primary' : 'foreground'}`}
           >
-            Contáctanos
+            {i18n[language].navbar.contact}
           </Link>
         </NavbarItem>
         <Divider
@@ -207,7 +219,7 @@ export const Navigation = () => {
               setIsMenuOpen(false)
             }}
           >
-            Iniciar Sesion
+            {i18n[language].navbar.signin}
           </Link>
         </NavbarItem>
         <NavbarItem>
@@ -218,7 +230,7 @@ export const Navigation = () => {
               setIsMenuOpen(false)
             }}
           >
-            Registrarse
+            {i18n[language].navbar.signup}
           </Link>
         </NavbarItem>
       </NavbarMenu>

@@ -13,51 +13,51 @@ import RoomsPage from '@/pages/admin/RoomsPage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
 
 export const router = createBrowserRouter([
-	{
-		path: '/',
-		element: <BaseLayout />,
-		children: [
-			{ path: '/', element: <HomePage /> },
-			{
-				path: 'sobre-nosotros',
-				element: <AboutPage />,
-			},
-			{
-				path: 'contacto',
-				element: <ContactPage />,
-			},
-			{
-				path: 'reservacion',
-				element: <ReservationPage />,
-			},
-		],
-	},
-	{
-		path: '/admin',
-		element: <AdminLayout />,
-		children: [
-			{ path: '/admin', element: <DashboardPage /> },
-			{
-				path: '/admin/clientes',
-				element: <ClientPage />,
-			},
-			{
-				path: '/admin/reservaciones',
-				element: <ListOfReservationcPage />,
-			},
-			{
-				path: '/admin/servicios-adicionales',
-				element: <AditionalServicesPage />,
-			},
-			{
-				path: '/admin/habitaciones',
-				element: <RoomsPage />,
-			},
-		],
-	},
-	{
-		path: '*',
-		element: <NotFoundPage />,
-		errorElement: <NotFoundPage />,
-	},
+  {
+    path: '/',
+    element: <BaseLayout />,
+    children: [
+      { path: '/', element: <HomePage /> },
+      {
+        path: 'sobre-nosotros',
+        element: <AboutPage />,
+      },
+      {
+        path: 'contacto',
+        element: <ContactPage />,
+      },
+      {
+        path: 'reservacion',
+        element: <ReservationPage />,
+      },
+    ],
+  },
+  {
+    path: '/admin',
+    element: <AdminLayout />,
+    children: [
+      { path: '/admin', element: <DashboardPage /> },
+      {
+        path: '/admin/clientes',
+        element: <ClientPage />,
+      },
+      {
+        path: '/admin/reservaciones',
+        element: <ListOfReservationcPage />,
+      },
+      {
+        path: '/admin/servicios-adicionales',
+        element: <AditionalServicesPage />,
+      },
+      {
+        path: '/admin/habitaciones',
+        element: <RoomsPage />,
+      },
+    ],
+  },
+  {
+    path: '*',
+    element: <NotFoundPage />,
+    errorElement: <NotFoundPage />,
+  },
 ])

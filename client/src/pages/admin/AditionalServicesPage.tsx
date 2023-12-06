@@ -4,7 +4,7 @@ import { useModal, useForm } from '@/hooks'
 import { createService, deleteService, updateService } from '@/services/aditional_services.service'
 import { useServiceStore } from '@/store/aditionalService.store'
 import { Select, SelectItem, Spacer } from '@nextui-org/react'
-import React from 'react'
+import React, { useMemo } from 'react'
 import { toast } from 'react-toastify'
 
 export interface IServices {
@@ -112,6 +112,15 @@ export const AditionalServicesPage = () => {
     }
   }
 
+  const renderServices = useMemo(() => {
+    return services.filter((service) => {
+      if (values.filter && values.filter.length > 0) {
+        return service.name.toLowerCase().includes(values.filter.toLowerCase())
+      }
+      return service
+    })
+  }, [services, values.filter])
+
   const renderCell = React.useCallback(
     (item: IServices, columnKey: React.Key) => {
       const cellValue = item[columnKey as keyof IServices]
@@ -160,7 +169,7 @@ export const AditionalServicesPage = () => {
           />
         }
         columns={COLUMNS_SERVICES}
-        items={services}
+        items={renderServices}
         renderCell={renderCell}
       />
       <ActionModal
